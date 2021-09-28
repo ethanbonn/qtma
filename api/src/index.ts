@@ -1,9 +1,21 @@
-import express from "express";
+import express, { Express } from "express";
 import { json } from "body-parser";
+import mongoose from "mongoose";
 
-const app = express();
+const PORT: number = 2001;
+
+const app: Express = express();
 app.use(json());
 
-app.listen(5000, () => {
-  console.log("Listening on port 5000");
-});
+const uri = "mongodb+srv://qtma:qtma@cluster0.eehgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+mongoose
+  .connect(uri)
+  .then(() =>
+    app.listen(PORT, () =>
+      console.log(`Server running on http://localhost:${PORT}`)
+    )
+  )
+  .catch((error) => {
+    throw error;
+  });
