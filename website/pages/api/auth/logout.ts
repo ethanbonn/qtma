@@ -1,7 +1,6 @@
-// ./pages/api/logout
 import { NextApiRequest, NextApiResponse } from "next";
 import { unsetAuthCookies } from "next-firebase-auth";
-import initAuth from "../../logic/initAuth"; // the module you created above
+import initAuth from "../../../logic/initAuth";
 
 type Data = {
   success: boolean;

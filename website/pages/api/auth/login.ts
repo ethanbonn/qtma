@@ -1,7 +1,6 @@
-// ./pages/api/login
 import { NextApiRequest, NextApiResponse } from "next";
 import { setAuthCookies } from "next-firebase-auth";
-import initAuth from "../../logic/initAuth"; // the module you created above
+import initAuth from "../../../logic/initAuth";
 
 type Data = {
   success: boolean;
@@ -16,6 +15,7 @@ export default async function handler(
   try {
     await setAuthCookies(req, res);
   } catch (e) {
+    console.log(e);
     return res.status(500).json({ success: false });
   }
   return res.status(200).json({ success: true });
