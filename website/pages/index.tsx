@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-const Demo = () => {
+const Index = () => {
   const { email, signOut } = useAuthUser();
   return (
     <div>
@@ -59,4 +59,4 @@ export const getServerSideProps = withAuthUserTokenSSR()(
   }
 );
 
-export default withAuthUser()(Demo);
+export default withAuthUser()(Index);
