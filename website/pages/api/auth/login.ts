@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { setAuthCookies } from "next-firebase-auth";
-import initAuth from "../../../logic/initAuth";
+import initAuth from "../../../utils/initAuth";
 
 type Data = {
   success: boolean;
