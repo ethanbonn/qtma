@@ -35,6 +35,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## To run cypress tests:
 
-2. `npm run dev`
-3. Then in another terminal window: `npm run cypress`
-4. Select the test you would like to run
+1. `npm run dev`
+2. Then in another terminal window: `npm run cypress`
+3. Select the test you would like to run
