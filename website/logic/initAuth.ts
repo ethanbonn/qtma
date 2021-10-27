@@ -2,17 +2,18 @@ import { init } from "next-firebase-auth";
 
 const initAuth = () => {
   init({
-    authPageURL: "/auth",
+    debug: true,
     appPageURL: "/",
-    loginAPIEndpoint: "/api/login", // required
-    logoutAPIEndpoint: "/api/logout", // required
+    authPageURL: "/login",
+    loginAPIEndpoint: "/api/auth/login", // required
+    logoutAPIEndpoint: "/api/auth/logout", // required
     // Required in most cases.
     firebaseAdminInitConfig: {
       credential: {
         projectId: "qtma-94a76",
         clientEmail:
           "firebase-adminsdk-baq7h@qtma-94a76.iam.gserviceaccount.com",
-        privateKey: process.env.FIREBASE_PRIVATE_KEY ?? "",
+        privateKey: process.env.FIREBASE_PRIVATE_KEY ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY) : "",
       },
       databaseURL: "https://qtma-94a76-default-rtdb.firebaseio.com",
     },
@@ -35,7 +36,7 @@ const initAuth = () => {
       overwrite: true,
       path: "/",
       sameSite: "strict",
-      secure: true, // set this to false in local (non-HTTPS) development
+      secure: false, // set this to false in local (non-HTTPS) development
       signed: false,
     },
   });
