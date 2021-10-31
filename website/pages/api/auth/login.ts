@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { setAuthCookies } from "next-firebase-auth";
 import initAuth from "../../../utils/initAuth";
 
