@@ -14,16 +14,14 @@ export default async function handler(
 ) {
   const {
     method,
-    query: { firebaseId },
+    query: { _id },
   } = req;
 
   if (method === "GET") {
     await dbConnect();
 
     try {
-      const user = await UserModel.findOne({
-        firebaseId: firebaseId,
-      });
+      const user = await UserModel.findOne(_id);
       if (!user) {
         res.status(404).json({ success: false });
       } else res.status(200).json({ success: true, data: user?.toObject() });

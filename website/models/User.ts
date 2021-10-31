@@ -3,6 +3,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
+  _id: { type: String, required: true },
   email: { type: String, required: true },
   userName: { type: String, required: true },
   firstName: { type: String, required: true },
@@ -12,7 +13,6 @@ const schema = new Schema<User>({
   userDescription: { type: String, required: false },
   links: { type: [String], required: false },
   interests: { type: [String], required: false },
-  firebaseId: { type: String, required: true },
 });
 
 // Create and export the model.

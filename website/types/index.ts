@@ -1,4 +1,4 @@
 export type UnregisteredUser = {
   email: string;
-  firebaseId: string;
+  _id: string;
 };
