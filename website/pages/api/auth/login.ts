@@ -15,7 +15,6 @@ export default async function handler(
   try {
     await setAuthCookies(req, res);
   } catch (e) {
-    console.log(e);
     return res.status(500).json({ success: false });
   }
   return res.status(200).json({ success: true });

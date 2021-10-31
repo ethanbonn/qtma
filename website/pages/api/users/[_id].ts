@@ -21,11 +21,12 @@ export default async function handler(
     await dbConnect();
 
     try {
-      const user = await UserModel.findOne(_id);
-      if (!user) {
-        res.status(404).json({ success: false });
-      } else res.status(200).json({ success: true, data: user?.toObject() });
+      if (typeof _id !== "string") throw new Error("Invalid _id");
+      const user = await UserModel.findById(_id);
+      if (!user) throw new Error("User not found");
+      res.status(200).json({ success: true, data: user?.toObject() });
     } catch (error) {
+      console.error(error);
       res.status(400).json({ success: false });
     }
   } else res.status(400).json({ success: false });
