@@ -4,6 +4,8 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import Link from "next/link";
+import type { User } from "../types/models";
+import getUserData from "../functions/server/getUserData";
 
 const styles = {
   container: {
@@ -18,8 +20,9 @@ const styles = {
   },
 };
 
-const Index = () => {
-  const { email, signOut } = useAuthUser();
+const Index = (props: { email: string; id: string } | User) => {
+  const { signOut } = useAuthUser();
+  const { email } = props;
   return (
     <div>
       {email ? (
@@ -53,8 +56,11 @@ const Index = () => {
 
 export const getServerSideProps = withAuthUserTokenSSR()(
   async ({ AuthUser }) => {
+    const { email, id } = AuthUser;
+    const userData = await getUserData(id);
+
     return {
-      props: {},
+      props: userData ?? { email, id },
     };
   }
 );
