@@ -15,8 +15,9 @@ const EditProfile = (props: UnregisteredUser | User) => {
   const { _id, email } = props;
 
   const onSubmit = (data: any) => {
-    if (!isTypeUser) {
-      fetch("http://localhost:3000/api/users/create", {
+    fetch(
+      `http://localhost:3000/api/users/${!isTypeUser ? "create" : "update"}`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,10 +29,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
           links: [""],
           interests: [""],
         }),
-      });
-    } else {
-      console.log(data);
-    }
+      }
+    );
   };
 
   return (
