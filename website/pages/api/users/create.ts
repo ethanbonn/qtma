@@ -18,6 +18,9 @@ export default async function handler(
     await dbConnect();
 
     try {
+      if (!req?.headers?.authorization)
+        throw new Error("No authorization token");
+
       const user: User = await UserModel.create(req.body);
       res.status(200).json({ success: true, data: user });
     } catch (error) {

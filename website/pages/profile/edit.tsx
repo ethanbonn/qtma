@@ -1,4 +1,9 @@
-import { withAuthUser, AuthAction, withAuthUserSSR } from "next-firebase-auth";
+import {
+  withAuthUser,
+  AuthAction,
+  withAuthUserSSR,
+  useAuthUser,
+} from "next-firebase-auth";
 import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
@@ -13,14 +18,17 @@ const EditProfile = (props: UnregisteredUser | User) => {
   } = useForm();
   const isTypeUser = isUser(props);
   const { _id, email } = props;
+  const { getIdToken } = useAuthUser();
+  const onSubmit = async (data: any) => {
+    const token = await getIdToken();
 
-  const onSubmit = (data: any) => {
     fetch(
       `http://localhost:3000/api/users/${!isTypeUser ? "create" : "update"}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          ...(token ? { Authorization: token } : {}),
         },
         body: JSON.stringify({
           _id,

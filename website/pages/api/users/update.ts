@@ -18,6 +18,9 @@ export default async function handler(
     await dbConnect();
 
     try {
+      if (!req?.headers?.authorization)
+        throw new Error("No authorization token");
+
       const updatedUser: User = await UserModel.findByIdAndUpdate(
         req?.body?._id,
         req?.body
