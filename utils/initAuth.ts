@@ -13,7 +13,9 @@ const initAuth = () => {
         projectId: "qtma-94a76",
         clientEmail:
           "firebase-adminsdk-baq7h@qtma-94a76.iam.gserviceaccount.com",
-        privateKey: process.env.FIREBASE_PRIVATE_KEY ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY) : "",
+        privateKey: process.env.FIREBASE_PRIVATE_KEY
+          ? JSON.parse(process.env.FIREBASE_PRIVATE_KEY)
+          : "",
       },
       databaseURL: "https://qtma-94a76-default-rtdb.firebaseio.com",
     },
