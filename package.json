@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "cypress": "cypress open"
   },
   "dependencies": {
+    "cypress": "8.7.0",
     "firebase": "8.10.0",
     "firebase-admin": "10.0.0",
     "mongoose": "6.0.12",
