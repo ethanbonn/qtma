@@ -4,9 +4,9 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import Link from "next/link";
+import type { FunctionComponent } from "react";
 import type { User } from "../types/models";
 import getUserData from "../functions/server/getUserData";
-import type { FunctionComponent } from "react";
 
 const styles = {
   container: {
@@ -28,7 +28,10 @@ const Index = (props: { email: string; id: string } | User) => {
     <div>
       {email ? (
         <>
-          <p>Signed in as {email}</p>
+          <p>
+            Signed in as
+            {email}
+          </p>
           <button
             type="button"
             onClick={() => {
@@ -43,11 +46,9 @@ const Index = (props: { email: string; id: string } | User) => {
         <>
           <p>You are not signed in.</p>
           <Link href="/login">
-            <a>
-              <button type="button" style={styles.button}>
-                Sign in
-              </button>
-            </a>
+            <button type="button" style={styles.button}>
+              Sign in
+            </button>
           </Link>
         </>
       )}

@@ -26,7 +26,6 @@ export default async function handler(
       if (!user) throw new Error("User not found");
       res.status(200).json({ success: true, data: user?.toObject() });
     } catch (error) {
-      console.error(error);
       res.status(400).json({ success: false });
     }
   } else res.status(400).json({ success: false });

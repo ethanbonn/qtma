@@ -5,11 +5,11 @@ import {
   withAuthUserSSR,
 } from "next-firebase-auth";
 import Link from "next/link";
+import type { FunctionComponent } from "react";
 import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
-import type { FunctionComponent } from "react";
 
 const styles = {
   container: {
@@ -32,7 +32,10 @@ const Profile = (props: UnregisteredUser | User) => {
     <div>
       {isUserType ? (
         <>
-          <p>Signed in as {email}</p>
+          <p>
+            Signed in as
+            {email}
+          </p>
           <button
             type="button"
             onClick={() => {
@@ -47,11 +50,9 @@ const Profile = (props: UnregisteredUser | User) => {
         <>
           <p>Complete your profile</p>
           <Link href="/profile/edit">
-            <a>
-              <button type="button" style={styles.button}>
-                Complete
-              </button>
-            </a>
+            <button type="button" style={styles.button}>
+              Complete
+            </button>
           </Link>
         </>
       )}

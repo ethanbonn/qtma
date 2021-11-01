@@ -18,8 +18,9 @@ export default async function handler(
     await dbConnect();
 
     try {
-      if (!req?.headers?.authorization)
+      if (!req?.headers?.authorization) {
         throw new Error("No authorization token");
+      }
 
       const updatedUser: User = await UserModel.findByIdAndUpdate(
         req?.body?._id,
@@ -27,7 +28,6 @@ export default async function handler(
       );
       res.status(200).json({ success: true, data: updatedUser });
     } catch (error) {
-      console.log(error);
       res.status(400).json({ success: false });
     }
   } else res.status(400).json({ success: false });

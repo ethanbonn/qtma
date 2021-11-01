@@ -4,12 +4,12 @@ import {
   withAuthUserSSR,
   useAuthUser,
 } from "next-firebase-auth";
+import { useForm } from "react-hook-form";
+import type { FunctionComponent } from "react";
 import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
-import { useForm } from "react-hook-form";
 import { isUser } from "../../functions/typeGuards";
-import type { FunctionComponent } from "react";
 
 const EditProfile = (props: UnregisteredUser | User) => {
   const {
