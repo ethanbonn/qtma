@@ -6,6 +6,7 @@ import {
 import Link from "next/link";
 import type { User } from "../types/models";
 import getUserData from "../functions/server/getUserData";
+import type { FunctionComponent } from "react";
 
 const styles = {
   container: {
@@ -65,4 +66,4 @@ export const getServerSideProps = withAuthUserTokenSSR()(
   }
 );
 
-export default withAuthUser()(Index);
+export default withAuthUser()(Index as FunctionComponent<unknown>);

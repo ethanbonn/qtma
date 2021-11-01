@@ -9,6 +9,7 @@ import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { useForm } from "react-hook-form";
 import { isUser } from "../../functions/typeGuards";
+import type { FunctionComponent } from "react";
 
 const EditProfile = (props: UnregisteredUser | User) => {
   const {
@@ -92,4 +93,4 @@ export const getServerSideProps = withAuthUserSSR({
   };
 });
 
-export default withAuthUser()(EditProfile);
+export default withAuthUser()(EditProfile as FunctionComponent<unknown>);

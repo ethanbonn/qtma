@@ -9,6 +9,7 @@ import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
+import type { FunctionComponent } from "react";
 
 const styles = {
   container: {
@@ -69,4 +70,4 @@ export const getServerSideProps = withAuthUserSSR({
   };
 });
 
-export default withAuthUser()(Profile);
+export default withAuthUser()(Profile as FunctionComponent<unknown>);
