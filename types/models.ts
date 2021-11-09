@@ -10,3 +10,33 @@ export type User = {
   links?: string[];
   interests?: string[];
 };
+
+
+export type Conversation = {
+  _id: string;
+  participants_id: string[];
+  conversation_type: string;
+  last_activity: Date;
+  message_ids: string[];
+};
+
+
+export type Message = {
+  _id: string;
+  conversation_id: string;
+  time_created: Date;
+  sender_id: string;
+  content: string;
+};
+
+
+export type Project = {
+  _id: string;
+  author_id: string;
+  author_timezone: string;
+  project_tags: string[];
+  skill_tags: string[];
+  description: string;
+  liked_by_ids: string[];
+  date_created: Date;
+};
