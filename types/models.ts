@@ -39,4 +39,19 @@ export type Project = {
   description: string;
   liked_by_ids: string[];
   date_created: Date;
+  desired_relationship_type: string;
 };
+
+export type Skill = {
+  _id: string;
+  name: string;
+  follower_ids: string[];
+  project_ids: string[];
+};
+
+export type ProjectTag = {
+  _id: string;
+  name: string;
+  follower_ids: string[];
+  project_ids: string[];
+}

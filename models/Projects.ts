@@ -10,8 +10,9 @@ const schema = new Schema<Project>({
   skill_tags: {type: [String], required: false},
   description: {type: String, required: true},
   liked_by_ids: {type: [String], required: false},
-  date_created: {type: Date, required: True},
-  
+  date_created: {type: Date, required: true},
+  desired_relationship_type: {type: String, required: true}
+
 });
 
 // Create and export the model.
