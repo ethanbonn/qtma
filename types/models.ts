@@ -10,6 +10,9 @@ export type User = {
   links?: string[];
   interests?: string[];
   timezone: string;
+  skill_id_list: string[];
+  project_ids: string[];
+
 };
 
 
@@ -24,7 +27,7 @@ export type Conversation = {
 
 export type Message = {
   _id: string;
-  conversation_id: string;
+  conversation_id: string; // is this nessasary
   time_created: Date;
   sender_id: string;
   content: string;
@@ -36,7 +39,7 @@ export type Project = {
   author_id: string;
   author_timezone: string;
   project_tags: string[];
-  skill_tags: string[];
+  skill_id: string[];
   description: string;
   liked_by_ids: string[];
   date_created: Date;
@@ -46,13 +49,12 @@ export type Project = {
 export type Skill = {
   _id: string;
   name: string;
-  follower_ids: string[];
+  // follower_ids: string[];
   project_ids: string[];
 };
 
 export type ProjectTag = {
   _id: string;
   name: string;
-  follower_ids: string[];
   project_ids: string[];
 }

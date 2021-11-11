@@ -13,8 +13,10 @@ const schema = new Schema<User>({
   userDescription: { type: String, required: false },
   links: { type: [String], required: false },
   interests: { type: [String], required: false },
-  timezone: {type: [String], required : true},
-  
+  timezone: {type: String, required : true},
+  skill_id_list: {type: [String], required: false},
+  project_ids: {type: [String], required: false},
+
 });
 
 // Create and export the model.

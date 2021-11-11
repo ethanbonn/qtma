@@ -7,7 +7,7 @@ const schema = new Schema<Project>({
   author_id: {type: String, required: true},
   author_timezone: {type: String, required: true},
   project_tags: {type: [String], required: false},
-  skill_tags: {type: [String], required: false},
+  skill_id: {type: [String], required: false},
   description: {type: String, required: true},
   liked_by_ids: {type: [String], required: false},
   date_created: {type: Date, required: true},
