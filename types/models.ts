@@ -9,6 +9,7 @@ export type User = {
   userDescription?: string;
   links?: string[];
   interests?: string[];
+  timezone: string;
 };
 
 
