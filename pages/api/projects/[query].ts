@@ -14,15 +14,28 @@ export default async function handler(
 ) {
   const {
     method,
+    query
   } = req;
 
+  let search_params = new URLSearchParams(query.query);
+
+  const query_params: Project = {desired_relationship_type: search_params.get('relationship_type'), author_timezone: search_params.get('timezone')?.split(",")};
+
+
+  if (search_params.has('tags')) {
+    query_params["project_tags"] = search_params.get('tags')?.split(",");
+  }
+
+  if (search_params.has('skills')) {
+    query_params["skill_id"] = search_params.get('skills')?.split(",");
+  }
 
   if (method === "GET") {
 
     await dbConnect();
 
     try {
-      const queryobj = await ProjectModel.find({ desired_relationship_type: 'collaborator' });
+      const queryobj = await ProjectModel.find(query_params);
       if (!queryobj) throw new Error("Data not found");
       res.status(200).json({ success: true, data: queryobj });
     } catch (error) {
