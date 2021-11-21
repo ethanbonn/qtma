@@ -5,7 +5,7 @@ import {
   useAuthUser,
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
-import type { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
@@ -18,6 +18,20 @@ const EditProfile = (props: UnregisteredUser | User) => {
     formState: { errors },
   } = useForm();
   const isTypeUser = isUser(props);
+
+  const [linksList, setLinksList] = useState(
+    isTypeUser && props.links ? props.links : [{ links: "" }]
+  );
+  const [interestsList, setInterestsList] = useState(
+    isTypeUser && props.interests ? props.interests : [{ interests: "" }]
+  );
+  const [skillsList, setSkillsList] = useState(
+    isTypeUser && props.skill_id_list ? props.skill_id_list : [{ skills: "" }]
+  );
+  const [projectsList, setProjectsList] = useState(
+    isTypeUser && props.project_ids ? props.project_ids : [{ projects: "" }]
+  );
+
   const { _id, email } = props;
   const { getIdToken } = useAuthUser();
   const onSubmit = async (data: any) => {
@@ -35,62 +49,243 @@ const EditProfile = (props: UnregisteredUser | User) => {
           _id,
           email,
           ...data,
-          links: [""],
           interests: [""],
         }),
       }
     );
   };
 
+  const handleInputChange = (
+    e: { target: { value: any } },
+    index: number,
+    param: string,
+    originalList,
+    listToUpdate
+  ) => {
+    const { value } = e.target;
+    const list = [...originalList];
+    list[index][param] = value;
+    listToUpdate(list);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        defaultValue={isTypeUser ? props.userName : undefined}
-        {...register("userName", { required: true, maxLength: 12 })}
-      />
-      {errors.userName && <span>This field is required</span>}
+      <label htmlFor="userName">
+        Username:
+        <input
+          type="text"
+          id="userName"
+          defaultValue={isTypeUser ? props.userName : undefined}
+          {...register("userName", { required: true, maxLength: 12 })}
+        />
+        {errors.userName && <span>This field is required</span>}
+      </label>
       <br />
-      <input
-        defaultValue={isTypeUser ? props.firstName : undefined}
-        {...register("firstName", { required: true, maxLength: 24 })}
-      />
-      {errors.firstName && <span>This field is required</span>}
+      <label htmlFor="firstName">
+        First Name:
+        <input
+          type="text"
+          id="firstName"
+          defaultValue={isTypeUser ? props.firstName : undefined}
+          {...register("firstName", { required: true, maxLength: 24 })}
+        />
+        {errors.firstName && <span>This field is required</span>}
+      </label>
       <br />
-      <input
-        defaultValue={isTypeUser ? props.lastName : undefined}
-        {...register("lastName", { required: true, maxLength: 24 })}
-      />
-      {errors.lastName && <span>This field is required</span>}
+      <label htmlFor="lastName">
+        Last Name:
+        <input
+          type="text"
+          id="lastName"
+          defaultValue={isTypeUser ? props.lastName : undefined}
+          {...register("lastName", { required: true, maxLength: 24 })}
+        />
+        {errors.lastName && <span>This field is required</span>}
+      </label>
       <br />
-      <input
-        defaultValue={isTypeUser ? props.profilePicture : undefined}
-        {...register("profilePicture")}
-      />
+      <label htmlFor="profilePicture">
+        Profile Picture:
+        <input
+          type="text"
+          id="profilePicture"
+          defaultValue={isTypeUser ? props.profilePicture : undefined}
+          {...register("profilePicture")}
+        />
+      </label>
       <br />
-      <input
-        defaultValue={isTypeUser ? props.jobTitle : undefined}
-        {...register("jobTitle", { maxLength: 24 })}
-      />
+      <label htmlFor="jobTitle">
+        Job Title:
+        <input
+          type="text"
+          id="jobTitle"
+          defaultValue={isTypeUser ? props.jobTitle : undefined}
+          {...register("jobTitle", { maxLength: 24 })}
+        />
+      </label>
       <br />
-      <input
-        defaultValue={isTypeUser ? props.userDescription : undefined}
-        {...register("userDescription", { maxLength: 240 })}
-      />
+      <label htmlFor="userDescription">
+        Description:
+        <input
+          type="text"
+          id="userDescription"
+          defaultValue={isTypeUser ? props.userDescription : undefined}
+          {...register("userDescription", { maxLength: 240 })}
+        />
+      </label>
       <br />
+      <label htmlFor="timezone">
+        Timezone:
+        <input
+          type="text"
+          id="timezone"
+          defaultValue={isTypeUser ? props.timezone : undefined}
+          {...register("timezone", { maxLength: 4 })}
+        />
+      </label>
+      <br />
+      {linksList.map((_, i) => (
+        <>
+          <br />
+          <label htmlFor={`links${i}`}>
+            {i === 0 && "Links:"}
+            <br />
+            <input
+              type="text"
+              id={`links${i}`}
+              defaultValue={isTypeUser ? props.links : undefined}
+              {...register(`links.${i}`, {
+                maxLength: 500,
+                onChange: (e) =>
+                  handleInputChange(e, i, "links", linksList, setLinksList),
+              })}
+            />
+            {i === 0 && (
+              <button
+                type="button"
+                onClick={() => setLinksList([...linksList, { links: "" }])}
+              >
+                +
+              </button>
+            )}
+          </label>
+        </>
+      ))}
+      <br />
+
+      {interestsList.map((_, i) => (
+        <>
+          <br />
+          <label htmlFor={`links${i}`}>
+            {i === 0 && "Interests:"}
+            <br />
+            <input
+              type="text"
+              id={`links${i}`}
+              defaultValue={isTypeUser ? props.interests : undefined}
+              {...register(`interests.${i}`, {
+                maxLength: 500,
+                onChange: (e) =>
+                  handleInputChange(
+                    e,
+                    i,
+                    "interests",
+                    interestsList,
+                    setInterestsList
+                  ),
+              })}
+            />
+            {i === 0 && (
+              <button
+                type="button"
+                onClick={() =>
+                  setInterestsList([...interestsList, { interests: "" }])
+                }
+              >
+                +
+              </button>
+            )}
+          </label>
+        </>
+      ))}
+      <br />
+
+      {skillsList.map((_, i) => (
+        <>
+          <br />
+          <label htmlFor={`skills${i}`}>
+            {i === 0 && "Skills:"}
+            <br />
+            <input
+              type="text"
+              id={`skills${i}`}
+              defaultValue={isTypeUser ? props.skill_id_list : undefined}
+              {...register(`skills.${i}`, {
+                maxLength: 500,
+                onChange: (e) =>
+                  handleInputChange(e, i, "skills", skillsList, setSkillsList),
+              })}
+            />
+            {i === 0 && (
+              <button
+                type="button"
+                onClick={() => setSkillsList([...skillsList, { skills: "" }])}
+              >
+                +
+              </button>
+            )}
+          </label>
+        </>
+      ))}
+      <br />
+
+      {projectsList.map((_, i) => (
+        <>
+          <br />
+          <label htmlFor={`projects${i}`}>
+            {i === 0 && "Projects:"}
+            <br />
+            <input
+              type="text"
+              id={`projects${i}`}
+              defaultValue={isTypeUser ? props.project_ids : undefined}
+              {...register(`projects.${i}`, {
+                maxLength: 500,
+                onChange: (e) =>
+                  handleInputChange(
+                    e,
+                    i,
+                    "projects",
+                    projectsList,
+                    setProjectsList
+                  ),
+              })}
+            />
+            {i === 0 && (
+              <button
+                type="button"
+                onClick={() =>
+                  setProjectsList([...projectsList, { projects: "" }])
+                }
+              >
+                +
+              </button>
+            )}
+          </label>
+        </>
+      ))}
+      <br />
+
+      {JSON.stringify(linksList)}
+      <br />
+      {JSON.stringify(interestsList)}
+      <br />
+      {JSON.stringify(skillsList)}
+      <br />
+      {JSON.stringify(projectsList)}
+      <br />
+
       <input type="submit" />
     </form>
   );
 };
-
-export const getServerSideProps = withAuthUserSSR({
-  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-})(async ({ AuthUser }) => {
-  const { email, id } = AuthUser;
-  const userData = await getUserData(id);
-
-  return {
-    props: userData ?? { email, _id: id },
-  };
-});
-
 export default withAuthUser()(EditProfile as FunctionComponent<unknown>);
