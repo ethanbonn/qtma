@@ -4,6 +4,7 @@ import mongoose, { Schema, model } from "mongoose";
 // Schema corresponding to the document interface.
 const schema = new Schema<Project>({
   _id: { type: String, required: true },
+  name: {type: String, required: true},
   author_id: {type: String, required: true},
   author_timezone: {type: String, required: true},
   project_tags: {type: [String], required: false},
