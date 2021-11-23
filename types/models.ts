@@ -36,6 +36,7 @@ export type Message = {
 
 export type Project = {
   _id: string;
+  name: string;
   author_id: string;
   author_timezone: string;
   project_tags: string[];
@@ -44,6 +45,7 @@ export type Project = {
   liked_by_ids: string[];
   date_created: Date;
   desired_relationship_type: string;
+  
 };
 
 export type Skill = {
