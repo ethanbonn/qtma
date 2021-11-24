@@ -6,6 +6,7 @@ type Data = {
   success: boolean;
 };
 
+
 initAuth();
 
 export default async function handler(

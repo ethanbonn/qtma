@@ -1,6 +1,9 @@
 import { withAuthUser, AuthAction } from "next-firebase-auth";
 import FirebaseAuth from "../components/FirebaseAuth";
 
+
+
+
 const styles = {
   textContainer: {
     display: "flex",
