@@ -1,28 +1,41 @@
 import type { Project } from "../../types/models";
 
-type supported_timezones = "ACST" | "AEST" | "AKST" | "AST" | "AWST" | "CET" | "CST" | "EET" | "EST" | "MST" | "PST" | "WET";
+export type supported_timezones = "ACST" | "AEST" | "AKST" | "AST" | "AWST" | "CET" | "CST" | "EET" | "EST" | "MST" | "PST" | "WET";
 
 const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string], skills?: [string], timezone?: [supported_timezones]): Promise<Project[] | null> => {
 
-    relationship = "sponsor";
-    timezone = ["EST", "PST"];
-
-    var params = {relationship_type: relationship, timezone: timezone}
-
-    if (tags) {
-        params["tags"] = tags;
-    }
-    if (skills) {
-        params["skills"] = skills;
-    }
-
-    var query_string = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+    type queryParams = {
+        author_timezone: supported_timezones | supported_timezones[] | undefined;
+        desired_relationship_type: "sponsor" | "collaborator" | undefined;
+        project_tags: string | string[] | undefined;
+        skill_id: string | string[] | undefined;
+    };
     
+    var params: queryParams = {
+        author_timezone: timezone,
+        desired_relationship_type: relationship,
+        project_tags: tags,
+        skill_id: skills
+    };
+
+    console.log(params);
+
+    var valid_params: Array<String | String[]> = [];
+
+    Object.keys(params).forEach(key => {
+        if (params[key] !== undefined) {
+            valid_params.push(key + "=" + params[key]);
+        }
+    });
+
+    var query_string = valid_params !== undefined ? valid_params.join("&") : "";
+
     console.log(query_string);
 
     await fetch(`http://localhost:3000/api/projects/${query_string}`)
         .then((response) => response.json())
         .then((projects) => {
+            console.log(projects.data);
             return projects.data;
         });
 
