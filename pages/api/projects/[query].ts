@@ -33,6 +33,10 @@ export default async function handler(
     "skill_id": search_params.get("skill_id")?.split(",")
   };
 
+  for (const [key, value] of Object.entries(query_params)) {
+    if (value === undefined || value === null) delete query_params[key];
+  }
+
   if (method === "GET") {
 
     await dbConnect();

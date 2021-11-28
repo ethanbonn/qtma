@@ -30,7 +30,7 @@ const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string
 
     var query_string = valid_params !== undefined ? valid_params.join("&") : "";
 
-    console.log(query_string);
+    if (query_string === "") query_string = "query";
 
     await fetch(`http://localhost:3000/api/projects/${query_string}`)
         .then((response) => response.json())
