@@ -17,7 +17,7 @@ export default async function handler(
     query
   } = req;
 
-  let search_params = new URLSearchParams(query.query);
+  let search_params = new URLSearchParams({});
 
   const query_params: Project = {desired_relationship_type: search_params.get('relationship_type'), author_timezone: search_params.get('timezone')?.split(",")};
 

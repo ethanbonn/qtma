@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { ProjectTag } from "../../../types/models";
 import dbConnect from "../../../utils/dbConnect";
-import ProjectTagModel from "../../../models/Projects"; // come back to this
+import ProjectTagModel from "../../../models/ProjectTags"; // come back to this
 
 type Data = {
   success: boolean;
@@ -17,9 +17,9 @@ export default async function handler(
     query
   } = req;
 
-  // let search_params = new URLSearchParams(query.query);
+  let search_params = new URLSearchParams(query.query);
 
-  // const query_params: ProjectTag = {desired_relationship_type: search_params.get('relationship_type'), author_timezone: search_params.get('timezone')?.split(",")};
+  const query_params: ProjectTag = {name : search_params.get("name")};
 
   //
   // if (search_params.has('tags')) {
@@ -29,18 +29,32 @@ export default async function handler(
   // if (search_params.has('skills')) {
   //   query_params["skill_id"] = search_params.get('skills')?.split(",");
   // }
+  if (method === "GET"){
+    await dbConnect();
+
+    try {
+      console.log(query_params);
+      const tag_resp = await ProjectTagModel.find({});
+      if (!tag_resp) throw new Error("ProjectTag Data Not Found");
+      res.status(200).json({success : true, data : tag_resp});
+    } catch (error) {
+      res.status(400).json({sucess : false});
+    }
+  }
 
   if (method === "POST") {
     await dbConnect();
 
     try {
       const tag : ProjectTag = {name : "test", project_ids : []};
-      await ProjectTagModel.();
+      await ProjectTagModel.create(ProjectTag);
       res.status(200).json({ success: true, data: queryobj });
     } catch (error) {
       res.status(400).json({ success: false });
     }
   }
+
+
   // if (method === "GET") {
   //
   //   await dbConnect();

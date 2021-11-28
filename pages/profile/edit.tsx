@@ -18,7 +18,9 @@ const EditProfile = (props: UnregisteredUser | User) => {
     formState: { errors },
   } = useForm();
   const isTypeUser = isUser(props);
+  console.log("isTypeUser", isTypeUser);
   const { _id, email } = props;
+  console.log(_id, email);
   const { getIdToken } = useAuthUser();
   const onSubmit = async (data: any) => {
     const token = await getIdToken();
@@ -44,39 +46,53 @@ const EditProfile = (props: UnregisteredUser | User) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <h1>userName: </h1>
       <input
         defaultValue={isTypeUser ? props.userName : undefined}
         {...register("userName", { required: true, maxLength: 12 })}
       />
       {errors.userName && <span>This field is required</span>}
       <br />
+      <h1>firstName: </h1>
       <input
         defaultValue={isTypeUser ? props.firstName : undefined}
         {...register("firstName", { required: true, maxLength: 24 })}
       />
       {errors.firstName && <span>This field is required</span>}
       <br />
+      <h1>lastName: </h1>
       <input
         defaultValue={isTypeUser ? props.lastName : undefined}
         {...register("lastName", { required: true, maxLength: 24 })}
       />
       {errors.lastName && <span>This field is required</span>}
       <br />
+      <h1>Profile Pic (dont need): </h1>
       <input
         defaultValue={isTypeUser ? props.profilePicture : undefined}
         {...register("profilePicture")}
       />
       <br />
+      <h1>timezone: </h1>
+      <input
+        defaultValue={isTypeUser ? props.timezone : undefined}
+        {...register("timezone", { required : true, maxLength: 240 })}
+      />
+      <br />
+      <h1>Job Title (Dont need): </h1>
       <input
         defaultValue={isTypeUser ? props.jobTitle : undefined}
         {...register("jobTitle", { maxLength: 24 })}
       />
       <br />
+      <h1>Description (Dont need): </h1>
       <input
         defaultValue={isTypeUser ? props.userDescription : undefined}
         {...register("userDescription", { maxLength: 240 })}
       />
       <br />
+
+
       <input type="submit" />
     </form>
   );

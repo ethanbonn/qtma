@@ -21,9 +21,15 @@ export default async function handler(
       if (!req?.headers?.authorization) {
         throw new Error("No authorization token");
       }
-      await verifyIdToken(req?.headers?.authorization);
+
+      if (!req.headers?.authorization?.startsWith('Bearer ')) {
+        throw new Error("No authorization token");
+      }
+      const idToken = req.headers.authorization.split('Bearer ')[1];
+      console.log(idToken);
+      await verifyIdToken(idToken);
     } catch (error) {
-      res.status(400).json({ success: false });
+      return res.status(500).json({ success: false});
     }
 
     await dbConnect();
@@ -32,7 +38,11 @@ export default async function handler(
       const user: User = await UserModel.create(req.body);
       res.status(200).json({ success: true, data: user });
     } catch (error) {
-      res.status(400).json({ success: false });
+      console.log(error);
+      res.status(401).json({ success: false, data: error});
     }
-  } else res.status(400).json({ success: false });
+  }
+  else {
+    res.status(400).json({ success: false });
+  }
 }
