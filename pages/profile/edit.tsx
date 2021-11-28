@@ -59,8 +59,13 @@ const EditProfile = (props: UnregisteredUser | User) => {
     e: { target: { value: any } },
     index: number,
     param: string,
-    originalList,
-    listToUpdate
+    originalList:
+      | string[]
+      | { links: string }[]
+      | { interests: string }[]
+      | { skills: string }[]
+      | { projects: string }[],
+    listToUpdate: any
   ) => {
     const { value } = e.target;
     const list = [...originalList];
@@ -139,8 +144,9 @@ const EditProfile = (props: UnregisteredUser | User) => {
           type="text"
           id="timezone"
           defaultValue={isTypeUser ? props.timezone : undefined}
-          {...register("timezone", { maxLength: 4 })}
+          {...register("timezone", { required: true, maxLength: 4 })}
         />
+        {errors.timezone && <span>This field is required</span>}
       </label>
       <br />
       {linksList.map((_, i) => (
@@ -288,4 +294,16 @@ const EditProfile = (props: UnregisteredUser | User) => {
     </form>
   );
 };
+
+export const getServerSideProps = withAuthUserSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async ({ AuthUser }) => {
+  const { email, id } = AuthUser;
+  const userData = await getUserData(id);
+
+  return {
+    props: userData ?? { email, _id: id },
+  };
+});
+
 export default withAuthUser()(EditProfile as FunctionComponent<unknown>);

@@ -23,7 +23,7 @@ export default async function handler(
       }
       await verifyIdToken(req?.headers?.authorization);
     } catch (error) {
-      res.status(400).json({ success: false });
+      return res.status(400).json({ success: false });
     }
 
     await dbConnect();
@@ -33,9 +33,9 @@ export default async function handler(
         req?.body?._id,
         req?.body
       );
-      res.status(200).json({ success: true, data: updatedUser });
+      return res.status(200).json({ success: true, data: updatedUser });
     } catch (error) {
-      res.status(400).json({ success: false });
+      return res.status(400).json({ success: false });
     }
-  } else res.status(400).json({ success: false });
+  } else return res.status(400).json({ success: false });
 }
