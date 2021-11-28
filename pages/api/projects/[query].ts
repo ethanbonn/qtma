@@ -19,8 +19,15 @@ export default async function handler(
 
   let search_params = new URLSearchParams(query.query);
 
-  const query_params: Project = {desired_relationship_type: search_params.get('relationship_type'), author_timezone: search_params.get('timezone')?.split(",")};
+  const query_params: Project = {};
 
+  if (search_params.has('relationship_type')) {
+    query_params["desired_relationship_type"] = search_params.get('relationship_type');
+  }
+
+  if (search_params.has('timezone')) {
+    query_params["author_timezone"] = search_params.get('timezone')?.split(",");
+  }
 
   if (search_params.has('tags')) {
     query_params["project_tags"] = search_params.get('tags')?.split(",");
