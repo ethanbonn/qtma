@@ -1,3 +1,9 @@
+export type Link = {
+  _id: string;
+  site?: string;
+  url?: string;
+};
+
 export type User = {
   _id: string;
   email: string;
@@ -7,14 +13,12 @@ export type User = {
   profilePicture?: string;
   jobTitle?: string;
   userDescription?: string;
-  links?: string[];
+  links?: Link[];
   interests?: string[];
   timezone: string;
-  skill_id_list: string[];
-  project_ids: string[];
-
+  skillIdList?: string[];
+  projectIds?: string[];
 };
-
 
 export type Conversation = {
   _id: string;
@@ -23,8 +27,6 @@ export type Conversation = {
   last_activity: Date;
   message_ids: string[];
 };
-
-
 export type Message = {
   _id: string;
   conversation_id: string; // is this nessasary
@@ -32,8 +34,6 @@ export type Message = {
   sender_id: string;
   content: string;
 };
-
-
 export type Project = {
   _id: string;
   author_id: string;
@@ -57,4 +57,4 @@ export type ProjectTag = {
   _id: string;
   name: string;
   project_ids: string[];
-}
+};

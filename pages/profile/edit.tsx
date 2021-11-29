@@ -6,7 +6,7 @@ import {
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
 import { FunctionComponent, useState } from "react";
-import type { User } from "../../types/models";
+import type { User, Link } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
@@ -15,21 +15,25 @@ const EditProfile = (props: UnregisteredUser | User) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const isTypeUser = isUser(props);
 
   const [linksList, setLinksList] = useState(
-    isTypeUser && props.links ? props.links : [{ links: "" }]
-  );
-  const [interestsList, setInterestsList] = useState(
-    isTypeUser && props.interests ? props.interests : [{ interests: "" }]
+    isTypeUser && props.links
+      ? props.links
+      : [
+          { site: "Linkedin", url: "" },
+          { site: "GitHub", url: "" },
+          { site: "Website", url: "" },
+        ]
   );
   const [skillsList, setSkillsList] = useState(
-    isTypeUser && props.skill_id_list ? props.skill_id_list : [{ skills: "" }]
+    isTypeUser && props.skillIdList ? props.skillIdList : [{ skills: "" }]
   );
   const [projectsList, setProjectsList] = useState(
-    isTypeUser && props.project_ids ? props.project_ids : [{ projects: "" }]
+    isTypeUser && props.projectIds ? props.projectIds : [{ projects: "" }]
   );
 
   const { _id, email } = props;
@@ -49,22 +53,17 @@ const EditProfile = (props: UnregisteredUser | User) => {
           _id,
           email,
           ...data,
-          interests: [""],
         }),
       }
     );
+    window.location.reload();
   };
 
   const handleInputChange = (
     e: { target: { value: any } },
     index: number,
     param: string,
-    originalList:
-      | string[]
-      | { links: string }[]
-      | { interests: string }[]
-      | { skills: string }[]
-      | { projects: string }[],
+    originalList: Link[] | { skills: string }[] | { projects: string }[],
     listToUpdate: any
   ) => {
     const { value } = e.target;
@@ -149,62 +148,58 @@ const EditProfile = (props: UnregisteredUser | User) => {
         {errors.timezone && <span>This field is required</span>}
       </label>
       <br />
-      {linksList.map((_, i) => (
+      {linksList.map((x, i) => (
         <>
           <br />
           <label htmlFor={`links${i}`}>
             {i === 0 && "Links:"}
             <br />
-            <input
-              type="text"
-              id={`links${i}`}
-              defaultValue={isTypeUser ? props.links : undefined}
-              {...register(`links.${i}`, {
-                maxLength: 500,
-                onChange: (e) =>
-                  handleInputChange(e, i, "links", linksList, setLinksList),
-              })}
-            />
-            {i === 0 && (
-              <button
-                type="button"
-                onClick={() => setLinksList([...linksList, { links: "" }])}
-              >
-                +
-              </button>
-            )}
-          </label>
-        </>
-      ))}
-      <br />
+            {i < 3 && x.site}
+            {i < 3 && setValue(`links.${i}.site`, x.site)}
 
-      {interestsList.map((_, i) => (
-        <>
-          <br />
-          <label htmlFor={`links${i}`}>
-            {i === 0 && "Interests:"}
             <br />
+            {i >= 3 && (
+              <>
+                <label htmlFor={`site${i}`}>
+                  Add Link:
+                  <br />
+                  <input
+                    type="text"
+                    placeholder="website name"
+                    id={`site${i}`}
+                    defaultValue={isTypeUser ? x.site : undefined}
+                    {...register(`links.${i}.site`, {
+                      maxLength: 500,
+                      onChange: (e) =>
+                        handleInputChange(
+                          e,
+                          i,
+                          "site",
+                          linksList,
+                          setLinksList
+                        ),
+                    })}
+                  />
+                </label>
+              </>
+            )}
             <input
               type="text"
-              id={`links${i}`}
-              defaultValue={isTypeUser ? props.interests : undefined}
-              {...register(`interests.${i}`, {
+              placeholder="your url here"
+              id={`url${i}`}
+              // key={site.}
+              defaultValue={isTypeUser ? x.url : undefined}
+              {...register(`links.${i}.url`, {
                 maxLength: 500,
                 onChange: (e) =>
-                  handleInputChange(
-                    e,
-                    i,
-                    "interests",
-                    interestsList,
-                    setInterestsList
-                  ),
+                  handleInputChange(e, i, "url", linksList, setLinksList),
               })}
             />
             {i === 0 && (
               <button
                 type="button"
                 onClick={() =>
-                  setInterestsList([...interestsList, { interests: "" }])
+                  setLinksList([...linksList, { site: "", url: "" }])
                 }
               >
                 +
@@ -224,7 +219,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
             <input
               type="text"
               id={`skills${i}`}
-              defaultValue={isTypeUser ? props.skill_id_list : undefined}
+              defaultValue={isTypeUser ? props.skillIdList : undefined}
               {...register(`skills.${i}`, {
                 maxLength: 500,
                 onChange: (e) =>
@@ -253,7 +248,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
             <input
               type="text"
               id={`projects${i}`}
-              defaultValue={isTypeUser ? props.project_ids : undefined}
+              defaultValue={isTypeUser ? props.projectIds : undefined}
               {...register(`projects.${i}`, {
                 maxLength: 500,
                 onChange: (e) =>
@@ -282,8 +277,6 @@ const EditProfile = (props: UnregisteredUser | User) => {
       <br />
 
       {JSON.stringify(linksList)}
-      <br />
-      {JSON.stringify(interestsList)}
       <br />
       {JSON.stringify(skillsList)}
       <br />

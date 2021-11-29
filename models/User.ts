@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import type { User } from "../types/models";
+import type { User, Link } from "../types/models";
 
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
@@ -11,11 +11,35 @@ const schema = new Schema<User>({
   profilePicture: { type: String, required: false },
   jobTitle: { type: String, required: false },
   userDescription: { type: String, required: false },
-  links: { type: [String], required: false },
+  links: {
+    type: [
+      new Schema<Link>(
+        {
+          site: { type: String, required: false },
+          url: { type: String, required: false },
+        },
+        { strict: false }
+      ),
+    ],
+    default: [
+      {
+        site: "Linkedin",
+        url: "",
+      },
+      {
+        site: "GitHub",
+        url: "",
+      },
+      {
+        site: "Website",
+        url: "",
+      },
+    ],
+  },
   interests: { type: [String], required: false },
   timezone: { type: String, required: true },
-  skill_id_list: { type: [String], required: false },
-  project_ids: { type: [String], required: false },
+  skillIdList: { type: [String], required: false },
+  projectIds: { type: [String], required: false },
 });
 
 // Create and export the model.
