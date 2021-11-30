@@ -19,30 +19,27 @@ export default async function handler(
   if (method === "POST") {
     try {
       if (!req?.headers?.authorization) {
+        console.log("No Auth token");
         throw new Error("No authorization token");
       }
 
-      if (!req.headers?.authorization?.startsWith('Bearer ')) {
-        throw new Error("No authorization token");
-      }
-      const idToken = req.headers.authorization.split('Bearer ')[1];
-      console.log(idToken);
-      await verifyIdToken(idToken);
+      // if (!req.headers?.authorization?.startsWith('Bearer ')) {
+      //   console.log("No auth token bearer")
+      //   throw new Error("No authorization token");
+      // }
+
+      await verifyIdToken(req?.headers?.authorization);
     } catch (error) {
-      return res.status(500).json({ success: false});
+      return res.status(401).json({ success: false });
     }
 
     await dbConnect();
 
     try {
       const user: User = await UserModel.create(req.body);
-      res.status(200).json({ success: true, data: user });
+      return res.status(200).json({ success: true, data: user });
     } catch (error) {
-      console.log(error);
-      res.status(401).json({ success: false, data: error});
+      return res.status(400).json({ success: false });
     }
-  }
-  else {
-    res.status(400).json({ success: false });
-  }
+  } else return res.status(500).json({ success: false });
 }

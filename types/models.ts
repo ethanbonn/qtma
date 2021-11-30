@@ -1,3 +1,5 @@
+import {Types} from "mongoose";
+
 export type User = {
   _id: string;
   email: string;
@@ -7,13 +9,20 @@ export type User = {
   profilePicture?: string;
   jobTitle?: string;
   userDescription?: string;
-  links?: string[];
-  interests?: string[];
+  links?: Record<string, string>
   timezone: string;
-  skill_id_list: string[];
-  project_ids: string[];
+  project_ids: Types.ObjectID[];
+  skills : Record<string, Types.ObjectID>;
 
 };
+
+export type Link = {
+  _id : Types.ObjectID;
+  website : string;
+  linkedin : string;
+  github : string;
+  other : string;
+}
 
 
 export type Conversation = {
@@ -45,7 +54,7 @@ export type Project = {
   liked_by_ids: string[];
   date_created: Date;
   desired_relationship_type: string;
-  
+
 };
 
 export type Skill = {
