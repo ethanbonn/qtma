@@ -10,6 +10,7 @@ import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
+import ExplorePage from "../../components/ExplorePage";
 
 const styles = {
   container: {
@@ -30,6 +31,7 @@ const Profile = (props: UnregisteredUser | User) => {
   const { email } = props;
   return (
     <div>
+      <ExplorePage />
       {isUserType ? (
         <>
           <p>
@@ -50,7 +52,7 @@ const Profile = (props: UnregisteredUser | User) => {
         <>
           <p>Search for Projects</p>
           <p>Skills</p>
-          <input> </input>
+          {/* <input> </input> */}
 
           <button>Submit</button>
         </>
