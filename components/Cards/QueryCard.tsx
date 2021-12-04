@@ -17,8 +17,8 @@ export default function Card() {
 
         <div>
         <div class="text-xl font-medium text-black"> </div>
-          <button class="px-3 py-1 mt-9 text-green-100 bg-green-500 rounded-lg">
-            Search
+          <button class="px-3 py-1 mt-9 text-white bg-green-normal rounded-lg">
+            S
           </button>
         </div>
       </div>
