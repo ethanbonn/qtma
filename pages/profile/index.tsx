@@ -10,6 +10,11 @@ import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
+import ProfilePageCard from "../../components/Cards/ProfilePageCard";
+import SkillCard from "../../components/Cards/SkillCard";
+import LinkCard from "../../components/Cards/LinkCard";
+import ProjectCard from "../../components/Cards/ProfileCard";
+import NavBar from "../../components/NavBar/NavBar";
 
 const styles = {
   container: {
@@ -27,15 +32,28 @@ const styles = {
 const Profile = (props: UnregisteredUser | User) => {
   const { signOut } = useAuthUser();
   const isUserType = isUser(props);
-  const { email } = props;
   return (
     <div>
       {isUserType ? (
         <>
-          <p>
-            Signed in as
-            {email}
-          </p>
+          <NavBar />
+          <ProfilePageCard user={props} />
+          <SkillCard user={props} />
+          <LinkCard user={props} />
+          <div className="pt-20 px-20">
+            <p className="font-sans text-3xl font-bold  text-black ">
+              Projects
+            </p>
+            <div className="flex flex-wrap content-center">
+              <ProjectCard />
+              <ProjectCard />
+            </div>
+          </div>
+          <Link href="/profile/edit">
+            <button type="button" style={styles.button}>
+              Edit Profile
+            </button>
+          </Link>
           <button
             type="button"
             onClick={() => {
