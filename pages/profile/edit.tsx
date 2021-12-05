@@ -82,8 +82,18 @@ const EditProfile = (props: UnregisteredUser | User) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <label htmlFor="profilePicture">
+        Change Profile Picture:&nbsp;
+        <input
+          type="file"
+          accept="image/*"
+          id="profilePicture"
+          {...register("profilePicture")}
+        />
+      </label>
+      <br />
       <label htmlFor="userName">
-        Username:
+        Username:&nbsp;
         <input
           type="text"
           id="userName"
@@ -94,7 +104,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       </label>
       <br />
       <label htmlFor="firstName">
-        First Name:
+        First Name:&nbsp;
         <input
           type="text"
           id="firstName"
@@ -105,7 +115,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       </label>
       <br />
       <label htmlFor="lastName">
-        Last Name:
+        Last Name:&nbsp;
         <input
           type="text"
           id="lastName"
@@ -115,18 +125,19 @@ const EditProfile = (props: UnregisteredUser | User) => {
         {errors.lastName && <span>This field is required</span>}
       </label>
       <br />
-      <label htmlFor="profilePicture">
-        Profile Picture:
+      <label htmlFor="email">
+        Email:&nbsp;
         <input
-          type="file"
-          accept="image/*"
-          id="profilePicture"
-          {...register("profilePicture")}
+          type="text"
+          id="email"
+          defaultValue={isTypeUser ? props.email : undefined}
+          {...register("email", { required: true, maxLength: 24 })}
         />
+        {errors.lastName && <span>This field is required</span>}
       </label>
       <br />
       <label htmlFor="jobTitle">
-        Job Title:
+        Job Title:&nbsp;
         <input
           type="text"
           id="jobTitle"
@@ -136,7 +147,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       </label>
       <br />
       <label htmlFor="userDescription">
-        Description:
+        Description:&nbsp;
         <input
           type="text"
           id="userDescription"
@@ -146,7 +157,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       </label>
       <br />
       <label htmlFor="timezone">
-        Timezone:
+        Timezone:&nbsp;
         <input
           type="text"
           id="timezone"
@@ -155,7 +166,36 @@ const EditProfile = (props: UnregisteredUser | User) => {
         />
         {errors.timezone && <span>This field is required</span>}
       </label>
+
+      {skillsList.map((_, i) => (
+        <>
+          <br />
+          <label htmlFor={`skills${i}`}>
+            {i === 0 && "Skills:"}
+            <br />
+            <input
+              type="text"
+              id={`skills${i}`}
+              // defaultValue={isTypeUser ? props.skills : undefined}
+              {...register(`skills.${i}`, {
+                maxLength: 500,
+                onChange: (e) =>
+                  handleInputChange(e, i, "skills", skillsList, setSkillsList),
+              })}
+            />
+            {i === 0 && (
+              <button
+                type="button"
+                onClick={() => setSkillsList([...skillsList, { skills: "" }])}
+              >
+                +
+              </button>
+            )}
+          </label>
+        </>
+      ))}
       <br />
+
       {linksList.map((x, i) => (
         <>
           <br />
@@ -218,35 +258,6 @@ const EditProfile = (props: UnregisteredUser | User) => {
       ))}
       <br />
 
-      {skillsList.map((_, i) => (
-        <>
-          <br />
-          <label htmlFor={`skills${i}`}>
-            {i === 0 && "Skills:"}
-            <br />
-            <input
-              type="text"
-              id={`skills${i}`}
-              // defaultValue={isTypeUser ? props.skills : undefined}
-              {...register(`skills.${i}`, {
-                maxLength: 500,
-                onChange: (e) =>
-                  handleInputChange(e, i, "skills", skillsList, setSkillsList),
-              })}
-            />
-            {i === 0 && (
-              <button
-                type="button"
-                onClick={() => setSkillsList([...skillsList, { skills: "" }])}
-              >
-                +
-              </button>
-            )}
-          </label>
-        </>
-      ))}
-      <br />
-
       {projectsList.map((_, i) => (
         <>
           <br />
@@ -282,15 +293,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
         </>
       ))}
       <br />
-
-      {JSON.stringify(linksList)}
-      <br />
-      {JSON.stringify(skillsList)}
-      <br />
-      {JSON.stringify(projectsList)}
-      <br />
-
-      <input type="submit" />
+      <input type="submit" value="Save Changes" />
     </form>
   );
 };
