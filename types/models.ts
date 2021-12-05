@@ -49,7 +49,7 @@ export type Project = {
 export type Skill = {
   _id: string;
   name: string;
-  // follower_ids: string[];
+  follower_ids: string[];
   project_ids: string[];
 };
 

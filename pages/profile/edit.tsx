@@ -23,23 +23,30 @@ const EditProfile = (props: UnregisteredUser | User) => {
   const [linksList, setLinksList] = useState(
     isTypeUser && props.links
       ? props.links
-      : [
+      : ([
           { site: "Linkedin", url: "" },
           { site: "GitHub", url: "" },
           { site: "Website", url: "" },
-        ]
+        ] as Link[])
   );
   const [skillsList, setSkillsList] = useState(
-    isTypeUser && props.skillIdList ? props.skillIdList : [{ skills: "" }]
+    isTypeUser && props.skillIdList ? props.skillIdList : []
   );
   const [projectsList, setProjectsList] = useState(
-    isTypeUser && props.projectIds ? props.projectIds : [{ projects: "" }]
+    isTypeUser && props.projectIds ? props.projectIds : []
   );
-
   const { _id, email } = props;
   const { getIdToken } = useAuthUser();
   const onSubmit = async (data: any) => {
     const token = await getIdToken();
+
+    const toBase64 = (file: File) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
 
     fetch(
       `http://localhost:3000/api/users/${!isTypeUser ? "create" : "update"}`,
@@ -53,6 +60,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
           _id,
           email,
           ...data,
+          profilePicture: await toBase64(data.profilePicture[0] as File),
         }),
       }
     );
@@ -63,7 +71,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
     e: { target: { value: any } },
     index: number,
     param: string,
-    originalList: Link[] | { skills: string }[] | { projects: string }[],
+    originalList: Record<string, unknown>[],
     listToUpdate: any
   ) => {
     const { value } = e.target;
@@ -110,9 +118,9 @@ const EditProfile = (props: UnregisteredUser | User) => {
       <label htmlFor="profilePicture">
         Profile Picture:
         <input
-          type="text"
+          type="file"
+          accept="image/*"
           id="profilePicture"
-          defaultValue={isTypeUser ? props.profilePicture : undefined}
           {...register("profilePicture")}
         />
       </label>
@@ -199,7 +207,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
               <button
                 type="button"
                 onClick={() =>
-                  setLinksList([...linksList, { site: "", url: "" }])
+                  setLinksList([...linksList, { site: "", url: "" } as Link])
                 }
               >
                 +
@@ -219,7 +227,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
             <input
               type="text"
               id={`skills${i}`}
-              defaultValue={isTypeUser ? props.skillIdList : undefined}
+              // defaultValue={isTypeUser ? props.skills : undefined}
               {...register(`skills.${i}`, {
                 maxLength: 500,
                 onChange: (e) =>
@@ -248,7 +256,6 @@ const EditProfile = (props: UnregisteredUser | User) => {
             <input
               type="text"
               id={`projects${i}`}
-              defaultValue={isTypeUser ? props.projectIds : undefined}
               {...register(`projects.${i}`, {
                 maxLength: 500,
                 onChange: (e) =>
