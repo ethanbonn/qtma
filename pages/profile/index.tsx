@@ -6,6 +6,8 @@ import {
 } from "next-firebase-auth";
 import Link from "next/link";
 import type { FunctionComponent } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
@@ -32,9 +34,17 @@ const styles = {
 const Profile = (props: UnregisteredUser | User) => {
   const { signOut } = useAuthUser();
   const isUserType = isUser(props);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserType) {
+      router.push("/profile/edit");
+    }
+  });
+
   return (
     <div>
-      {isUserType ? (
+      {isUserType && (
         <>
           <NavBar />
           <ProfilePageCard user={props} />
@@ -63,15 +73,6 @@ const Profile = (props: UnregisteredUser | User) => {
           >
             Sign out
           </button>
-        </>
-      ) : (
-        <>
-          <p>Complete your profile</p>
-          <Link href="/profile/edit">
-            <button type="button" style={styles.button}>
-              Complete
-            </button>
-          </Link>
         </>
       )}
     </div>
