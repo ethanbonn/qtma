@@ -4,7 +4,7 @@ import { verifyIdToken } from "next-firebase-auth";
 import type { User } from "../../../types/models";
 import dbConnect from "../../../utils/dbConnect";
 import UserModel from "../../../models/User";
-import uploadImage from "../image/upload";
+import uploadImage from "../../../utils/upload";
 
 type Data = {
   success: boolean;
