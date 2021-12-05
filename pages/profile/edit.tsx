@@ -10,6 +10,8 @@ import type { User, Link } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/NavBar/NavBar";
 
 const EditProfile = (props: UnregisteredUser | User) => {
   const {
@@ -37,6 +39,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
   );
   const { _id, email } = props;
   const { getIdToken } = useAuthUser();
+
   const onSubmit = async (data: any) => {
     const token = await getIdToken();
 
@@ -48,7 +51,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
         reader.onerror = (error) => reject(error);
       });
 
-    fetch(
+    await fetch(
       `http://localhost:3000/api/users/${!isTypeUser ? "create" : "update"}`,
       {
         method: "POST",
@@ -60,11 +63,16 @@ const EditProfile = (props: UnregisteredUser | User) => {
           _id,
           email,
           ...data,
-          profilePicture: await toBase64(data.profilePicture[0] as File),
+          profilePicture:
+            data.profilePicture.length !== 0
+              ? await toBase64(data.profilePicture[0] as File)
+              : isTypeUser
+              ? props.profilePicture
+              : "",
         }),
       }
     );
-    window.location.reload();
+    window.location.href = "/profile";
   };
 
   const handleInputChange = (
@@ -81,220 +89,289 @@ const EditProfile = (props: UnregisteredUser | User) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="profilePicture">
-        Change Profile Picture:&nbsp;
-        <input
-          type="file"
-          accept="image/*"
-          id="profilePicture"
-          {...register("profilePicture")}
-        />
-      </label>
-      <br />
-      <label htmlFor="userName">
-        Username:&nbsp;
-        <input
-          type="text"
-          id="userName"
-          defaultValue={isTypeUser ? props.userName : undefined}
-          {...register("userName", { required: true, maxLength: 12 })}
-        />
-        {errors.userName && <span>This field is required</span>}
-      </label>
-      <br />
-      <label htmlFor="firstName">
-        First Name:&nbsp;
-        <input
-          type="text"
-          id="firstName"
-          defaultValue={isTypeUser ? props.firstName : undefined}
-          {...register("firstName", { required: true, maxLength: 24 })}
-        />
-        {errors.firstName && <span>This field is required</span>}
-      </label>
-      <br />
-      <label htmlFor="lastName">
-        Last Name:&nbsp;
-        <input
-          type="text"
-          id="lastName"
-          defaultValue={isTypeUser ? props.lastName : undefined}
-          {...register("lastName", { required: true, maxLength: 24 })}
-        />
-        {errors.lastName && <span>This field is required</span>}
-      </label>
-      <br />
-      <label htmlFor="email">
-        Email:&nbsp;
-        <input
-          type="text"
-          id="email"
-          defaultValue={isTypeUser ? props.email : undefined}
-          {...register("email", { required: true, maxLength: 24 })}
-        />
-        {errors.lastName && <span>This field is required</span>}
-      </label>
-      <br />
-      <label htmlFor="jobTitle">
-        Job Title:&nbsp;
-        <input
-          type="text"
-          id="jobTitle"
-          defaultValue={isTypeUser ? props.jobTitle : undefined}
-          {...register("jobTitle", { maxLength: 24 })}
-        />
-      </label>
-      <br />
-      <label htmlFor="userDescription">
-        Description:&nbsp;
-        <input
-          type="text"
-          id="userDescription"
-          defaultValue={isTypeUser ? props.userDescription : undefined}
-          {...register("userDescription", { maxLength: 240 })}
-        />
-      </label>
-      <br />
-      <label htmlFor="timezone">
-        Timezone:&nbsp;
-        <input
-          type="text"
-          id="timezone"
-          defaultValue={isTypeUser ? props.timezone : undefined}
-          {...register("timezone", { required: true, maxLength: 4 })}
-        />
-        {errors.timezone && <span>This field is required</span>}
-      </label>
-
-      {skillsList.map((_, i) => (
-        <>
+    <>
+      {isTypeUser && <NavBar />}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
+      >
+        {!isTypeUser && (
+          <div className="font-sans text-3xl font-bold text-black">
+            Complete Your Profile
+          </div>
+        )}
+        <label
+          htmlFor="profilePicture"
+          className="font-sans text-green-normal font-bold"
+        >
+          Change Profile Picture
           <br />
-          <label htmlFor={`skills${i}`}>
-            {i === 0 && "Skills:"}
-            <br />
-            <input
-              type="text"
-              id={`skills${i}`}
-              // defaultValue={isTypeUser ? props.skills : undefined}
-              {...register(`skills.${i}`, {
-                maxLength: 500,
-                onChange: (e) =>
-                  handleInputChange(e, i, "skills", skillsList, setSkillsList),
-              })}
-            />
-            {i === 0 && (
-              <button
-                type="button"
-                onClick={() => setSkillsList([...skillsList, { skills: "" }])}
-              >
-                +
-              </button>
-            )}
-          </label>
-        </>
-      ))}
-      <br />
-
-      {linksList.map((x, i) => (
-        <>
+          <input
+            type="file"
+            accept="image/*"
+            id="profilePicture"
+            {...register("profilePicture")}
+          />
+        </label>
+        <br />
+        <label
+          htmlFor="userName"
+          className="font-sans text-black-normal font-bold"
+        >
+          Username
           <br />
-          <label htmlFor={`links${i}`}>
-            {i === 0 && "Links:"}
-            <br />
-            {i < 3 && x.site}
-            {i < 3 && setValue(`links.${i}.site`, x.site)}
-
-            <br />
-            {i >= 3 && (
-              <>
-                <label htmlFor={`site${i}`}>
-                  Add Link:
-                  <br />
-                  <input
-                    type="text"
-                    placeholder="website name"
-                    id={`site${i}`}
-                    defaultValue={isTypeUser ? x.site : undefined}
-                    {...register(`links.${i}.site`, {
-                      maxLength: 500,
-                      onChange: (e) =>
-                        handleInputChange(
-                          e,
-                          i,
-                          "site",
-                          linksList,
-                          setLinksList
-                        ),
-                    })}
-                  />
-                </label>
-              </>
-            )}
-            <input
-              type="text"
-              placeholder="your url here"
-              id={`url${i}`}
-              // key={site.}
-              defaultValue={isTypeUser ? x.url : undefined}
-              {...register(`links.${i}.url`, {
-                maxLength: 500,
-                onChange: (e) =>
-                  handleInputChange(e, i, "url", linksList, setLinksList),
-              })}
-            />
-            {i === 0 && (
-              <button
-                type="button"
-                onClick={() =>
-                  setLinksList([...linksList, { site: "", url: "" } as Link])
-                }
-              >
-                +
-              </button>
-            )}
-          </label>
-        </>
-      ))}
-      <br />
-
-      {projectsList.map((_, i) => (
-        <>
+          <input
+            type="text"
+            id="userName"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.userName : undefined}
+            {...register("userName", { required: true, maxLength: 12 })}
+          />
+          {errors.userName && <span>This field is required</span>}
+        </label>
+        <br />
+        <label htmlFor="firstName" className="text-black-normal font-bold">
+          First Name
           <br />
-          <label htmlFor={`projects${i}`}>
-            {i === 0 && "Projects:"}
+          <input
+            type="text"
+            id="firstName"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.firstName : undefined}
+            {...register("firstName", { required: true, maxLength: 24 })}
+          />
+          {errors.firstName && <span>This field is required</span>}
+        </label>
+        <br />
+        <label
+          htmlFor="lastName"
+          className="font-sans text-black-normal font-bold"
+        >
+          Last Name
+          <br />
+          <input
+            type="text"
+            id="lastName"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.lastName : undefined}
+            {...register("lastName", { required: true, maxLength: 24 })}
+          />
+          {errors.lastName && <span>This field is required</span>}
+        </label>
+        <br />
+        <label
+          htmlFor="jobTitle"
+          className="font-sans text-black-normal font-bold"
+        >
+          Job Title
+          <br />
+          <input
+            type="text"
+            id="jobTitle"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.jobTitle : undefined}
+            {...register("jobTitle", { maxLength: 24 })}
+          />
+        </label>
+        <br />
+        <label
+          htmlFor="userDescription"
+          className="font-sans text-black-normal font-bold"
+        >
+          Description
+          <br />
+          <input
+            type="text"
+            id="userDescription"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.userDescription : undefined}
+            {...register("userDescription", { maxLength: 240 })}
+          />
+        </label>
+        <br />
+        <label
+          htmlFor="timezone"
+          className="font-sans text-black-normal font-bold"
+        >
+          Timezone
+          <br />
+          <input
+            type="text"
+            id="timezone"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.timezone : undefined}
+            {...register("timezone", { required: true, maxLength: 4 })}
+          />
+          {errors.timezone && <span>This field is required</span>}
+        </label>
+
+        {skillsList.map((_, i) => (
+          <>
             <br />
-            <input
-              type="text"
-              id={`projects${i}`}
-              {...register(`projects.${i}`, {
-                maxLength: 500,
-                onChange: (e) =>
-                  handleInputChange(
-                    e,
-                    i,
-                    "projects",
-                    projectsList,
-                    setProjectsList
-                  ),
-              })}
-            />
-            {i === 0 && (
-              <button
-                type="button"
-                onClick={() =>
-                  setProjectsList([...projectsList, { projects: "" }])
-                }
-              >
-                +
-              </button>
-            )}
-          </label>
-        </>
-      ))}
-      <br />
-      <input type="submit" value="Save Changes" />
-    </form>
+            <label
+              htmlFor={`skills${i}`}
+              className={
+                i === 0
+                  ? "font-sans text-black-normal font-bold"
+                  : "font-sans text-black-normal"
+              }
+            >
+              {i === 0 && "Skills:"}
+              <br />
+              <input
+                type="text"
+                id={`skills${i}`}
+                // defaultValue={isTypeUser ? props.skills : undefined}
+                {...register(`skills.${i}`, {
+                  maxLength: 500,
+                  onChange: (e) =>
+                    handleInputChange(
+                      e,
+                      i,
+                      "skills",
+                      skillsList,
+                      setSkillsList
+                    ),
+                })}
+              />
+              {i === 0 && (
+                <button
+                  type="button"
+                  onClick={() => setSkillsList([...skillsList, { skills: "" }])}
+                >
+                  +
+                </button>
+              )}
+            </label>
+          </>
+        ))}
+        <br />
+
+        <label
+          htmlFor="user-links"
+          className="font-sans text-black-normal font-bold"
+        >
+          Links
+        </label>
+        <div id="user-links" className="font-sans text-black-normal">
+          {linksList.map((x, i) => (
+            <>
+              {i < 3 && i !== 0 && <br />}
+              <label htmlFor={`links${i}`}>
+                {i !== 0 && <br />}
+                {i < 3 && x.site}
+                {i < 3 && setValue(`links.${i}.site`, x.site)}
+                <br />
+                {i >= 3 && (
+                  <>
+                    <label htmlFor={`site${i}`}>
+                      Add Link:
+                      <br />
+                      <input
+                        type="text"
+                        className="font-sans my-1 border border-gray-200 rounded-lg mr-1 pl-1"
+                        style={{ width: "49%" }}
+                        placeholder="website name"
+                        id={`site${i}`}
+                        defaultValue={isTypeUser ? x.site : undefined}
+                        {...register(`links.${i}.site`, {
+                          maxLength: 500,
+                          onChange: (e) =>
+                            handleInputChange(
+                              e,
+                              i,
+                              "site",
+                              linksList,
+                              setLinksList
+                            ),
+                        })}
+                      />
+                    </label>
+                  </>
+                )}
+                <input
+                  type="text"
+                  placeholder="your url here"
+                  id={`url${i}`}
+                  className="font-sans my-1 border border-gray-200 rounded-lg pl-1"
+                  style={{ width: "49%" }}
+                  defaultValue={isTypeUser ? x.url : undefined}
+                  {...register(`links.${i}.url`, {
+                    maxLength: 500,
+                    onChange: (e) =>
+                      handleInputChange(e, i, "url", linksList, setLinksList),
+                  })}
+                />
+                {i === 0 && (
+                  <button
+                    type="button"
+                    className="font-sans px-2 py-0.5 ml-1 rounded-lg text-white bg-green-normal shadow-md h-3/4"
+                    onClick={() =>
+                      setLinksList([
+                        ...linksList,
+                        { site: "", url: "" } as Link,
+                      ])
+                    }
+                  >
+                    +
+                  </button>
+                )}
+              </label>
+            </>
+          ))}
+        </div>
+        <br />
+
+        {projectsList.map((_, i) => (
+          <>
+            <br />
+            <label
+              htmlFor={`projects${i}`}
+              className={
+                i === 0
+                  ? "font-sans text-black-normal font-bold"
+                  : "font-sans text-black-normal"
+              }
+            >
+              {i === 0 && "Projects:"}
+              <br />
+              <input
+                type="text"
+                id={`projects${i}`}
+                {...register(`projects.${i}`, {
+                  maxLength: 500,
+                  onChange: (e) =>
+                    handleInputChange(
+                      e,
+                      i,
+                      "projects",
+                      projectsList,
+                      setProjectsList
+                    ),
+                })}
+              />
+              {i === 0 && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    setProjectsList([...projectsList, { projects: "" }])
+                  }
+                >
+                  +
+                </button>
+              )}
+            </label>
+          </>
+        ))}
+        <br />
+        <input
+          type="submit"
+          className=" font-sans px-4 py-2 text-white bg-green-normal rounded-full shadow-md w-1/5 self-center"
+          value={isTypeUser ? "Save Changes" : "Finish"}
+        />
+      </form>
+      {isTypeUser && <Footer />}
+    </>
   );
 };
 
