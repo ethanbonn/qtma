@@ -2,17 +2,14 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <nav className="bg-green-normal">
+    <nav className="bg-green-normal py-3">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
           <div className="flex space-x-4">
             <div>
-              <a
-                href="#"
-                className="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900"
-              >
+              <Link href="/#">
                 <span className="font-bold text-white text-3xl">Soar</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="items-center hidden space-x-8 lg:flex">
@@ -21,7 +18,7 @@ export default function NavBar() {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-1">
-            {/* <a href="" class="py-5 px-3">
+            {/* <a href="" className="py-5 px-3">
                 Login
               </a> */}
             <Link href="/login">
@@ -32,7 +29,7 @@ export default function NavBar() {
           </div>
 
           <div className="md:hidden flex items-center">
-            <Link href="/profile">
+            <Link href="/login">
               <button className=" font-sans  px-4 py-2 text-white bg-green rounded-md shadow-md">
                 Sign in
               </button>
