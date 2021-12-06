@@ -1,6 +1,6 @@
 import type { User } from "../../types/models";
 export default function LinkCard(props: User) {
-  const { user } = props;
+  const { User } = props;
   const { links, timezone } = user;
 
   return (
