@@ -1,0 +1,27 @@
+export default function Card() {
+  return (
+    <div className=" p-4 m-10 max-w-auto mx-auto bg-white rounded-xl shadow-lg flex  ">
+      <div className="flex flex-wrap content-center">
+        <div className="mx-2">
+          <div className="text-xl font-medium text-black">I'm looking for </div>
+          <input className="my-3 border border-black rounded-lg  px-1 " />
+        </div>
+        <div className="mx-2">
+          <div className="text-xl font-medium text-black">that are skilled in </div>
+          <input className="my-3 border border-black rounded-lg  px-1 " />
+        </div>
+        <div className="mx-2">
+          <div className="text-xl font-medium text-black">to build </div>
+          <input className="my-3 border border-black rounded-lg  px-1 " />
+        </div>
+
+        <div>
+        <div className="text-xl font-medium text-black"> </div>
+          <button className="px-3 py-1 mt-9 text-white bg-green-normal rounded-lg">
+            S
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

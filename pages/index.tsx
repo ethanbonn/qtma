@@ -7,6 +7,7 @@ import Link from "next/link";
 import type { FunctionComponent } from "react";
 import type { User } from "../types/models";
 import getUserData from "../functions/server/getUserData";
+import LandingPage from "../components/LandingPage";
 
 const styles = {
   container: {
@@ -26,6 +27,7 @@ const Index = (props: { email: string; id: string } | User) => {
   const { email } = props;
   return (
     <div>
+      <LandingPage />
       {email ? (
         <>
           <p>

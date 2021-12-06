@@ -1,4 +1,8 @@
-import {Types} from "mongoose";
+export type Link = {
+  _id: string;
+  site?: string;
+  url?: string;
+};
 
 export type User = {
   _id: string;
@@ -9,21 +13,12 @@ export type User = {
   profilePicture?: string;
   jobTitle?: string;
   userDescription?: string;
-  links?: Record<string, string>
+  links?: Link[];
+  interests?: string[];
   timezone: string;
-  project_ids: Types.ObjectID[];
-  skills : Record<string, Types.ObjectID>;
-
+  skillIdList?: string[];
+  projectIds?: string[];
 };
-
-export type Link = {
-  _id : Types.ObjectID;
-  website : string;
-  linkedin : string;
-  github : string;
-  other : string;
-}
-
 
 export type Conversation = {
   _id: string;
@@ -32,8 +27,6 @@ export type Conversation = {
   last_activity: Date;
   message_ids: string[];
 };
-
-
 export type Message = {
   _id: string;
   conversation_id: string; // is this nessasary
@@ -41,11 +34,8 @@ export type Message = {
   sender_id: string;
   content: string;
 };
-
-
 export type Project = {
   _id: string;
-  name: string;
   author_id: string;
   author_timezone: string;
   project_tags: string[];
@@ -54,13 +44,12 @@ export type Project = {
   liked_by_ids: string[];
   date_created: Date;
   desired_relationship_type: string;
-
 };
 
 export type Skill = {
   _id: string;
   name: string;
-  // follower_ids: string[];
+  follower_ids: string[];
   project_ids: string[];
 };
 
@@ -68,4 +57,4 @@ export type ProjectTag = {
   _id: string;
   name: string;
   project_ids: string[];
-}
+};
