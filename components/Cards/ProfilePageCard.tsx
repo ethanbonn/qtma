@@ -1,5 +1,11 @@
-export default function ProfilePageCard(props: User) {
-  const { user } = props;
+import type { User } from "../../types/models";
+
+interface userWrapper {
+user : User
+}
+
+export default function ProfilePageCard(props: userWrapper) {
+  const user : User = props.user;
   const { profilePicture, firstName, lastName, jobTitle, userDescription } =
     user;
   return (

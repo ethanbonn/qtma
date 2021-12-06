@@ -1,5 +1,11 @@
-export default function SkillCard(props: User) {
-  const { user } = props;
+import type { User} from "../../types/models";
+
+interface userWrapper {
+  user : User
+}
+
+export default function SkillCard(props: userWrapper) {
+  const user : User = props.user;
   const { skillIdList } = user;
 
   // query for each skill in the db to get the "skill name"

@@ -1,7 +1,8 @@
 export type Link = {
-  _id: string;
+  _id?: string;
   site?: string;
   url?: string;
+  colour? : string
 };
 
 export type User = {
@@ -36,6 +37,7 @@ export type Message = {
 };
 export type Project = {
   _id: string;
+  name: string;
   author_id: string;
   author_timezone: string;
   project_tags: string[];

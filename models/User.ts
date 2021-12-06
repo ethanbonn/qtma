@@ -1,6 +1,8 @@
 import mongoose, { Schema, model } from "mongoose";
 import type { User, Link } from "../types/models";
 
+
+
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
   _id: { type: String, required: true },
@@ -12,27 +14,30 @@ const schema = new Schema<User>({
   jobTitle: { type: String, required: false },
   userDescription: { type: String, required: false },
   links: {
-    type: [
-      new Schema<Link>(
-        {
-          site: { type: String, required: false },
-          url: { type: String, required: false },
-        },
-        { strict: false }
-      ),
-    ],
+    type: [new Schema<Link>(
+      {
+        _id : {type : String, required : false},
+        site: { type: String, required: false },
+        url: { type: String, required: false },
+        colour : {type: String, required : false},
+      },
+      { strict: false }
+    )],
     default: [
       {
         site: "Linkedin",
         url: "",
+        colour : "red",
       },
       {
         site: "GitHub",
         url: "",
+        colour : "blue",
       },
       {
         site: "Website",
         url: "",
+        colour : "green",
       },
     ],
   },

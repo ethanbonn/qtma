@@ -1,7 +1,17 @@
-import type { User } from "../../types/models";
-export default function LinkCard(props: User) {
-  const { user } = props;
-  const { links, timezone } = user;
+import type { User, Link } from "../../types/models";
+
+interface userWrapper {
+  user : User
+}
+
+export default function LinkCard(props: userWrapper) {
+  const user : User = props.user;
+  // const  usr : User = props;
+  // console.log(user);
+  // console.log(usr)
+  // console.log(usr.user.timezone);
+  const links : Link[] = user.links!;
+  const {timezone} = user;
 
   return (
     <>
