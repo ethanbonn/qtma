@@ -1,5 +1,5 @@
-import type { User } from "../../../types/models";
-export default function LinkCard(props: User) {
+// import type { User } from "../../../types/models";
+export default function LinkCard(props: user) {
   const { user } = props;
   const { links, timezone } = user;
 
