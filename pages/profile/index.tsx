@@ -17,6 +17,7 @@ import SkillCard from "../../components/Cards/SkillCard";
 import LinkCard from "../../components/Cards/LinkCard";
 import ProjectCard from "../../components/Cards/ProfileCard";
 import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer";
 
 const styles = {
   container: {
@@ -45,35 +46,41 @@ const Profile = (props: UnregisteredUser | User) => {
   return (
     <div>
       {isUserType && (
-        <>
-          <NavBar />
-          <ProfilePageCard user={props} />
-          <SkillCard user={props} />
-          <LinkCard user={props} />
-          <div className="pt-20 px-20">
-            <p className="font-sans text-3xl font-bold  text-black ">
-              Projects
-            </p>
-            <div className="flex flex-wrap content-center">
+        <div className="grid grid-cols-4 auto-cols-min">
+          <div className="col-span-4">
+            <NavBar />
+          </div>
+          <div className="col-span-1">
+            <ProfilePageCard user={props} />
+            <SkillCard user={props} />
+            <LinkCard user={props} />
+          </div>
+          <div className="col-span-3 pt-10 px-20">
+            <div className="flex flex-row justify-between">
+              <p className="font-sans text-3xl font-bold  text-black ">
+                Projects
+              </p>
+              <div className="content-end">
+                <Link href="/profile/edit">
+                  <button
+                    type="button"
+                    style={styles.button}
+                    className="px-4 py-2 text-black bg-gray-light rounded-full shadow-md self-center"
+                  >
+                    Edit Profile
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className="flex flex-wrap content-center -mx-12 -my-2 ">
               <ProjectCard />
               <ProjectCard />
             </div>
           </div>
-          <Link href="/profile/edit">
-            <button type="button" style={styles.button}>
-              Edit Profile
-            </button>
-          </Link>
-          <button
-            type="button"
-            onClick={() => {
-              signOut();
-            }}
-            style={styles.button}
-          >
-            Sign out
-          </button>
-        </>
+          <div className="col-span-4">
+            <Footer />
+          </div>
+        </div>
       )}
     </div>
   );
