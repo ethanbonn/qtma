@@ -2,7 +2,7 @@ import type { Project } from "../../types/models";
 
 export type supported_timezones = "ACST" | "AEST" | "AKST" | "AST" | "AWST" | "CET" | "CST" | "EET" | "EST" | "MST" | "PST" | "WET";
 
-const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string], skills?: [string], timezone?: [supported_timezones]): Promise<Project[] | null> => {
+const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string], skills?: [string], timezone?: [supported_timezones]): Promise<Project[]> => {
 
     // Type guard for the query parameters
     type queryParams = {
@@ -26,7 +26,7 @@ const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string
 
     // Map each parameter to the valid_params list if they are not undefined
     Object.keys(params).forEach(key => {
-        if (params[key as keyof queryParams] !== undefined) {
+        if (params[key as keyof queryParams] !== undefined && params[key as keyof queryParams] !== "") {
             valid_params.push(key + "=" + params[key as keyof queryParams]);
         }
     });
@@ -34,14 +34,12 @@ const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string
     // If there are valid parameters, join them with &, otherwise, set the query string to query
     var query_string = (valid_params.length !== 0) ? valid_params.join("&") : "query";
 
-    await fetch(`http://localhost:3000/api/projects/${query_string}`)
+    return await fetch(`http://localhost:3000/api/projects/${query_string}`)
         .then((response) => response.json())
         .then((projects) => {
-            console.log(projects.data);
             return projects.data;
         });
 
-    return null;
 };
 
 export default queryDB;
