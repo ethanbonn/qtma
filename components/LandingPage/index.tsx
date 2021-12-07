@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import PreviewCard from "./PreviewCard";
 import ProjectCard from "../Cards/ProjectCard";
 import ProfileCard from "../Cards/ProfileCard";
@@ -7,6 +9,8 @@ import Footer from "../Footer";
 import Card from "../Cards/QueryCard";
 
 export default function LandingPage() {
+  const [projects, update_projects] = useState([]);
+  console.log(projects);
   return (
     <div>
       <NavBar />
@@ -15,7 +19,7 @@ export default function LandingPage() {
           <p className="font-nunito text-4xl font-bold  text-white px-3">
             Build the dream team to soar your ideas to the moon.
           </p>
-          <Card />
+          <Card stateChanger={update_projects} />
           <div className="flex flex-wrap content-center">
             <PreviewCard />
             <PreviewCard />
@@ -35,10 +39,24 @@ export default function LandingPage() {
               Featured Projects
             </p>
             <div className="flex flex-wrap content-center">
-              <ProjectCard />
-              <ProjectCard />
-
-              <ProjectCard />
+              {projects}
+              {
+                projects.length === 0 ? (
+                  <>
+                    <p>No data</p>
+                  </>
+                ) : (
+                  <>
+                    {
+                      projects.map((e) => {
+                        return (
+                          <ProjectCard project_name={e.name} project_skills={Object.keys(e.skills)} />
+                        );
+                      })
+                    }
+                  </>
+                )
+              }
             </div>
           </div>
           <button className=" font-sans  px-4 py-2 text-white bg-green-normal rounded-full shadow-md">

@@ -1,15 +1,13 @@
 import { useState } from "react";
 import queryDB from "../../functions/server/queryDB";
 
-const buttonHandler = async (relationship_type: "sponsor" | "collaborator" | undefined, skills: [string] | undefined, tags: [string] | undefined) => {
+const buttonHandler = async (relationship_type: string | undefined, skills: [string] | undefined, tags: [string] | undefined) => {
   const response = await queryDB(relationship_type, tags, skills)
   .then(response => response);
-
-  console.log(response);
-
+  return response;
 }
 
-export default function Card() {
+export default function Card({ stateChanger }) {
   const [relationship_type, set_relationship_type] = useState("");
   const [skill, set_skill] = useState("");
   const [tag, set_tag] = useState("");
@@ -32,7 +30,7 @@ export default function Card() {
 
         <div>
         <div className="text-xl font-medium text-black"> </div>
-          <button className="px-3 py-1 mt-9 text-white bg-green-normal rounded-lg" onClick={(e) => {buttonHandler(relationship_type, skill, tag)}}>
+          <button className="px-3 py-1 mt-9 text-white bg-green-normal rounded-lg" onClick={() => stateChanger(buttonHandler(relationship_type, skill, tag))}>
             S
           </button>
         </div>
