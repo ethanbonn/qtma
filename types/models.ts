@@ -1,3 +1,5 @@
+
+
 export type Link = {
   _id?: string;
   site?: string;
@@ -35,18 +37,6 @@ export type Message = {
   sender_id: string;
   content: string;
 };
-export type Project = {
-  _id: string;
-  name: string;
-  author_id: string;
-  author_timezone: string;
-  project_tags: string[];
-  skill_id: string[];
-  description: string;
-  liked_by_ids: string[];
-  date_created: Date;
-  desired_relationship_type: string;
-};
 
 export type Skill = {
   _id: string;
@@ -54,6 +44,22 @@ export type Skill = {
   follower_ids: string[];
   project_ids: string[];
 };
+
+export type Project = {
+  _id: string;
+  name: string;
+  author_id: string;
+  author_timezone: string;
+  project_tags: string[];
+  // skill_id: string[];
+  skills : Skill;
+  description: string;
+  liked_by_ids: string[];
+  date_created: Date;
+  desired_relationship_type: string;
+};
+
+
 
 export type ProjectTag = {
   _id: string;

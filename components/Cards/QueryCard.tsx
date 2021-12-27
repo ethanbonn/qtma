@@ -3,7 +3,9 @@ import queryDB from "../../functions/server/queryDB";
 
 const buttonHandler = async (relationship_type: string | undefined, skills: [string] | undefined, tags: [string] | undefined) => {
   const response = await queryDB(relationship_type, tags, skills)
+  // queryDB(relationship_type, tags, skills)
   .then(response => response);
+  console.log("returning res in QueryCard", response)
   return response;
 }
 

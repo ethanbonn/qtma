@@ -31,7 +31,7 @@ const Index = (props: { email: string; id: string } | User) => {
       {email ? (
         <>
           <p>
-            Signed in as: 
+            Signed in as:
             {email}
           </p>
           <button

@@ -23,7 +23,7 @@ export default function NavBar() {
               </a> */}
             <Link href="/login">
               <button className="font-sans font-bold px-4 py-2 text-white bg-green-normal rounded-md shadow-md">
-                Sign in
+                Get Started
               </button>
             </Link>
           </div>

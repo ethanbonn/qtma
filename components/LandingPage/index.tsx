@@ -1,16 +1,61 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import PreviewCard from "./PreviewCard";
 import ProjectCard from "../Cards/ProjectCard";
 import ProfileCard from "../Cards/ProfileCard";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer";
-
 import Card from "../Cards/QueryCard";
+import queryDB from "../../functions/server/queryDB";
+
+
+// function project_loading_handler(projects){
+//    // const print_projects = () => {
+//    //   projects.then((e) => {
+//    //     console.log("in funct v2, ", e);
+//    //   })
+//    // };
+//    // print_projects();
+//    // console.log("in funct, ", projects);
+//     //
+//     const res = projects.then((e) => {
+//       (e.map((proj) => {
+//         console.log("proj in card def", proj);
+//         return (
+//         <ProjectCard project_name={proj.name} project_skills={Object.keys(proj.skills)} />
+//         );
+//       }));
+//     });
+//
+//     return res;
+//}
+
+
+function pro(projects){
+  var ret = (<h1>Loading</h1>);
+  projects.then((e) => {
+    (e.map((proj) => {
+      console.log("proj in card def", proj);
+      return (
+      <ProjectCard project_name={proj.name} project_skills={Object.keys(proj.skills)} />
+      );
+    }));
+  });
+  return cards;
+}
+
+
+
+
 
 export default function LandingPage() {
   const [projects, update_projects] = useState([]);
-  console.log(projects);
+  console.log("update_proj", update_projects);
+
+  useEffect( () => {
+    // queryDB();
+  }, []);
+  // console.log("update proj", update_projects);
+
   return (
     <div>
       <NavBar />
@@ -39,7 +84,6 @@ export default function LandingPage() {
               Featured Projects
             </p>
             <div className="flex flex-wrap content-center">
-              {projects}
               {
                 projects.length === 0 ? (
                   <>
@@ -48,11 +92,7 @@ export default function LandingPage() {
                 ) : (
                   <>
                     {
-                      projects.map((e) => {
-                        return (
-                          <ProjectCard project_name={e.name} project_skills={Object.keys(e.skills)} />
-                        );
-                      })
+                      pro(projects)
                     }
                   </>
                 )
@@ -75,7 +115,7 @@ export default function LandingPage() {
             </div>
           </div>
           <button className=" font-sans  px-4 py-2 text-white bg-green-normal rounded-full shadow-md">
-            Explore more projects{" "}
+            Explore more profiles{" "}
           </button>
         </div>
       </div>

@@ -26,7 +26,7 @@ export default function ProfilePageCard(props: userWrapper) {
               </p>
             </div>
 
-            <p className="text-gray-400 font-normal">{`"${userDescription}"`}</p>
+            <p className="text-gray-400 font-normal">{`${userDescription}`}</p>
           </div>
         </div>
       </div>

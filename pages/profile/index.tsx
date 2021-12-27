@@ -15,7 +15,7 @@ import { isUser } from "../../functions/typeGuards";
 import ProfilePageCard from "../../components/Cards/ProfilePageCard";
 import SkillCard from "../../components/Cards/SkillCard";
 import LinkCard from "../../components/Cards/LinkCard";
-import ProjectCard from "../../components/Cards/ProfileCard";
+import ProjectCard from "../../components/Cards/ProjectCard";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer";
 
@@ -74,7 +74,7 @@ const Profile = (props: UnregisteredUser | User) => {
             </div>
             <div className="flex flex-wrap content-center -mx-12 -my-2 ">
               <ProjectCard />
-              <ProjectCard />
+
             </div>
           </div>
           <div className="col-span-4">

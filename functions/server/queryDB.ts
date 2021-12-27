@@ -34,11 +34,17 @@ const queryDB = async (relationship?: "sponsor" | "collaborator", tags?: [string
     // If there are valid parameters, join them with &, otherwise, set the query string to query
     var query_string = (valid_params.length !== 0) ? valid_params.join("&") : "query";
 
-    return await fetch(`http://localhost:3000/api/projects/${query_string}`)
+    // var projects =  await fetch(`http://localhost:3000/api/projects/${query_string}`, {
+    var projects = await fetch(`http://localhost:3000/api/projects/${query_string}`, {
+      method: 'GET'
+    })
         .then((response) => response.json())
         .then((projects) => {
             return projects.data;
         });
+    console.log("projects in Query: ", projects);
+    return projects;
+
 
 };
 
