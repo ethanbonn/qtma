@@ -29,31 +29,13 @@ import queryDB from "../../functions/server/queryDB";
 //     return res;
 //}
 
-
-function pro(projects){
-  var ret = (<h1>Loading</h1>);
-  projects.then((e) => {
-    (e.map((proj) => {
-      console.log("proj in card def", proj);
-      return (
-      <ProjectCard project_name={proj.name} project_skills={Object.keys(proj.skills)} />
-      );
-    }));
-  });
-  return cards;
-}
-
-
-
-
-
 export default function LandingPage() {
   const [projects, update_projects] = useState([]);
   console.log("update_proj", update_projects);
 
   useEffect( () => {
     // queryDB();
-  }, []);
+  }, [projects]);
   // console.log("update proj", update_projects);
 
   return (
@@ -92,7 +74,10 @@ export default function LandingPage() {
                 ) : (
                   <>
                     {
-                      pro(projects)
+                      projects.map((proj) => {
+                        console.log(proj);
+                        return (<ProjectCard name={proj.name} skill_id={[]} />)
+                      })
                     }
                   </>
                 )
