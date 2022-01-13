@@ -24,10 +24,6 @@ export default async function handler(
         throw new Error("No authorization token");
       }
 
-      // if (!req.headers?.authorization?.startsWith('Bearer ')) {
-      //   console.log("No auth token bearer")
-      //   throw new Error("No authorization token");
-      // }
 
       await verifyIdToken(req?.headers?.authorization);
     } catch (error) {
@@ -39,8 +35,9 @@ export default async function handler(
         req.body.profilePicture.replace(/data:.*\/.*;base64,/, ""),
         "base64"
       ),
-      `${req.body.userName}-profilePicture`
+      `${req.body._id}-profilePicture`
     );
+
 
     await dbConnect();
 

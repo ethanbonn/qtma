@@ -8,39 +8,15 @@ import Card from "../Cards/QueryCard";
 import queryDB from "../../functions/server/queryDB";
 
 
-// function project_loading_handler(projects){
-//    // const print_projects = () => {
-//    //   projects.then((e) => {
-//    //     console.log("in funct v2, ", e);
-//    //   })
-//    // };
-//    // print_projects();
-//    // console.log("in funct, ", projects);
-//     //
-//     const res = projects.then((e) => {
-//       (e.map((proj) => {
-//         console.log("proj in card def", proj);
-//         return (
-//         <ProjectCard project_name={proj.name} project_skills={Object.keys(proj.skills)} />
-//         );
-//       }));
-//     });
-//
-//     return res;
-//}
-
 export default function LandingPage() {
   const [projects, update_projects] = useState([]);
-  console.log("update_proj", update_projects);
 
   useEffect( () => {
-    // queryDB();
   }, [projects]);
-  // console.log("update proj", update_projects);
 
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className=" bg-green-normal py-20">
         <div className="grid justify-items-center mx-30">
           <p className="font-nunito text-4xl font-bold  text-white px-3">
@@ -76,7 +52,7 @@ export default function LandingPage() {
                     {
                       projects.map((proj) => {
                         console.log(proj);
-                        return (<ProjectCard name={proj.name} skill_id={[]} />)
+                        return (<ProjectCard name={proj.name} skills={proj.skills} {... proj} />)
                       })
                     }
                   </>

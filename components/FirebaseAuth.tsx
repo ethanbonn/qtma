@@ -34,6 +34,7 @@ const FirebaseAuth = () => {
           uiConfig={firebaseAuthConfig}
           firebaseAuth={firebase.auth()}
         />
+        
       ) : null}
     </>
   );

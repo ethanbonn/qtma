@@ -1,7 +1,19 @@
 import mongoose, { Schema, model } from "mongoose";
-import type { User, Link } from "../types/models";
+import type { User, Link, Skill } from "../types/models";
+import SkillModel from "../models/Skills";
 
 
+
+
+
+const skillSchema = new Schema<Skill>({
+  _id: { type: String, required: true },
+  name: { type: String, required: true },
+  colour: { type: String, required: true },
+  users_possess: { type : [String], required: false},
+  users_learning: { type: [String], required: false},
+  project_ids: { type: [String], required: false },
+});
 
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
@@ -45,6 +57,7 @@ const schema = new Schema<User>({
   timezone: { type: String, required: true },
   skillIdList: { type: [String], required: false },
   projectIds: { type: [String], required: false },
+  skills: {type: [skillSchema], required: false},
 });
 
 // Create and export the model.

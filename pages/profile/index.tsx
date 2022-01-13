@@ -11,13 +11,15 @@ import { useEffect } from "react";
 import type { User } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
-import { isUser } from "../../functions/typeGuards";
+import { handleUserType, isUser } from "../../functions/typeGuards";
 import ProfilePageCard from "../../components/Cards/ProfilePageCard";
 import SkillCard from "../../components/Cards/SkillCard";
 import LinkCard from "../../components/Cards/LinkCard";
 import ProjectCard from "../../components/Cards/ProjectCard";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer";
+import firebase from "firebase";
+
 
 const styles = {
   container: {
@@ -32,23 +34,26 @@ const styles = {
   },
 };
 
-const Profile = (props: UnregisteredUser | User) => {
-  const { signOut } = useAuthUser();
-  const isUserType = isUser(props);
-  const router = useRouter();
 
-  useEffect(() => {
-    if (!isUserType) {
-      router.push("/profile/edit");
-    }
-  });
+const Profile = (props: UnregisteredUser | User) => {
+  const isUserType = isUser(props);
+  var display_name = handleUserType(props); // handles user access and redirects & returns nav menu arg
+
+
+
+  // const userVerified = isVerified();
+
+  // console.log("verified", firebase.auth().currentUser.emailVerified);
+
+
+
 
   return (
     <div>
       {isUserType && (
         <div className="grid grid-cols-4 auto-cols-min">
           <div className="col-span-4">
-            <NavBar />
+            <NavBar login_name={display_name}/>
           </div>
           <div className="col-span-1">
             <ProfilePageCard user={props} />
@@ -73,7 +78,7 @@ const Profile = (props: UnregisteredUser | User) => {
               </div>
             </div>
             <div className="flex flex-wrap content-center -mx-12 -my-2 ">
-              <ProjectCard />
+              {/* <ProjectCard /> */}
 
             </div>
           </div>
@@ -89,11 +94,15 @@ const Profile = (props: UnregisteredUser | User) => {
 export const getServerSideProps = withAuthUserSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async ({ AuthUser }) => {
-  const { email, id } = AuthUser;
+  const { email, id, emailVerified } = AuthUser;
+
   const userData = await getUserData(id);
+  console.log("ID", id);
+  console.log("user data", userData);
+  console.log("Verified", emailVerified);
 
   return {
-    props: userData ?? { email, firebaseId: id },
+    props: userData ?? { email, firebaseId: id, emailVerified },
   };
 });
 

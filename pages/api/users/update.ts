@@ -32,7 +32,7 @@ export default async function handler(
         req.body.profilePicture.replace(/data:.*\/.*;base64,/, ""),
         "base64"
       ),
-      `${req.body.userName}-profilePicture`
+      `${req.body._id}-profilePicture`
     );
 
     await dbConnect();

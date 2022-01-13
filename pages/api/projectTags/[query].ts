@@ -38,7 +38,7 @@ export default async function handler(
       if (!tag_resp) throw new Error("ProjectTag Data Not Found");
       res.status(200).json({success : true, data : tag_resp});
     } catch (error) {
-      res.status(400).json({sucess : false});
+      res.status(400).json({success : false});
     }
   }
 

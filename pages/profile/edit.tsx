@@ -32,7 +32,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
         ] as Link[])
   );
   const [skillsList, setSkillsList] = useState(
-    isTypeUser && props.skillIdList ? props.skillIdList : []
+    isTypeUser && props.skills ? props.skills : []
   );
   const [projectsList, setProjectsList] = useState(
     isTypeUser && props.projectIds ? props.projectIds : []
@@ -89,8 +89,9 @@ const EditProfile = (props: UnregisteredUser | User) => {
   };
 
   return (
+
     <>
-      {isTypeUser && <NavBar />}
+      <NavBar login_name={props.firstName ?? email}/>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
@@ -205,6 +206,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
           {errors.timezone && <span>This field is required</span>}
         </label>
 
+  
+  
         {skillsList.map((_, i) => (
           <>
             <br />
@@ -246,6 +249,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
           </>
         ))}
         <br />
+
+        
 
         <label
           htmlFor="user-links"

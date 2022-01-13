@@ -1,5 +1,16 @@
-import type { Project } from "../types/models";
+import type { Project, Skill } from "../types/models";
 import mongoose, { Schema, model } from "mongoose";
+
+
+const skillSchema = new Schema<Skill>({
+  _id: { type: String, required: true },
+  name: { type: String, required: true },
+  colour: { type: String, required: true },
+  users_possess: { type : [String], required: false},
+  users_learning: { type: [String], required: false},
+  project_ids: { type: [String], required: false },
+});
+
 
 // Schema corresponding to the document interface.
 const schema = new Schema<Project>({
@@ -9,7 +20,7 @@ const schema = new Schema<Project>({
   author_timezone: {type: String, required: true},
   project_tags: {type: [String], required: false},
   // skill_id: {type: [String], required: false},
-  skills : {type: Schema.Types.ObjectId, required: false},
+  skills : {type: [skillSchema], required: false},
   description: {type: String, required: true},
   liked_by_ids: {type: [String], required: false},
   date_created: {type: Date, required: true},

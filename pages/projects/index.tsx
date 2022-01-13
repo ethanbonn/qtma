@@ -42,6 +42,7 @@ const Profile = (props: UnregisteredUser | User) => {
             type="button"
             onClick={() => {
               signOut();
+              
             }}
             style={styles.button}
           >

@@ -19,20 +19,18 @@ export default async function handler(
 
   // Retrieve the search parameters from the URL
   let search_params = new URLSearchParams(query.query as string);
-
   var query_param;
 
-  if (search_params.get("skill") !== null) {
+  console.log("params", search_params);
+  if (search_params.get("name") !== null) {
+    console.log("query", search_params.get("name"));
+
     query_param = {
-        "$search": {
-            "autocomplete": {
-                "query": search_params.get("skill"),
-                "path": "name",
-                "fuzzy": {
-                    "maxEdits": 1,
-                    "prefixLength": 1
-                }
-            }
+      $text:
+        {
+          $search: search_params.get("name"),
+          $caseSensitive: false,
+          $diacriticSensitive: false
         }
     }
   }
@@ -43,7 +41,11 @@ export default async function handler(
     await dbConnect();
 
     try {
-      const queryobj = await SkillModel.find(query_param);
+      console.log(query_param);
+      var queryobj;
+      if (search_params.get("name") !== null) queryobj = await SkillModel.aggregate([query_param]);
+      else queryobj = await SkillModel.find({});
+      
       if (!queryobj) throw new Error("Data not found");
       res.status(200).json({ success: true, data: queryobj });
     } catch (error) {

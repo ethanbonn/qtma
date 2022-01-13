@@ -21,6 +21,7 @@ export type User = {
   timezone: string;
   skillIdList?: string[];
   projectIds?: string[];
+  skills?: Skill[];
 };
 
 export type Conversation = {
@@ -41,7 +42,9 @@ export type Message = {
 export type Skill = {
   _id: string;
   name: string;
-  follower_ids: string[];
+  colour: string;
+  users_possess: string[]; // ids
+  users_learning: string[]; // ids
   project_ids: string[];
 };
 
@@ -52,7 +55,7 @@ export type Project = {
   author_timezone: string;
   project_tags: string[];
   // skill_id: string[];
-  skills : Skill;
+  skills : Skill[];
   description: string;
   liked_by_ids: string[];
   date_created: Date;

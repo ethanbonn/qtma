@@ -1,10 +1,10 @@
-import type { Project } from "../../types/models";
+import type { Project, Skill } from "../../types/models";
+
 
 // export default function ProjectCard({ project_name, project_skills }) {
 export default function ProjectCard(props : Project) {
-   const { name, skill_id } = props;
-   const project_skills = skill_id;
-   console.log("CREATING PROJECT CARD W params: ", props);
+   const { name, skills } = props;
+   console.log("CREATING PROJECT CARD W params: ", name, skills);
   return (
     <div className=" max-w-auto mx-10 bg-white rounded-xl shadow-lg flex m-10 ">
       <div className="max-w-sm  rounded-xl  overflow-hidden shadow-lg">
@@ -20,10 +20,10 @@ export default function ProjectCard(props : Project) {
         </div>
         <div className="px-6  pb-2">
           {
-            project_skills.map((e) => {
+            skills.map((e) => {
               return (
-                <span className="inline-block bg-blue-normal rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-                  {e}
+                <span className={`inline-block + bg-${e.colour}-normal rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" `}>
+                  {e.name}
                 </span>
               );
             })

@@ -1,17 +1,21 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import queryDB from "../../functions/server/queryDB";
+import { Listbox, Transition } from "@headlessui/react";
+import QueryCardRelationship from "../QueryCardRelationship";
+import QueryCardSelect from "../QueryCardSelect";
+
 
 export default function Card({ stateChanger }) {
   const [relationship_type, set_relationship_type] = useState("");
-  const [skill, set_skill] = useState("");
-  const [tag, set_tag] = useState("");
+  const [skill, set_skill] = useState([]);
+  const [search, set_search] = useState("");
 
   const [button_pressed, set_button_press] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function handler() {
-      await queryDB(relationship_type, tag, skill).then(response => response)
+      await queryDB(relationship_type, search, skill).then(response => response)
       .then((res) => stateChanger(res))
     }
     handler();
@@ -22,16 +26,19 @@ export default function Card({ stateChanger }) {
     <div className=" p-4 m-10 max-w-auto mx-auto bg-white rounded-xl shadow-lg flex  ">
       <div className="flex flex-wrap content-center">
         <div className="mx-2">
+          
           <div className="text-xl font-medium text-black">I'm looking for </div>
-          <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_relationship_type(e.target.value)}/>
+          <QueryCardRelationship />
+          {/* <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_relationship_type(e.target.value)}/> */}
         </div>
         <div className="mx-2">
           <div className="text-xl font-medium text-black">that are skilled in </div>
-          <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_skill(e.target.value)}/>
+          <QueryCardSelect />
+          {/* <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_skill(e.target.value)}/> */}
         </div>
         <div className="mx-2">
           <div className="text-xl font-medium text-black">to build </div>
-          <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_tag(e.target.value)}/>
+          <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_search(e.target.value)}/>
         </div>
 
         <div>

@@ -4,10 +4,15 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import Link from "next/link";
-import type { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import type { User } from "../types/models";
 import getUserData from "../functions/server/getUserData";
 import LandingPage from "../components/LandingPage";
+import NavBar from "../components/NavBar/NavBar";
+import firebase from "firebase";
+import { isUser, handleUserType } from "../functions/typeGuards";
+import { useRouter } from "next/router";
+import { UnregisteredUser } from "../types";
 
 const styles = {
   container: {
@@ -22,49 +27,29 @@ const styles = {
   },
 };
 
-const Index = (props: { email: string; id: string } | User) => {
-  const { signOut } = useAuthUser();
+const Index = (props: UnregisteredUser | User) => {
   const { email } = props;
+  var navNameDisplay = handleUserType(props); // handles user access and redirects
+
+
+
   return (
     <div>
+      <NavBar login_name={navNameDisplay}/>
       <LandingPage />
-      {email ? (
-        <>
-          <p>
-            Signed in as:
-            {email}
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              signOut();
-            }}
-            style={styles.button}
-          >
-            Sign out
-          </button>
-        </>
-      ) : (
-        <>
-          <p>You are not signed in.</p>
-          <Link href="/login">
-            <button type="button" style={styles.button}>
-              Sign in
-            </button>
-          </Link>
-        </>
-      )}
     </div>
   );
 };
 
 export const getServerSideProps = withAuthUserTokenSSR()(
   async ({ AuthUser }) => {
-    const { email, id } = AuthUser;
+    const { email, id, emailVerified } = AuthUser;
     const userData = await getUserData(id);
 
+
+
     return {
-      props: userData ?? { email, id },
+      props: userData ?? { email, id, emailVerified },
     };
   }
 );

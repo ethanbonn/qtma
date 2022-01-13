@@ -4,6 +4,11 @@ import dbConnect from "../../../utils/dbConnect";
 import ProjectModel from "../../../models/Projects";
 
 
+// the logic needs to be re-written here for the 'search' criteria
+// we need an atlas search index on it
+
+// not sure it works for skills either (need to fix queryDB)
+
 type Data = {
   success: boolean;
   data?: Project[];
@@ -31,7 +36,7 @@ export default async function handler(
     type ProjectQuery = {
       author_timezone: string | string[] | undefined;
       desired_relationship_type: string | null;
-      project_tags: string | string[] | undefined;
+      search: string | null;
       skills: string | string[] | undefined;
     };
 
@@ -39,7 +44,7 @@ export default async function handler(
     const query_params: ProjectQuery = {
       "author_timezone": search_params.get("author_timezone")?.split(","),
       "desired_relationship_type": search_params.get("desired_relationship_type"),
-      "project_tags": search_params.get("project_tags")?.split(","),
+      "search": search_params.get("search"),
       "skills": search_params.get("skills")?.split(",")
     };
 
@@ -59,7 +64,7 @@ export default async function handler(
         // var obj: {[key: string]: typeof value} = {};
         obj = {}
         // obj[key as string] = value;
-        obj[key] = value
+        obj[key] = value;
         console.log("ADDING: ", obj);
         console.log(typeof obj);
         console.log(typeof key, typeof value);
