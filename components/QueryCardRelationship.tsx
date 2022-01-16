@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
 const rel_type = [
@@ -9,8 +9,12 @@ const rel_type = [
 //   { id: 5, name: 'Katelyn Rohan', unavailable: false },
 ]
 
-export default function QueryCardRelationship() {
+export default function QueryCardRelationship({ stateChanger }) {
   const [selected, setSelected] = useState(rel_type[0])
+
+  useEffect(() => {
+    stateChanger(selected.name);
+  });
 
   return (
     // <div className="w-72 fixed top-16">
