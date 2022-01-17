@@ -18,13 +18,12 @@ const schema = new Schema<Project>({
   name: {type: String, required: true},
   author_id: {type: String, required: true},
   author_timezone: {type: String, required: true},
-  project_tags: {type: [String], required: false},
-  // skill_id: {type: [String], required: false},
   skills : {type: [skillSchema], required: false},
   description: {type: String, required: true},
-  liked_by_ids: {type: [String], required: false},
   date_created: {type: Date, required: true},
-  desired_relationship_type: {type: String, required: true}
+  desired_relationship_type: {type: String, required: true},
+  hours_per_week: {type: Number, required: false},
+  duration: {type: String, required: false}, // short (<1 month) | medium (1-4 months) | long (4+ months)  
 
 });
 

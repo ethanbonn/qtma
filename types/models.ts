@@ -19,10 +19,28 @@ export type User = {
   links?: Link[];
   interests?: string[];
   timezone: string;
-  skillIdList?: string[];
   projectIds?: string[];
   skills?: Skill[];
 };
+
+export type Chat = {
+  _id: string;
+  user: String; // _id
+  chats: [
+    {
+      textsWith:String[];   // recipients
+      texts: [
+        {
+          text: String; // content
+          sender:  String; // _id
+          receiver: String[]; // recipients
+          date: Date;
+        },
+            ]
+    } 
+  ]; 
+};
+
 
 export type Conversation = {
   _id: string;
@@ -54,18 +72,13 @@ export type Project = {
   author_id: string;
   author_timezone: string;
   project_tags: string[];
-  // skill_id: string[];
   skills : Skill[];
   description: string;
-  liked_by_ids: string[];
   date_created: Date;
   desired_relationship_type: string;
+  hours_per_week: number;
+  duration: string;
+  
 };
 
 
-
-export type ProjectTag = {
-  _id: string;
-  name: string;
-  project_ids: string[];
-};
