@@ -71,13 +71,12 @@ export type Project = {
   name: string;
   author_id: string;
   author_timezone: string;
-  project_tags: string[];
   skills : Skill[];
   description: string;
   date_created: Date;
   desired_relationship_type: string;
-  hours_per_week: number;
-  duration: string;
+  // hours_per_week?: number;
+  duration?: string;
   
 };
 
