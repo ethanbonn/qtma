@@ -55,7 +55,6 @@ const schema = new Schema<User>({
   },
   interests: { type: [String], required: false },
   timezone: { type: String, required: true },
-  skillIdList: { type: [String], required: false },
   projectIds: { type: [String], required: false },
   skills: {type: [skillSchema], required: false},
 });

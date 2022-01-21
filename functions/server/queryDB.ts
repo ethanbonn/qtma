@@ -1,4 +1,5 @@
 import type { Project } from "../../types/models";
+import baseUrl from "../../utils/baseUrl";
 
 export type supported_timezones = "ACST" | "AEST" | "AKST" | "AST" | "AWST" | "CET" | "CST" | "EET" | "EST" | "MST" | "PST" | "WET";
 
@@ -42,8 +43,7 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
     // If there are valid parameters, join them with &, otherwise, set the query string to query
     var query_string = (valid_params.length !== 0) ? valid_params.join("&") : "query";
 
-    // var projects =  await fetch(`http://localhost:3000/api/projects/${query_string}`, {
-    var projects = await fetch(`http://localhost:3000/api/projects/${query_string}`, {
+    var projects = await fetch(`${baseUrl}/api/projects/${query_string}`, {
       method: 'GET'
     })
         .then((response) => response.json())

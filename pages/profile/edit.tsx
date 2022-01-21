@@ -6,12 +6,13 @@ import {
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
 import { FunctionComponent, useState } from "react";
-import type { User, Link } from "../../types/models";
+import type { User, Link, Skill } from "../../types/models";
 import getUserData from "../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../types";
 import { isUser } from "../../functions/typeGuards";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar/NavBar";
+import baseUrl from "../../utils/baseUrl";
 
 const EditProfile = (props: UnregisteredUser | User) => {
   const {
@@ -52,7 +53,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       });
 
     await fetch(
-      `http://localhost:3000/api/users/${!isTypeUser ? "create" : "update"}`,
+      `${baseUrl}/api/users/${!isTypeUser ? "create" : "update"}`,
       {
         method: "POST",
         headers: {
