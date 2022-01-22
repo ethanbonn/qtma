@@ -28,7 +28,7 @@ export default function Card({ stateChanger }) {
         <div className="mx-2">
           
           <div className="text-xl font-medium text-black">I'm looking for </div>
-          <QueryCardRelationship />
+          <QueryCardRelationship stateChanger={set_relationship_type} />
           {/* <input className="my-3 border border-black rounded-lg  px-1 " onChange={(e) => set_relationship_type(e.target.value)}/> */}
         </div>
         <div className="mx-2">
