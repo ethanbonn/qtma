@@ -17,44 +17,10 @@ export interface SkillOption {
   }
 
 
-// interface State {
-//   readonly inputValue: string;
-//   current: string[];
-// }
 
-
-// // async function getSkillsDB () {
-// //     var skillOptions : [SkillOption] = await getSkills();
-// //     return skillOptions;
-// // }
-
-// const filterSkills = (inputValue: string, skillOptions: SkillOption[]) => {
-//   return skillOptions.filter((i) =>
-//     i.label.toLowerCase().includes(inputValue.toLowerCase())
-//   );
-// };
-
-// const promiseOptions = (inputValue: string) =>
-// //   new Promise<SkillOption[]>((resolve) => {
-//     new Promise<Skill[]>((resolve) => {
-//     setTimeout(async () => {
-//         var options : Skill[] =  await getSkills();
-//         // map Skill type to SkillOption
-//         if (options) {
-//         var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
-//                                                                         value: x.name, 
-//                                                                         label: x.name,
-//                                                                         colour: x.colour}});
-//         resolve(filterSkills(inputValue, sOptions));
-//         }
-//     }, 1000);
-//   });
-
-
-
-export default function AsyncMulti() {
+export default function AsyncMulti({stateChanger}) {
   const [inputValue, setInputValue] = useState("");
-  const [selectedValue, setSelectedValue] = useState([]);
+  // const [selectedValue, setSelectedValue] = useState([]);
   // const [userSelected, setUserSelected] = useState([]);
 
 
@@ -71,25 +37,21 @@ export default function AsyncMulti() {
   // const promiseOptions = async (inputValue: string | object) => {
   const promiseOptions = async (inputValue) => {
     var options : Skill[] =  await getSkills();
-    console.log("options", options);
-    // map Skill type to SkillOption
     if (options) {
       var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
                                                                       value: x.name, 
                                                                       label: x.name,
-                                                                      colour: x.colour}});
-      console.log(typeof(inputValue));
-      
+                                                                      colour: x.colour}});      
       if (typeof(inputValue) === "string"){
-        console.log("input str not state", inputValue);
         return filterSkills(inputValue, sOptions);
         }
       else {
         setInputValue(inputValue);
-        console.log("input list", inputValue);
+        stateChanger(inputValue);
         return sOptions;
       }
-    }
+    } 
+    return []
   }
   
     return (
@@ -98,7 +60,6 @@ export default function AsyncMulti() {
         onChange={promiseOptions}
         isMulti
         isSearchable
-        // selectOptions={(e) => console.log("select options", e)}
         // cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
