@@ -28,4 +28,4 @@ const schema = new Schema<Project>({
 });
 
 // Create and export the model.
-export default mongoose.models.Project ?? model<Project>("Project", schema);
+export default mongoose.models?.Project ?? model<Project>("Project", schema);
