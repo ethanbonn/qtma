@@ -17,107 +17,96 @@ export interface SkillOption {
   }
 
 
-interface State {
-  readonly inputValue: string;
-  current: string[];
-}
-
-
-// async function getSkillsDB () {
-//     var skillOptions : [SkillOption] = await getSkills();
-//     return skillOptions;
+// interface State {
+//   readonly inputValue: string;
+//   current: string[];
 // }
 
-const filterSkills = (inputValue: string, skillOptions: SkillOption[]) => {
-  return skillOptions.filter((i) =>
-    i.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
-};
 
-const promiseOptions = (inputValue: string) =>
-//   new Promise<SkillOption[]>((resolve) => {
-    new Promise<Skill[]>((resolve) => {
-    setTimeout(async () => {
-        var options : Skill[] =  await getSkills();
-        // map Skill type to SkillOption
-        if (options) {
-        var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
-                                                                        value: x.name, 
-                                                                        label: x.name,
-                                                                        colour: x.colour}});
-        resolve(filterSkills(inputValue, sOptions));
+// // async function getSkillsDB () {
+// //     var skillOptions : [SkillOption] = await getSkills();
+// //     return skillOptions;
+// // }
+
+// const filterSkills = (inputValue: string, skillOptions: SkillOption[]) => {
+//   return skillOptions.filter((i) =>
+//     i.label.toLowerCase().includes(inputValue.toLowerCase())
+//   );
+// };
+
+// const promiseOptions = (inputValue: string) =>
+// //   new Promise<SkillOption[]>((resolve) => {
+//     new Promise<Skill[]>((resolve) => {
+//     setTimeout(async () => {
+//         var options : Skill[] =  await getSkills();
+//         // map Skill type to SkillOption
+//         if (options) {
+//         var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
+//                                                                         value: x.name, 
+//                                                                         label: x.name,
+//                                                                         colour: x.colour}});
+//         resolve(filterSkills(inputValue, sOptions));
+//         }
+//     }, 1000);
+//   });
+
+
+
+export default function AsyncMulti() {
+  const [inputValue, setInputValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState([]);
+  // const [userSelected, setUserSelected] = useState([]);
+
+
+  // change this using mongo to a search
+  function filterSkills(inputValue: string, skillOptions: SkillOption[]) {
+    if (inputValue === "") return skillOptions;
+    return skillOptions.filter((i) =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+
+  }
+
+  // const promiseOptions = async (inputValue: string | object) => {
+  const promiseOptions = async (inputValue) => {
+    var options : Skill[] =  await getSkills();
+    console.log("options", options);
+    // map Skill type to SkillOption
+    if (options) {
+      var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
+                                                                      value: x.name, 
+                                                                      label: x.name,
+                                                                      colour: x.colour}});
+      console.log(typeof(inputValue));
+      
+      if (typeof(inputValue) === "string"){
+        console.log("input str not state", inputValue);
+        return filterSkills(inputValue, sOptions);
         }
-    }, 1000);
-  });
-
-
-
-// export default function AsyncMulti() {
-//   const [inputValue, setInputValue] = useState("");
-
-
-//   // change this using mongo to a search
-//   function filterSkills(inputValue: string, skillOptions: SkillOption[]) {
-//     return skillOptions.filter((i) =>
-//       i.label.toLowerCase().includes(inputValue.toLowerCase())
-//     );
-//   }
-
-//   function promiseOptions(inputValue: string){
-//       setInputValue(inputValue);
-//       new Promise<Skill[]>((resolve) => {
-//       setTimeout(async () => {
-//           var options : Skill[] =  await getSkills();
-//           console.log("options", options);
-//           // map Skill type to SkillOption
-//           if (options) {
-//           var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
-//                                                                           value: x.name, 
-//                                                                           label: x.name,
-//                                                                           colour: x.colour}});
-//           resolve(filterSkills(inputValue, sOptions));
-//           }
-//       }, 100);
-//     });
-//   }
-
-//     return (
-//       <AsyncSelect
-//         value={inputValue}
-//         // onChange={promiseOptions}
-//         isMulti
-//         cacheOptions
-//         defaultOptions
-//         loadOptions={promiseOptions}
-//       />
-
-//     );
-
-
-
-
-// }
-
-export default class AsyncMulti extends Component<{}, State> {
-  state: State = { inputValue: '' , current : []};
-
-
-  handleInputChange = (newValue: string) => {
-    const inputValue = newValue.replace(/\W/g, '');
-    this.setState({ inputValue });
-    console.log(inputValue);
-    return inputValue;
-  };
-  render() {
+      else {
+        setInputValue(inputValue);
+        console.log("input list", inputValue);
+        return sOptions;
+      }
+    }
+  }
+  
     return (
       <AsyncSelect
+        value={inputValue}
+        onChange={promiseOptions}
         isMulti
-        cacheOptions
+        isSearchable
+        // selectOptions={(e) => console.log("select options", e)}
+        // cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
       />
 
     );
-  }
+
 }
+
+
 
