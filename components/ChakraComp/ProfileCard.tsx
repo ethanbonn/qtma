@@ -50,10 +50,50 @@ export default function SocialProfileSimple() {
         </VStack>
         {/* <Stack mt={8} direction={"row"}> */}
 
+        <Stack direction={["column", "row"]} spacing="24px">
+          <Box>
+          <Button
+           
+           fontSize={"sm"}
+           rounded={"full"}
+           color="white"
+           bg={"blue.400"}
+         >
+           UX Design
+         </Button>
+          </Box>
+
+          <Box>
+          <Button
+           
+           fontSize={"sm"}
+           rounded={"full"}
+           color="white"
+           bg={"blue.400"}
+         >
+           UX Design
+         </Button>
+          </Box>
+
+          <Box>
+          <Button
+           
+           fontSize={"sm"}
+           rounded={"full"}
+           color="white"
+           bg={"blue.400"}
+         >
+           UX Design
+         </Button>
+          </Box>
+          
+         
+        </Stack>
+
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
           {" "}
           <Button
-            flex={1}
+           
             fontSize={"sm"}
             rounded={"full"}
             color="white"

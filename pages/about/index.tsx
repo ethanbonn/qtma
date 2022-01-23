@@ -170,10 +170,23 @@ export default function WithSubnavigation() {
               mb="10"
               // textAlign={"center"}
             >
+              {/* <Stack direction={["column", "row"]} spacing="24px">
+                <Box >
+                  
+                </Box>
+
+
+                <Box >
+                                <Button colorScheme="green">Search</Button>
+
+                </Box>
+               
+               
+              </Stack> */}
               <SimpleGrid
-                minChildWidth="90px"
-                spacing="40px"
-                columns={[1, 1, 4]}
+                minChildWidth="70px"
+                spacing="30px"
+                columns={[2, 2, 2]}
               >
                 <Box>
                   {/* <Text fontWeight={600} fontSize="lg">
@@ -207,6 +220,16 @@ export default function WithSubnavigation() {
                   </FormControl>
                 </Box>
 
+                {/* <Box>
+             
+                  <FormControl>
+                    <FormLabel htmlFor="country">⭐</FormLabel>
+                    <Button colorScheme="green">
+                    Search
+                  </Button>
+                  </FormControl>
+                </Box> */}
+
                 {/* <Box mt="6">
                   <Text fontSize="md">  </Text>
 
@@ -218,6 +241,8 @@ export default function WithSubnavigation() {
                   />
                 </Box> */}
               </SimpleGrid>
+              {/* <Center mt="4"> */}{" "}
+              {/* </Center> */}
             </Box>
           </Center>
 
