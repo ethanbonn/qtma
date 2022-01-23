@@ -1,19 +1,27 @@
 import {
   Box,
   Flex,
+  FormControl,
+  FormLabel,
+  Select,
   Center,
+  Divider,
+  SimpleGrid,
   Image,
   Heading,
+  Input,
   IconButton,
   Button,
-  Stack,
   Collapse,
   Stack,
   Container,
+  Text,
   Link,
   useColorModeValue,
   useDisclosure,
   useColorMode,
+  VStack,
+  chakra,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -21,6 +29,7 @@ import {
   CloseIcon,
   SunIcon,
   MoonIcon,
+  SearchIcon,
 } from "@chakra-ui/icons";
 
 export default function WithSubnavigation() {
@@ -30,7 +39,7 @@ export default function WithSubnavigation() {
   const SwitchIcon = useColorModeValue(MoonIcon, SunIcon);
 
   return (
-    <Box>
+    <div>
       <Box>
         <Flex
           bg={useColorModeValue("green.300", "gray.800")}
@@ -65,7 +74,10 @@ export default function WithSubnavigation() {
 
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
             <Link href="/">
-              <Flex display={{ base: "none", md: "flex" }} ml={1}>
+              <Flex
+                display={{ base: "none", md: "flex" }}
+                ml={{ base: 20, md: 20, sm: 0 }}
+              >
                 <Image alt="Soar Logo" src="/soarlogo.png"></Image>
               </Flex>
             </Link>
@@ -76,17 +88,19 @@ export default function WithSubnavigation() {
             justify={"flex-end"}
             direction={"row"}
             spacing={6}
+            mr={{ base: 20, md: 20, sm: 0 }}
           >
-            {/* <IconButton
+            <IconButton
               size="md"
               fontSize="lg"
               aria-label={`Switch to ${text} mode`}
-              variant="ghost"
-              color="current"
+              colorScheme="green"
+              aria-label="Call Sage"
+              fontSize="20px"
               ml={{ base: "0", md: "3" }}
               onClick={toggleMode}
               icon={<SwitchIcon />}
-            /> */}
+            />
             <IconButton
               colorScheme="green"
               aria-label="Call Sage"
@@ -99,29 +113,220 @@ export default function WithSubnavigation() {
 
         {/* <Collapse in={isOpen} animateOpacity children={<MobileNav />} /> */}
       </Box>
-    </Box>
+      {/* <Divider color="blue" /> */}
+      <Center bg={useColorModeValue("green.300", "gray.700")}>
+        <Container maxW={"5xl"}>
+          <Stack
+            as={Box}
+            textAlign={"center"}
+            spacing={{ base: 8, md: 14 }}
+            pt={{ base: 10, md: 10 }}
+          >
+            {/* <Heading
+              fontWeight={600}
+              fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
+              lineHeight={"130%"}
+              color={"white"}
+              mx="8"
+            >
+              Build the dream team to soar your ideas to the moon. 🚀
+            </Heading> */}
 
-{/* <Container maxW={'3xl'}>
-<Stack
-  as={Box}
-  textAlign={'center'}
-  spacing={{ base: 8, md: 14 }}
-  py={{ base: 20, md: 36 }}>
-  <Heading
-    fontWeight={600}
-    fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-    lineHeight={'110%'}>
-    Make money from <br />
-    <Text as={'span'} color={'green.400'}>
-      your audience
-    </Text>
-  </Heading>
-  <Text color={'gray.500'}>
-    Monetize your content by charging your most loyal readers and reward
-    them loyalty points. Give back to your loyal readers by granting
-    them access to your pre-releases and sneak-peaks.
-  </Text>
+            <Heading color={"white"} mb="10">
+              {" "}
+              Build the dream team to soar your ideas to the moon. 🚀
+            </Heading>
+          </Stack>
 
-</Container> */}
+          <Center>
+            <Box
+              maxW={"650px"}
+              w={"full"}
+              bg={useColorModeValue("white", "gray.900")}
+              boxShadow={"2xl"}
+              rounded={"lg"}
+              p={5}
+              mb="10"
+              // textAlign={"center"}
+            >
+              <SimpleGrid
+                minChildWidth="90px"
+                spacing="40px"
+                columns={[1, 1, 4]}
+              >
+                <Box>
+                  {/* <Text fontWeight={600} fontSize="lg">
+                    I'm looking for{" "}
+                  </Text>
+                  <Input placeholder="a partner" />{" "} */}
+                  <FormControl>
+                    <FormLabel htmlFor="country">I'm Looking for</FormLabel>
+                    <Select id="country">
+                      <option>Profiles</option>
+                      <option>Projects</option>
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel htmlFor="country">Skilled In</FormLabel>
+                    <Select id="country">
+                      <option>Profiles</option>
+                      <option>Projects</option>
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel htmlFor="country">To Build</FormLabel>
+                    <Select id="country">
+                      <option>Profiles</option>
+                      <option>Projects</option>
+                    </Select>
+                  </FormControl>
+                </Box>
+
+                {/* <Box mt="6">
+                  <Text fontSize="md">  </Text>
+
+                  <IconButton
+                    colorScheme="green"
+                    aria-label="Call Sage"
+                    fontSize="20px"
+                    icon={<SearchIcon />}
+                  />
+                </Box> */}
+              </SimpleGrid>
+            </Box>
+          </Center>
+
+          <Container maxW={"7xl"} p="10">
+            <SimpleGrid columns={[1, 1, 3]} spacing="40px">
+              <Flex
+                flex={1}
+                justify={"center"}
+                align={"center"}
+                position={"relative"}
+                w={"full"}
+              >
+                <Box
+                  position={"relative"}
+                  height={"100%"}
+                  width={"100%"}
+                  rounded={"2xl"}
+                  boxShadow={"2xl"}
+                  overflow={"hidden"}
+                >
+                  <Image
+                    alt={"Hero Image"}
+                    fit={"cover"}
+                    align={"center"}
+                    w={"100%"}
+                    h={"100%"}
+                    src={
+                      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
+                    }
+                  />
+                </Box>
+              </Flex>
+              <Flex
+                flex={1}
+                justify={"center"}
+                align={"center"}
+                position={"relative"}
+                w={"full"}
+              >
+                <Box
+                  position={"relative"}
+                  height={"100%"}
+                  width={"100%"}
+                  rounded={"2xl"}
+                  boxShadow={"2xl"}
+                  // width={"full"}
+                  overflow={"hidden"}
+                >
+                  <Image
+                    alt={"Hero Image"}
+                    fit={"cover"}
+                    align={"center"}
+                    w={"100%"}
+                    h={"100%"}
+                    src={
+                      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
+                    }
+                  />
+                </Box>
+              </Flex>
+
+              <Flex
+                flex={1}
+                justify={"center"}
+                align={"center"}
+                position={"relative"}
+                w={"full"}
+              >
+                <Box
+                  position={"relative"}
+                  height={"100%"}
+                  width={"100%"}
+                  rounded={"2xl"}
+                  boxShadow={"2xl"}
+                  // width={"full"}
+                  overflow={"hidden"}
+                >
+                  <Image
+                    alt={"Hero Image"}
+                    fit={"cover"}
+                    align={"center"}
+                    w={"100%"}
+                    h={"100%"}
+                    src={
+                      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
+                    }
+                  />
+                </Box>
+              </Flex>
+            </SimpleGrid>
+          </Container>
+        </Container>
+      </Center>
+
+      <Center mt="15" bg={useColorModeValue("white", "gray.700")}>
+        <Container maxW={"5xl"}>
+          <Stack
+            as={Box}
+            textAlign={"center"}
+            spacing={{ base: 8, md: 14 }}
+            pt={{ base: 10, md: 10 }}
+          >
+            {/* <Heading
+              fontWeight={600}
+              fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
+              lineHeight={"130%"}
+              color={"white"}
+              mx="8"
+            >
+              Build the dream team to soar your ideas to the moon. 🚀
+            </Heading> */}
+
+            <Heading color={useColorModeValue("blue.500", "white")}>
+              {" "}
+              Discover hundreds of projects to build, and connect with other
+              bright-minded individuals. ⭐
+            </Heading>
+          </Stack>
+
+          <VStack alignItems="flex-start" spacing="20px" mt="20">
+            <chakra.h2 fontSize="2xl" fontWeight="700">
+              Featured Projects
+            </chakra.h2>
+
+            <chakra.h2 fontSize="2xl" fontWeight="700">
+              Profiles 
+            </chakra.h2>
+          </VStack>
+        </Container>
+      </Center>
+    </div>
   );
 }

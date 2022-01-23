@@ -8,8 +8,6 @@ export default function LandingPage() {
   return (
     <div>
       <NavBar />
-
-      
       <div className=" bg-green-normal py-20">
         <div className="grid justify-items-center mx-30">
           <p className="font-nunito text-4xl font-bold  text-white px-3">
