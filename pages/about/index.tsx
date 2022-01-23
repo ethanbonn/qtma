@@ -12,6 +12,12 @@ import {
   Input,
   IconButton,
   Button,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  MenuItem,
+  MenuDivider,
   Collapse,
   Stack,
   Container,
@@ -31,6 +37,8 @@ import {
   MoonIcon,
   SearchIcon,
 } from "@chakra-ui/icons";
+
+import ProfileCard from "../../components/ChakraComp/ProfileCard";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -95,7 +103,7 @@ export default function WithSubnavigation() {
               fontSize="lg"
               aria-label={`Switch to ${text} mode`}
               colorScheme="green"
-              aria-label="Call Sage"
+              //   aria-label="Call Sage"
               fontSize="20px"
               ml={{ base: "0", md: "3" }}
               onClick={toggleMode}
@@ -107,7 +115,20 @@ export default function WithSubnavigation() {
               fontSize="20px"
               icon={<ChatIcon />}
             />
-            <Button colorScheme="green">Profile</Button>
+
+            <Flex alignItems={"center"}>
+              <Menu>
+                <MenuButton as={Button} colorScheme="green" minW={0}>
+                  Profile
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Link 1</MenuItem>
+                  <MenuItem>Link 2</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Link 3</MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
           </Stack>
         </Flex>
 
@@ -321,9 +342,33 @@ export default function WithSubnavigation() {
               Featured Projects
             </chakra.h2>
 
+            <SimpleGrid columns={[1, 1, 3]} spacing="40px">
+              <ProfileCard />
+              <ProfileCard />
+
+              <ProfileCard />
+
+              <ProfileCard />
+
+              <ProfileCard />
+              <ProfileCard />
+            </SimpleGrid>
+
             <chakra.h2 fontSize="2xl" fontWeight="700">
-              Profiles 
+              Profiles
             </chakra.h2>
+
+            <SimpleGrid columns={[1, 1, 3]} spacing="40px">
+              <ProfileCard />
+              <ProfileCard />
+
+              <ProfileCard />
+
+              <ProfileCard />
+
+              <ProfileCard />
+              <ProfileCard />
+            </SimpleGrid>
           </VStack>
         </Container>
       </Center>
