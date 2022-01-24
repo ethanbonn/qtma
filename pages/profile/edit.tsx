@@ -14,6 +14,21 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar/NavBar";
 import baseUrl from "../../utils/baseUrl";
 
+const timezones = [
+  "ACST",
+  "AEST",
+  "AKST",
+  "AST",
+  "AWST",
+  "CET",
+  "CST",
+  "EET",
+  "EST",
+  "MST",
+  "PST",
+  "WET",
+];
+
 const EditProfile = (props: UnregisteredUser | User) => {
   const {
     register,
@@ -205,13 +220,16 @@ const EditProfile = (props: UnregisteredUser | User) => {
         >
           Timezone
           <br />
-          <input
-            type="text"
+          <select
             id="timezone"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.timezone : undefined}
             {...register("timezone", { required: true, maxLength: 4 })}
-          />
+          >
+            {timezones.map((x) => (
+              <option value={x}>{x}</option>
+            ))}
+          </select>
           {errors.timezone && <span>This field is required</span>}
         </label>
 
