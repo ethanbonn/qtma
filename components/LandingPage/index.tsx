@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import PreviewCard from "./PreviewCard";
 import ProjectCard from "../Cards/ProjectCard";
-import ProfileCard from "../Cards/ProfileCard";
+// import ProfileCard from "../Cards/ProfileCard";
+// import ProjectCard from "../ChakraComp/ProjectCard";
+import ProfileCard from "../ChakraComp/ProfileCard";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer";
 import Card from "../Cards/QueryCard";
 import queryDB from "../../functions/server/queryDB";
-import search from "../../pages/api/projects/search";
 
 
 export default function LandingPage() {
   const [projects, update_projects] = useState([]);
 
-  search("mobile coding");
 
 
   useEffect( () => {

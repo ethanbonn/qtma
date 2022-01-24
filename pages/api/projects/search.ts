@@ -8,46 +8,51 @@ export default async function search(query: string) {
     try {
       const queryobj = await ProjectModel.aggregate([{
         "$search": {
-            "compound" : {
-              "filter" : [{
-                "text": {
-                  "query" : rel_type,
-                  "path" : "desired_relationship_type"
+          "compound": {
+            "should": [
+              {
+                text: {
+                  query: 'mobile website',
+                  path: ['name', 'description']
                 }
-              }] // ,
-              // "should" : [
-            //     {
-            //         "text": {
-            //             "query": "coding",
-            //             "path": "skills.name"
-            //         }
-            //     },
-            //     {
-            //       "text": {
-            //           "query": "oop",
-            //           "path": "skills.name"
-            //       }
-            //   },
-            //   {
-            //     "text": {
-            //         "query": "python",
-            //         "path": "skills.name"
-            //     }
-            // },
-            // {
-              
-            //   "text": {
-            //         "query": query,
-            //         "path": ["name", "description"]
-            // }
-            // }
-              // ]
-            }
-
+              },
+            ],
+            "must": [
+              {
+                text: {
+                  query: ['coding', 'python'],
+                  path: 'skills'
+                }
+              }
+            ],
+            "filter": [
+              {
+                "text": {
+                  "query": "sponsor",
+                  "path": "desired_relationship_type" 
+                }
+              }
+            ]
+          }
+        
         }
-      }]);
+      }//,
+      // {
+      //   "$match": {
+      //     "skills": {
+      //       "$elemMatch": {
+      //         "$or": [
+      //           {"name": "coding"},
+      //           {"name": "python"},
+      //           {"name": "oop"}
+      //         ]
+      //       }
+      //     }
+      //   }
+      // }
+    ]);
       if (!queryobj) throw new Error("Data not found");
-      console.log("Search index query: ", queryobj);
+      console.log("Data not found Search index query: ", queryobj);
       return queryobj;
     } catch (error) {
       console.log(error);

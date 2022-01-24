@@ -15,7 +15,7 @@ export default function Card({ stateChanger }) {
 
   useEffect(() => {
     async function handler() {
-      await queryDB(relationship_type, search, skill).then(response => response)
+      await queryDB(relationship_type, search, skill.map((x) => x.value)).then(response => response)
       .then((res) => stateChanger(res))
     }
     handler();

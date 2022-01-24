@@ -1,5 +1,5 @@
 import type { Project, Skill } from "../types/models";
-import Mongoose, { Schema, model } from "mongoose";
+import Mongoose, { Schema, model, ObjectId } from "mongoose";
 
 
 const skillSchema = new Schema<Skill>({
@@ -27,4 +27,4 @@ const schema = new Schema<Project>({
 });
 
 // Create and export the model.
-export default Mongoose.models?.Project || model<Project>("Project", schema);
+export default Mongoose.models.Project || model<Project>("Project", schema);

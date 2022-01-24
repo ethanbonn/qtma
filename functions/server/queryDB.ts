@@ -10,7 +10,7 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
         // key: keyof typeof String;
         author_timezone: supported_timezones | supported_timezones[] | undefined;
         desired_relationship_type: string | undefined;
-        search: string | string[] | undefined;
+        search: string | undefined;
         skills: [] | string[] | undefined;
     };
 
@@ -42,6 +42,8 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
 
     // If there are valid parameters, join them with &, otherwise, set the query string to query
     var query_string = (valid_params.length !== 0) ? valid_params.join("&") : "query";
+
+    console.log("QUERY STRING IN QUERY DB", query_string);
 
     var projects = await fetch(`${baseUrl}/api/projects/${query_string}`, {
       method: 'GET'
