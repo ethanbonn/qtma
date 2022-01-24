@@ -1,5 +1,5 @@
 import type { Project, Skill } from "../types/models";
-import mongoose, { Schema, model } from "mongoose";
+import Mongoose, { Schema, model } from "mongoose";
 
 
 const skillSchema = new Schema<Skill>({
@@ -22,10 +22,9 @@ const schema = new Schema<Project>({
   description: {type: String, required: true},
   date_created: {type: Date, required: true},
   desired_relationship_type: {type: String, required: true},
-  // hours_per_week: {type: Number, required: false}, 
-  duration: {type: String, required: false}, // short (<1 month) | medium (1-4 months) | long (4+ months)  
+  duration: {type: String, required: false},   // short (<1 month) | medium (1-4 months) | long (4+ months)
 
 });
 
 // Create and export the model.
-export default mongoose.models.Project ?? model<Project>("Project", schema);
+export default Mongoose.models?.Project || model<Project>("Project", schema);
