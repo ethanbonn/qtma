@@ -23,6 +23,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
   } = useForm();
   const isTypeUser = isUser(props);
 
+  const [uniqueUsername, setUniqueUsername] = useState(true);
+  const [unexpectedError, setUnexpectedError] = useState(false);
   const [linksList, setLinksList] = useState(
     isTypeUser && props.links
       ? props.links
@@ -52,28 +54,34 @@ const EditProfile = (props: UnregisteredUser | User) => {
         reader.onerror = (error) => reject(error);
       });
 
-    await fetch(
-      `${baseUrl}/api/users/${!isTypeUser ? "create" : "update"}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: token } : {}),
-        },
-        body: JSON.stringify({
-          _id,
-          email,
-          ...data,
-          profilePicture:
-            data.profilePicture.length !== 0
-              ? await toBase64(data.profilePicture[0] as File)
-              : isTypeUser
-              ? props.profilePicture
-              : "",
-        }),
+    await fetch(`${baseUrl}/api/users/${!isTypeUser ? "create" : "update"}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: token } : {}),
+      },
+      body: JSON.stringify({
+        _id,
+        email,
+        ...data,
+        profilePicture:
+          data.profilePicture.length !== 0
+            ? await toBase64(data.profilePicture[0] as File)
+            : isTypeUser
+            ? props.profilePicture
+            : "",
+      }),
+    }).then((response) => {
+      if (response.status === 450) {
+        setUniqueUsername(false);
       }
-    );
-    window.location.href = "/profile";
+      if (response.status === 200) {
+        setUniqueUsername(true);
+        window.location.href = "/profile";
+      } else {
+        setUnexpectedError(true);
+      }
+    });
   };
 
   const handleInputChange = (
@@ -90,9 +98,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
   };
 
   return (
-
     <>
-      <NavBar login_name={props.firstName ?? email}/>
+      <NavBar login_name={props.firstName ?? email} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
@@ -130,6 +137,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
             {...register("userName", { required: true, maxLength: 12 })}
           />
           {errors.userName && <span>This field is required</span>}
+          {!uniqueUsername && <span>Username exists already, try again</span>}
         </label>
         <br />
         <label htmlFor="firstName" className="text-black-normal font-bold">
@@ -207,8 +215,6 @@ const EditProfile = (props: UnregisteredUser | User) => {
           {errors.timezone && <span>This field is required</span>}
         </label>
 
-  
-  
         {skillsList.map((_, i) => (
           <>
             <br />
@@ -250,8 +256,6 @@ const EditProfile = (props: UnregisteredUser | User) => {
           </>
         ))}
         <br />
-
-        
 
         <label
           htmlFor="user-links"
@@ -376,6 +380,11 @@ const EditProfile = (props: UnregisteredUser | User) => {
           value={isTypeUser ? "Save Changes" : "Finish"}
         />
       </form>
+      {unexpectedError && (
+        <span>
+          Sorry, an unexpected error occurred. Please try again later.
+        </span>
+      )}
       {isTypeUser && <Footer />}
     </>
   );
