@@ -5,6 +5,8 @@ import type { Project } from "../../../types/models";
 import dbConnect from "../../../utils/dbConnect";
 import ProjectModel from "../../../models/Projects";
 
+import mongoose from "mongoose";
+
 type Data = {
   success: boolean;
   data?: Project;
@@ -30,6 +32,12 @@ export default async function handler(
     //await dbConnect();
 
     try {
+      var current_timestamp = new Date();
+      req.body = {
+        _id: new mongoose.Types.ObjectId().toHexString(),
+        ...req.body,
+        date_created: current_timestamp.toISOString()
+      }
       const proj: Project = await ProjectModel.create({
         ...req.body
       });
