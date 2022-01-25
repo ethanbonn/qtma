@@ -30,7 +30,7 @@ export default function SocialProfileSimple() {
         <Avatar
           size={"2xl"}
           src={
-            "https://i.pinimg.com/originals/4c/b0/fd/4cb0fd75c75f71b0f9fcb70a93e8dd1b.jpg"
+           "https://www.cs.queensu.ca/people/images/user/51.jpg"
           }
           alt={"Avatar Alt"}
           mb={4}
@@ -44,83 +44,44 @@ export default function SocialProfileSimple() {
         </Text>
 
         <VStack alignItems="flex-start" mt="2">
-          <chakra.h2 fontSize="smmd" fontWeight="600">
+          <chakra.h2 fontSize="md" fontWeight="600">
             Skills and Interests
           </chakra.h2>
         </VStack>
-        {/* <Stack mt={8} direction={"row"}> */}
 
-        <Stack direction={["column", "row"]} spacing="24px">
-          <Box>
-          <Button
-           
-           fontSize={"sm"}
-           rounded={"full"}
-           color="white"
-           bg={"blue.400"}
-         >
-           UX Design
-         </Button>
-          </Box>
-
-          <Box>
-          <Button
-           
-           fontSize={"sm"}
-           rounded={"full"}
-           color="white"
-           bg={"blue.400"}
-         >
-           UX Design
-         </Button>
-          </Box>
-
-          <Box>
-          <Button
-           
-           fontSize={"sm"}
-           rounded={"full"}
-           color="white"
-           bg={"blue.400"}
-         >
-           UX Design
-         </Button>
-          </Box>
-          
-         
-        </Stack>
-
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-          {" "}
-          <Button
-           
-            fontSize={"sm"}
-            rounded={"full"}
+        <Stack direction={["column", "row"]} spacing="5px">
+          <Badge
+            px={2}
+            py={1}
+            bg={useColorModeValue("blue.500", "gray.800")}
+            fontWeight={"400"}
             color="white"
-            bg={"blue.400"}
+            rounded="xl"
           >
-            UX Design
-          </Button>
-          <Button
-            flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
+            Python
+          </Badge>
+
+          <Badge
+            px={2}
+            py={1}
+            bg={useColorModeValue("blue.500", "gray.800")}
+            fontWeight={"400"}
             color="white"
-            bg={"blue.400"}
-          >
-            Frontend Development
-          </Button>
-          <Button
-            flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
-            color="white"
-            bg={"blue.400"}
+            rounded="xl"
           >
             JavaScript
-          </Button>
-        </SimpleGrid>
-
+          </Badge>
+          <Badge
+            px={2}
+            py={1}
+            bg={useColorModeValue("blue.500", "gray.800")}
+            fontWeight={"400"}
+            color="white"
+            rounded="xl"
+          >
+            FL Studio
+          </Badge>
+        </Stack>
         {/* </Stack> */}
       </Box>
     </Center>
