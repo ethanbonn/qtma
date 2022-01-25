@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import PreviewCard from "./PreviewCard";
-import ProjectCard from "../Cards/ProjectCard";
+// import ProjectCard from "../Cards/ProjectCard";
 // import ProfileCard from "../Cards/ProfileCard";
-// import ProjectCard from "../ChakraComp/ProjectCard";
+import ProjectCard from "../ChakraComp/ProjectCard";
 import ProfileCard from "../ChakraComp/ProfileCard";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer";

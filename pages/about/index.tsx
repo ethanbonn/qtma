@@ -37,6 +37,10 @@ import {
   MoonIcon,
   SearchIcon,
 } from "@chakra-ui/icons";
+import Footer from "../../components/ChakraComp/Footer";
+import Navbar from "../../components/ChakraComp/Navbar";
+import ProjectCard from "../../components/ChakraComp/ProjectCard";
+import Login from "../../components/ChakraComp/Login";
 
 import ProfileCard from "../../components/ChakraComp/ProfileCard";
 
@@ -49,6 +53,7 @@ export default function WithSubnavigation() {
   return (
     <div>
       <Box>
+        {/* <Navbar /> */}
         <Flex
           bg={useColorModeValue("green.300", "gray.800")}
           color={useColorModeValue("gray.600", "green.300")}
@@ -60,30 +65,10 @@ export default function WithSubnavigation() {
           borderColor={useColorModeValue("gray.200", "gray.900")}
           align={"center"}
         >
-          <Flex
-            flex={{ base: 1, md: "auto" }}
-            ml={{ base: -2 }}
-            display={{ base: "flex", md: "none" }}
-          >
-            <IconButton
-              onClick={onToggle}
-              icon={
-                isOpen ? (
-                  <CloseIcon w={3} h={3} />
-                ) : (
-                  <HamburgerIcon w={5} h={5} />
-                )
-              }
-              colorScheme={"green"}
-              // variant={"ghost"}
-              aria-label={"Toggle Navigation"}
-            />
-          </Flex>
-
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
             <Link href="/">
               <Flex
-                display={{ base: "none", md: "flex" }}
+                display={{ base: "flex", md: "flex" }}
                 ml={{ base: 20, md: 20, sm: 0 }}
               >
                 <Image alt="Soar Logo" src="/soarlogo.png"></Image>
@@ -103,7 +88,6 @@ export default function WithSubnavigation() {
               aria-label={`Switch to ${text} mode`}
               colorScheme="green"
               //   aria-label="Call Sage"
-              fontSize="20px"
               ml={{ base: "0", md: "3" }}
               onClick={toggleMode}
               icon={<SwitchIcon />}
@@ -240,8 +224,7 @@ export default function WithSubnavigation() {
                   />
                 </Box> */}
               </SimpleGrid>
-              {/* <Center mt="4"> */}{" "}
-              {/* </Center> */}
+              {/* <Center mt="4"> */} {/* </Center> */}
             </Box>
           </Center>
 
@@ -365,37 +348,42 @@ export default function WithSubnavigation() {
             <chakra.h2 fontSize="2xl" fontWeight="700">
               Featured Projects
             </chakra.h2>
+          </VStack>
 
-            <SimpleGrid columns={[1, 1, 3]} spacing="40px">
-              <ProfileCard />
-              <ProfileCard />
+          <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
+  
+          </SimpleGrid>
 
-              <ProfileCard />
+          <Center mt="8px">
+            {" "}
+            <Button colorScheme="green" rounded="3xl">
+              Explore more projects
+            </Button>
+          </Center>
 
-              <ProfileCard />
-
-              <ProfileCard />
-              <ProfileCard />
-            </SimpleGrid>
-
-            <chakra.h2 fontSize="2xl" fontWeight="700">
+          <VStack alignItems="flex-start" spacing="20px" mt="30">
+            <chakra.h2 mt="30" fontSize="2xl" fontWeight="700">
               Profiles
             </chakra.h2>
-
-            <SimpleGrid columns={[1, 1, 3]} spacing="40px">
-              <ProfileCard />
-              <ProfileCard />
-
-              <ProfileCard />
-
-              <ProfileCard />
-
-              <ProfileCard />
-              <ProfileCard />
-            </SimpleGrid>
           </VStack>
+
+          <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
+            <ProfileCard />
+            <ProfileCard />
+            <ProfileCard />
+          </SimpleGrid>
+
+          <Center mt="8px" mb="30px">
+            {" "}
+            <Button colorScheme="green" rounded="3xl">
+              Explore more profiles
+            </Button>
+          </Center>
         </Container>
       </Center>
+      <Login />
+
+      <Footer />
     </div>
   );
 }
