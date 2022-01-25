@@ -29,7 +29,9 @@ export default async function handler(
   let search_params = new URLSearchParams(query.query as string);
 
   var all_params; //: {[key : string] : string[]};
-  
+  var search_obj = {};
+  var skills_arr = [];
+
   if (search_params.get("query") === null) {
 
     // Type guard for the URl query parameters
@@ -47,8 +49,6 @@ export default async function handler(
       "search": search_params.get("search"),
       "skills": search_params.get("skills")?.split(",")
     };
-    var search_obj = {};
-    var skills_arr = [];
     if (all_params.search && all_params.search !== "") {
       search_obj["should"] =  
         [  
@@ -85,7 +85,6 @@ export default async function handler(
 
 ////////////////////////////////////////////////
 //////////////////////////////
-  all_params = {desired_relationship_type: "sponsor", skills: ['python', 'c']};
 
 
 
@@ -93,6 +92,8 @@ export default async function handler(
 
     await dbConnect();
     // if search_string
+
+    console.log("all", all_params);
     try {
       var queryobj = [];
       if (Object.keys(search_obj).length > 0) {
@@ -133,10 +134,11 @@ export default async function handler(
         res.status(400).json({ success: false });
       }
     // } else res.status(400).json({ success: false });
-
-      if ((!search_obj) && (!skills_arr)){
+  
+      if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
         try {
           const queryobj = await ProjectModel.find({});
+          console.log("ALL PROJECTS", queryobj);
           if (!queryobj) throw new Error("Data not found");
           res.status(200).json({ success: true, data: queryobj });
         } catch (error) {
