@@ -1,12 +1,13 @@
 // async 
 // https://react-select.com/async
 
-
+import { useAuthUser } from 'next-firebase-auth';
 import React, { Component, useEffect, useState } from 'react';
 import dbConnect from "../utils/dbConnect";
-import AsyncSelect from 'react-select/async';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import getSkills from '../functions/server/getSkills';
 import type { Skill } from "../types/models";
+import baseUrl from "../utils/baseUrl";
 
 export interface SkillOption {
     readonly value: string;
@@ -54,8 +55,30 @@ export default function AsyncMulti({stateChanger}) {
     return []
   }
   
+  const { getIdToken } = useAuthUser();
+
+  async function createSkill(inputValue) {
+
+    const token = await getIdToken();
+
+    await fetch(
+      `${baseUrl}/api/skill/create`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: token } : {})
+        },
+        body: JSON.stringify({
+          name: inputValue,
+          colour: 'blue'
+        })
+      }
+    );
+  }
+
     return (
-      <AsyncSelect
+      <AsyncCreatableSelect
         value={inputValue}
         onChange={promiseOptions}
         isMulti
@@ -63,6 +86,7 @@ export default function AsyncMulti({stateChanger}) {
         // cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
+        onCreateOption={createSkill}
       />
 
     );
