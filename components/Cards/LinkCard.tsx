@@ -1,17 +1,17 @@
 import type { User, Link } from "../../types/models";
 
 interface userWrapper {
-  user : User
+  user: User;
 }
 
 export default function LinkCard(props: userWrapper) {
-  const user : User = props.user;
+  const { user } = props;
   // const  usr : User = props;
   // console.log(user);
   // console.log(usr)
   // console.log(usr.user.timezone);
-  const links : Link[] = user.links!;
-  const {timezone} = user;
+  const links: Link[] = user.links!;
+  const { timezone } = user;
 
   return (
     <>
@@ -19,15 +19,18 @@ export default function LinkCard(props: userWrapper) {
         <div className="max-w-xs w-full rounded-xl  overflow-hidden shadow-lg">
           <div className="px-2 pb-2">
             <div className="text-center text-sm font-semibold mt-2">{`Timezone: ${timezone}`}</div>
-            {links.map((x) => (
-              <span
-                className={`inline-block bg-${x.colour}-normal rounded-full px-3 py-1 text-sm font-semibold text-black mx-2 my-2`}
-              >
-                <a target="_blank" href={`${x.url}`} rel="noreferrer">
-                  {x.site}
-                </a>
-              </span>
-            ))}
+            {links.map(
+              (x) =>
+                x.url && (
+                  <span
+                    className={`inline-block bg-${x.colour}-normal rounded-full px-3 py-1 text-sm font-semibold text-black mx-2 my-2`}
+                  >
+                    <a target="_blank" href={`${x.url}`} rel="noreferrer">
+                      {x.site}
+                    </a>
+                  </span>
+                )
+            )}
           </div>
         </div>
       </div>
