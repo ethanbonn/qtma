@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type { Project } from "../../../types/models";
 import dbConnect from "../../../utils/dbConnect";
 import ProjectModel from "../../../models/Projects";
-import search from "./search";
 import { forEach } from "cypress/types/lodash";
 
 
