@@ -61,8 +61,7 @@ export type Skill = {
   _id: string;
   name: string;
   colour: string;
-  users_possess: string[]; // ids
-  users_learning: string[]; // ids
+  followers: string[]; // ids
   project_ids: string[];
 };
 
