@@ -6,13 +6,13 @@ import {
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
 import { FunctionComponent, useState } from "react";
-import type { User, Link, Skill } from "../../types/models";
-import getUserData from "../../functions/server/getUserData";
-import type { UnregisteredUser } from "../../types";
-import { isUser } from "../../functions/typeGuards";
-import Footer from "../../components/Footer";
-import NavBar from "../../components/NavBar/NavBar";
-import baseUrl from "../../utils/baseUrl";
+import type { User, Link, Skill } from "../../../types/models";
+import getUserData from "../../../functions/server/getUserData";
+import type { UnregisteredUser } from "../../../types";
+import { isUser } from "../../../functions/typeGuards";
+import Footer from "../../../components/Footer";
+import NavBar from "../../../components/NavBar/NavBar";
+import baseUrl from "../../../utils/baseUrl";
 
 const timezones = [
   "ACST",
@@ -92,7 +92,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       }
       if (response.status === 200) {
         setUniqueUsername(true);
-        window.location.href = "/profile";
+        window.location.href = `/profile/${props._id}`;
       } else {
         setUnexpectedError(true);
       }
