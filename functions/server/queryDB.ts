@@ -42,7 +42,7 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
 
     // If there are valid parameters, join them with &, otherwise, set the query string to query
     var query_string = (valid_params.length !== 0) ? valid_params.join("&") : "query";
-
+    console.log("BASE URL", ${baseUrl});
     var projects = await fetch(`${baseUrl}/api/projects/${query_string}`, {
       method: 'GET'
     })
