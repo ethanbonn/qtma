@@ -15,7 +15,8 @@ import { Project } from "../../types/models";
 
 
 export default function ProjectCard(props : Project) {
-  const { name, skills, author_timezone, duration } = props;
+  const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
+  // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
     <Center py={6}>
       <Box
@@ -49,19 +50,22 @@ export default function ProjectCard(props : Project) {
 
           <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
             <Avatar
-              src={"https://www.cs.queensu.ca/people/images/user/51.jpg"}
+              src={author_picture}
               alt={"Author"}
             />
             <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
-              <Text fontWeight={600}>John West</Text>
-              <Text color={"gray.500"}>Software Developer</Text>
+              <Text fontWeight={600}>{author_name}</Text>
+              <Text color={"gray.500"}>{author_title}</Text>
             </Stack>
           </Stack>
 
           <Text mt="2px" color={"gray.500"}>
-            Timezone: {author_timezone}
+            <Text mb="2px" color={"gray.500"}>Timezone: <chakra.span fontWeight={600}  color="blue.600">{author_timezone}</chakra.span></Text>
           </Text>
-          <Text mb="2px" color={"gray.500"}>Project Duration: <chakra.span fontWeight={600}  color="green.300"> {duration} </chakra.span>  </Text>
+          <Text mb="2px" color={"gray.500"}>Project Duration: <chakra.span fontWeight={600}  color={duration == "short" ? "green.400" : duration == "medium" ? "yellow.400" : "red.400"}> {duration} </chakra.span>  </Text>
+          
+          <Text mb="2px" color={"gray.500"}>Date Created: <chakra.span fontWeight={600}  color={"green.400" }> {String(date_created.toLocaleString())} </chakra.span>  </Text>
+
 
           {/* <Text color={"gray.500"}>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
@@ -73,7 +77,7 @@ export default function ProjectCard(props : Project) {
 
         <VStack alignItems="flex-start" mt="40px" mb="2px">
           <chakra.h2 fontSize="md" fontWeight="600">
-            Desired Skills
+            Skills
           </chakra.h2>
         </VStack>
 

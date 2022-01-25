@@ -9,7 +9,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 
 
 export default function Card({ stateChanger }) {
-  const [relationship_type, set_relationship_type] = useState("collaborator");
+  const [relationship_type, set_relationship_type] = useState("");
   const [skill, set_skill] = useState([]);
   const [search, set_search] = useState("");
 
@@ -93,7 +93,8 @@ export default function Card({ stateChanger }) {
                   <Input placeholder="a partner" />{" "} */}
                   <FormControl>
                     <FormLabel htmlFor="country">I'm Looking for</FormLabel>
-                    <Select id="country" onSelect={(text) => set_relationship_type(String(text))} >
+                    <Select id="country" onSelect={(text) => set_relationship_type(String(text))}>
+                      <option></option>
                       <option>collaborator</option>
                       <option>sponsor</option>
                     </Select>

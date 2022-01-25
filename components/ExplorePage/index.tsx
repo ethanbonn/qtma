@@ -38,7 +38,7 @@ const Explore = (props: UnregisteredUser | User) => {
   return (
     <div>
       {/* <NavBar login_name={navNameDisplay}/> */}
-      <LandingPage />
+      <LandingPage {... props}/>
     </div>
   );
 };

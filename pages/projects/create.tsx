@@ -25,10 +25,25 @@ import {
   
     const { _id, email } = props;
     const { getIdToken } = useAuthUser();
+
   
     const onSubmit = async (data: any) => {
       const token = await getIdToken();
+      var reqBody = isTypeUser ? JSON.stringify({
+        author_id: _id,
+        author_picture: (props.profilePicture ?? "https://avatars.dicebear.com/api/male/username.svg"),
+        author_name: (props.firstName + " " + props.lastName),
+        author_title: props.jobTitle,
+        author_username: props.userName,
+
   
+  
+        ...data
+      }) : JSON.stringify({
+        author_id: _id,
+  
+        ...data
+      });
       await fetch(
         `${baseUrl}/api/projects/create`,
         {
@@ -37,10 +52,7 @@ import {
             "Content-Type": "application/json",
             ...(token ? { Authorization: token } : {}),
           },
-          body: JSON.stringify({
-            author_id: _id,
-            ...data
-          }),
+          body: reqBody,
         }
       );
       window.location.href = "/";

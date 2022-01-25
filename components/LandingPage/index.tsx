@@ -62,6 +62,8 @@ import QueryCard from "../Cards/QueryCard";
 
 export default function LandingPage(props: UnregisteredUser | User) {
   const [projects, update_projects] = useState([]);
+  const [profiles, update_profiles] = useState([]);
+
 
   const { isOpen, onToggle } = useDisclosure();
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -72,6 +74,9 @@ export default function LandingPage(props: UnregisteredUser | User) {
 
   useEffect( () => {
   }, [projects]);
+
+  useEffect( () => {
+  }, [profiles]);
 
 //(
   //   <div>
@@ -391,9 +396,21 @@ export default function LandingPage(props: UnregisteredUser | User) {
           </VStack>
 
           <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
+          {
+                profiles.length === 0 ? (
+                  <>
+                    <p>No data</p>
+                  </>
+                ) : (
+                  <>
+                    {
+                      profiles.map((profile) => {
+                        return (<ProfileCard {... profile} />)
+                      })
+                    }
+                  </>
+                )
+              }
           </SimpleGrid>
 
           <Center mt="8px" mb="30px">
@@ -404,7 +421,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
           </Center>
         </Container>
       </Center>
-      <Login />
+      {/* <Login /> */}
 
       <Footer />
     </div>
