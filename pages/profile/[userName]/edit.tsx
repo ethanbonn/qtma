@@ -114,7 +114,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
 
   return (
     <>
-      <NavBar login_name={props.firstName ?? email} />
+      <NavBar login_name={isTypeUser ? props.firstName : email} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
@@ -233,7 +233,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
           {errors.timezone && <span>This field is required</span>}
         </label>
 
-        {skillsList.map((_, i) => (
+        {/* {skillsList.map((_, i) => (
           <>
             <br />
             <label
@@ -273,7 +273,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
             </label>
           </>
         ))}
-        <br />
+        <br /> */}
 
         <label
           htmlFor="user-links"
@@ -350,7 +350,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
         </div>
         <br />
 
-        {projectsList.map((_, i) => (
+        {/* {projectsList.map((_, i) => (
           <>
             <br />
             <label
@@ -390,7 +390,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
               )}
             </label>
           </>
-        ))}
+        ))} */}
         <br />
         <input
           type="submit"

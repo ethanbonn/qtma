@@ -10,7 +10,7 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
         // key: keyof typeof String;
         author_timezone: supported_timezones | supported_timezones[] | undefined;
         desired_relationship_type: string | undefined;
-        search: string | string[] | undefined;
+        search: string | undefined;
         skills: [] | string[] | undefined;
     };
 
@@ -50,7 +50,6 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
         .then((projects) => {
             return projects.data;
         });
-    console.log("projects in Query: ", projects);
     return projects;
 
 

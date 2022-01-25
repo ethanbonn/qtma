@@ -4,7 +4,6 @@ import type { Project, Skill } from "../../types/models";
 // export default function ProjectCard({ project_name, project_skills }) {
 export default function ProjectCard(props : Project) {
    const { name, skills } = props;
-   console.log("CREATING PROJECT CARD W params: ", name, skills);
   return (
     <div className=" max-w-auto mx-10 bg-white rounded-xl shadow-lg flex m-10 ">
       <div className="max-w-sm  rounded-xl  overflow-hidden shadow-lg">

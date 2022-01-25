@@ -7,7 +7,9 @@ import {
 } from "next-firebase-auth";
 
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import {
+ Fragment, useEffect, useRef, useState 
+} from "react";
 import getUserData from "../../functions/server/getUserData";
 // import { ChevronDownIcon } from '@heroicons/react/solid'
 
@@ -44,7 +46,7 @@ export default function NavMenu(props: { first_name: string }) {
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
-                      <a href={`/profile/${AuthUser.id}`}>
+                      <a href="/profile">
                         <button
                           className={`${
                             active

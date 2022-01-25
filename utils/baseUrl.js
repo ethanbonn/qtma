@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:3000"
-    : "https://soarup.io";
+    : process.env.PROD_DOMAIN;
 
 export default baseUrl;

@@ -1,15 +1,3 @@
-import { useState, useEffect } from "react";
-import PreviewCard from "./PreviewCard";
-// import ProjectCard from "../Cards/ProjectCard";
-// import ProfileCard from "../Cards/ProfileCard";
-// import ProjectCard from "../ChakraComp/ProjectCard";
-// import ProfileCard from "../ChakraComp/ProfileCard";
-// import NavBar from "../NavBar/NavBar";
-// import Footer from "../Footer";
-import Card from "../Cards/QueryCard";
-import queryDB from "../../functions/server/queryDB";
-
-
 import {
   Box,
   Flex,
@@ -55,165 +43,79 @@ import ProjectCard from "../../components/ChakraComp/ProjectCard";
 import Login from "../../components/ChakraComp/Login";
 
 import ProfileCard from "../../components/ChakraComp/ProfileCard";
-import { UnregisteredUser } from "../../types";
-import { User } from "../../types/models";
-import QueryCard from "../Cards/QueryCard";
 
-
-export default function LandingPage(props: UnregisteredUser | User) {
-  const [projects, update_projects] = useState([]);
-  const [profiles, update_profiles] = useState([]);
-
-
+export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { toggleColorMode: toggleMode } = useColorMode();
   const text = useColorModeValue("dark", "light");
   const SwitchIcon = useColorModeValue(MoonIcon, SunIcon);
 
-
-
-  useEffect( () => {
-  }, [projects]);
-
-  useEffect( () => {
-  }, [profiles]);
-
-//(
-  //   <div>
-  //     {/* <NavBar /> */}
-  //     <div className=" bg-green-normal py-20">
-  //       <div className="grid justify-items-center mx-30">
-  //         <p className="font-nunito text-4xl font-bold  text-white px-3">
-  //           Build the dream team to soar your ideas to the moon.
-  //         </p>
-  //         <Card stateChanger={update_projects} />
-  //         <div className="flex flex-wrap content-center">
-  //           <PreviewCard />
-  //           <PreviewCard />
-  //           <PreviewCard />
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <div className=" bg-white py-40">
-  //       <div className="grid justify-items-center mx-30">
-  //         <p className="font-sans text-center text-4xl font-bold  text-blue-normal px-40">
-  //           Discover hundreds of projects to build, and connect with other
-  //           brightminded individuals.
-  //         </p>
-
-  //         <div className="pt-20 px-20">
-  //           <p className="font-sans text-3xl font-bold  text-black ">
-  //             Featured Projects
-  //           </p>
-  //           <div className="flex flex-wrap content-center">
-  //             {
-  //               projects.length === 0 ? (
-  //                 <>
-  //                   <p>No data</p>
-  //                 </>
-  //               ) : (
-  //                 <>
-  //                   {
-  //                     projects.map((proj) => {
-  //                       return (<ProjectCard name={proj.name} skills={proj.skills} {... proj} />)
-  //                     })
-  //                   }
-  //                 </>
-  //               )
-  //             }
-  //           </div>
-  //         </div>
-  //         <button className=" font-sans  px-4 py-2 text-white bg-green-normal rounded-full shadow-md">
-  //           Explore more projects{" "}
-  //         </button>
-
-  //         <div className="pt-20 px-20">
-  //           <p className="font-sans text-3xl font-bold  text-black ">
-  //             Profiles
-  //           </p>
-  //           <div className="flex flex-wrap content-center">
-  //             <ProfileCard />
-  //             <ProfileCard />
-
-  //             <ProfileCard />
-  //           </div>
-  //         </div>
-  //         <button className=" font-sans  px-4 py-2 text-white bg-green-normal rounded-full shadow-md">
-  //           Explore more profiles{" "}
-  //         </button>
-  //       </div>
-  //     </div>
-  //     <Footer />
-  //   </div>
-  // );
-
   return (
     <div>
       <Box>
-        <Navbar {... props}/>
+        {/* <Navbar /> */}
         <Flex
           bg={useColorModeValue("green.300", "gray.800")}
           color={useColorModeValue("gray.600", "green.300")}
-        //   minH={"55px"}
-        //   py={{ base: 2 }}
-        //   px={{ base: 4 }}
-        //   borderBottom={1}
-        //   borderStyle={"solid"}
-        //   borderColor={useColorModeValue("gray.200", "gray.900")}
-        //   align={"center"}
-        // >
+          minH={"55px"}
+          py={{ base: 2 }}
+          px={{ base: 4 }}
+          borderBottom={1}
+          borderStyle={"solid"}
+          borderColor={useColorModeValue("gray.200", "gray.900")}
+          align={"center"}
+        >
+          <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+            <Link href="/">
+              <Flex
+                display={{ base: "flex", md: "flex" }}
+                ml={{ base: 20, md: 20, sm: 0 }}
+              >
+                <Image alt="Soar Logo" src="/soarlogo.png"></Image>
+              </Flex>
+            </Link>
+          </Flex>
 
-        //   <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-        //     <Link href="/">
-        //       <Flex
-        //         display={{ base: "flex", md: "flex" }}
-        //         ml={{ base: 20, md: 20, sm: 0 }}
-        //       >
-        //         <Image alt="Soar Logo" src="/soarlogo.png"></Image>
-        //       </Flex>
-        //     </Link>
-        //   </Flex>
-
-        //   <Stack
-        //     flex={{ base: 1, md: 0 }}
-        //     justify={"flex-end"}
-        //     direction={"row"}
-        //     spacing={6}
-        //     mr={{ base: 20, md: 20, sm: 0 }}
-        //   >
-        //     <IconButton
-        //       size="md"
-        //       aria-label={`Switch to ${text} mode`}
-        //       colorScheme="green"
-        //       //   aria-label="Call Sage"
-        //       ml={{ base: "0", md: "3" }}
-        //       onClick={toggleMode}
-        //       icon={<SwitchIcon />}
-        //     />
-        //     <IconButton
-        //       colorScheme="green"
-        //       aria-label="Call Sage"
-        //       fontSize="20px"
-        //       icon={<ChatIcon />}
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={6}
+            mr={{ base: 20, md: 20, sm: 0 }}
+          >
+            <IconButton
+              size="md"
+              aria-label={`Switch to ${text} mode`}
+              colorScheme="green"
+              //   aria-label="Call Sage"
+              ml={{ base: "0", md: "3" }}
+              onClick={toggleMode}
+              icon={<SwitchIcon />}
+            />
+            <IconButton
+              colorScheme="green"
+              aria-label="Call Sage"
+              fontSize="20px"
+              icon={<ChatIcon />}
             />
 
-            {/* <Flex alignItems={"center"}>
+            <Flex alignItems={"center"}>
               <Menu>
                 <MenuButton as={Button} colorScheme="green" minW={0}>
                   Profile
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>Edit Profile</MenuItem>
-                  <MenuItem>About</MenuItem>
+                  <MenuItem>Link 1</MenuItem>
+                  <MenuItem>Link 2</MenuItem>
                   <MenuDivider />
-                  <MenuItem>Sign Out</MenuItem>
+                  <MenuItem>Link 3</MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
           </Stack>
-        </Flex> */}
+        </Flex>
 
-      {/* <Collapse in={isOpen} animateOpacity children={<MobileNav />} /> */}
+        {/* <Collapse in={isOpen} animateOpacity children={<MobileNav />} /> */}
       </Box>
       {/* <Divider color="blue" /> */}
       <Center bg={useColorModeValue("green.300", "gray.700")}>
@@ -240,7 +142,91 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </Heading>
           </Stack>
 
-          <QueryCard stateChanger={update_projects}/>
+          <Center>
+            <Box
+              maxW={"650px"}
+              w={"full"}
+              bg={useColorModeValue("white", "gray.900")}
+              boxShadow={"2xl"}
+              rounded={"lg"}
+              p={5}
+              mb="10"
+              // textAlign={"center"}
+            >
+              {/* <Stack direction={["column", "row"]} spacing="24px">
+                <Box >
+                  
+                </Box>
+
+
+                <Box >
+                                <Button colorScheme="green">Search</Button>
+
+                </Box>
+               
+               
+              </Stack> */}
+              <SimpleGrid
+                minChildWidth="70px"
+                spacing="30px"
+                columns={[2, 2, 2]}
+              >
+                <Box>
+                  {/* <Text fontWeight={600} fontSize="lg">
+                    I'm looking for{" "}
+                  </Text>
+                  <Input placeholder="a partner" />{" "} */}
+                  <FormControl>
+                    <FormLabel htmlFor="country">I'm Looking for</FormLabel>
+                    <Select id="country">
+                      <option>Profiles</option>
+                      <option>Projects</option>
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel htmlFor="country">Skilled In</FormLabel>
+                    <Select id="country">
+                      <option>Profiles</option>
+                      <option>Projects</option>
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel htmlFor="country">To Build</FormLabel>
+                    <Select id="country">
+                      <option>Profiles</option>
+                      <option>Projects</option>
+                    </Select>
+                  </FormControl>
+                </Box>
+
+                {/* <Box>
+             
+                  <FormControl>
+                    <FormLabel htmlFor="country">⭐</FormLabel>
+                    <Button colorScheme="green">
+                    Search
+                  </Button>
+                  </FormControl>
+                </Box> */}
+
+                {/* <Box mt="6">
+                  <Text fontSize="md">  </Text>
+
+                  <IconButton
+                    colorScheme="green"
+                    aria-label="Call Sage"
+                    fontSize="20px"
+                    icon={<SearchIcon />}
+                  />
+                </Box> */}
+              </SimpleGrid>
+              {/* <Center mt="4"> */} {/* </Center> */}
+            </Box>
+          </Center>
 
           <Container maxW={"7xl"} p="10">
             <SimpleGrid columns={[1, 1, 3]} spacing="40px">
@@ -365,21 +351,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
           </VStack>
 
           <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
-              {
-                projects.length === 0 ? (
-                  <>
-                    <p>No data</p>
-                  </>
-                ) : (
-                  <>
-                    {
-                      projects.map((proj) => {
-                        return (<ProjectCard name={proj.name} skills={proj.skills} {... proj} />)
-                      })
-                    }
-                  </>
-                )
-              }
+  
           </SimpleGrid>
 
           <Center mt="8px">
@@ -396,21 +368,9 @@ export default function LandingPage(props: UnregisteredUser | User) {
           </VStack>
 
           <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
-          {
-                profiles.length === 0 ? (
-                  <>
-                    <p>No data</p>
-                  </>
-                ) : (
-                  <>
-                    {
-                      profiles.map((profile) => {
-                        return (<ProfileCard {... profile} />)
-                      })
-                    }
-                  </>
-                )
-              }
+            <ProfileCard />
+            <ProfileCard />
+            <ProfileCard />
           </SimpleGrid>
 
           <Center mt="8px" mb="30px">
@@ -421,7 +381,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
           </Center>
         </Container>
       </Center>
-      {/* <Login /> */}
+      <Login />
 
       <Footer />
     </div>

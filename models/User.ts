@@ -6,8 +6,7 @@ const skillSchema = new Schema<Skill>({
   _id: { type: String, required: true },
   name: { type: String, required: true },
   colour: { type: String, required: true },
-  users_possess: { type: [String], required: false },
-  users_learning: { type: [String], required: false },
+  followers: { type: [String], required: false },
   project_ids: { type: [String], required: false },
 });
 

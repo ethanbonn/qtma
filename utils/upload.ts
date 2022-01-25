@@ -1,13 +1,17 @@
 import aws from "aws-sdk";
 
+interface UploadedImage  {
+  Location: string;
+}
+
 // Now creating the S3 instance which will be used in uploading photo to s3 bucket.
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID_SOAR, // accessKeyId that is stored in .env file
   secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET_SOAR, // secretAccessKey is also store in .env file
 });
 
-export default (data: Buffer, filename: string) =>
-  new Promise((resolve, reject) => {
+export default (data: Buffer, filename: string)=>
+  new Promise<UploadedImage>((resolve, reject) => {
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME_SOAR, // S3 bucket
       Key: filename, // Name of the image

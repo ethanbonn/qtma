@@ -31,7 +31,7 @@ const styles = {
     cursor: "pointer",
   },
 };
-export const Profile = (props: UnregisteredUser | User) => {
+export const ViewProfile = (props: UnregisteredUser | User) => {
   const [userProfile, setUserProfile] = useState(props as User);
 
   const isUserType = isUser(props);
@@ -117,4 +117,4 @@ export const getServerSideProps = withAuthUserSSR({
   };
 });
 
-export default withAuthUser()(Profile as FunctionComponent<unknown>);
+export default withAuthUser()(ViewProfile as FunctionComponent<unknown>);

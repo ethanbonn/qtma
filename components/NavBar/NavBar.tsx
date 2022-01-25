@@ -14,8 +14,6 @@ export default function NavBar(props: {login_name: string}) {
   const { signOut } = useAuthUser();
   const { login_name } = props;
 
-  console.log("NAVBAR name", login_name);
-
   return (
     <nav className="bg-green-normal py-3">
       <div className="max-w-6xl mx-auto px-4">

@@ -23,46 +23,45 @@ export type User = {
   skills?: Skill[];
 };
 
-export type Chat = {
-  _id: string;
-  user: String; // _id
-  chats: [
-    {
-      textsWith:String[];   // recipients
-      texts: [
-        {
-          text: String; // content
-          sender:  String; // _id
-          receiver: String[]; // recipients
-          date: Date;
-        },
-            ]
-    } 
-  ]; 
-};
+// export type Chat = {
+//   _id: string;
+//   user: String; // _id
+//   chats: [
+//     {
+//       textsWith:String[];   // recipients
+//       texts: [
+//         {
+//           text: String; // content
+//           sender:  String; // _id
+//           receiver: String[]; // recipients
+//           date: Date;
+//         },
+//             ]
+//     } 
+//   ]; 
+// };
 
 
-export type Conversation = {
-  _id: string;
-  participants_id: string[];
-  conversation_type: string;
-  last_activity: Date;
-  message_ids: string[];
-};
-export type Message = {
-  _id: string;
-  conversation_id: string; // is this nessasary
-  time_created: Date;
-  sender_id: string;
-  content: string;
-};
+// export type Conversation = {
+//   _id: string;
+//   participants_id: string[];
+//   conversation_type: string;
+//   last_activity: Date;
+//   message_ids: string[];
+// };
+// export type Message = {
+//   _id: string;
+//   conversation_id: string; // is this nessasary
+//   time_created: Date;
+//   sender_id: string;
+//   content: string;
+// };
 
 export type Skill = {
   _id: string;
   name: string;
   colour: string;
-  users_possess: string[]; // ids
-  users_learning: string[]; // ids
+  followers: string[]; // ids
   project_ids: string[];
 };
 
@@ -75,6 +74,10 @@ export type Project = {
   description: string;
   date_created: Date;
   desired_relationship_type: string;
+  author_name: string;
+  author_title: string;
+  author_picture?: string; 
+  author_username: string;
   // hours_per_week?: number;
   duration?: string;
   

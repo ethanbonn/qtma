@@ -28,15 +28,15 @@ const styles = {
 };
 
 const Index = (props: UnregisteredUser | User) => {
-  const { email } = props;
-  var navNameDisplay = handleUserType(props); // handles user access and redirects
+  // const { email } = props;
+  // var navNameDisplay = handleUserType(props); // handles user access and redirects
 
 
 
   return (
     <div>
-      <NavBar login_name={navNameDisplay}/>
-      <LandingPage />
+      {/* <NavBar login_name={navNameDisplay}/> */}
+      <LandingPage {... props} />
     </div>
   );
 };

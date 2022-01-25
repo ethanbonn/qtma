@@ -7,6 +7,10 @@ import type { User } from "../../types/models";
 export const isUser = (user: UnregisteredUser | User): user is User =>
   (user as User).userName !== undefined;
 
+export const isRegistered = (
+  user: UnregisteredUser | null | undefined
+): user is UnregisteredUser => (user as UnregisteredUser).email != undefined;
+
 export const handleUserType = (props: UnregisteredUser | User) => {
   const router = useRouter();
   const { email } = props;
@@ -29,6 +33,9 @@ export const handleUserType = (props: UnregisteredUser | User) => {
       } else {
         router.push(`/profile/${_id}/edit`);
         // router.reload();
+      }
+      if (isUser(props)) {
+        const displayName = props.firstName;
       }
     }
   });
