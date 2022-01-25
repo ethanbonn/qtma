@@ -100,7 +100,6 @@ export default function WithSubnavigation() {
           >
             <IconButton
               size="md"
-              fontSize="lg"
               aria-label={`Switch to ${text} mode`}
               colorScheme="green"
               //   aria-label="Call Sage"

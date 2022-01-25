@@ -48,7 +48,7 @@ import {
   
     return (
       <>
-        <NavBar login_name={props.firstName ?? email}/>
+        <NavBar login_name={isTypeUser ? props.firstName : email}/>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
