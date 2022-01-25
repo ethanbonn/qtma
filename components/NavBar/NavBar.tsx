@@ -1,13 +1,26 @@
 import Link from "next/link";
+import { useState } from "react";
+import {
+  useAuthUser,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from "next-firebase-auth";
+import getUserData from "../../functions/server/getUserData";
+import { useRouter } from "next/router";
+import NavMenu from "../../components/NavBar/NavMenu";
 
-export default function NavBar() {
+
+export default function NavBar(props: {login_name: string}) {
+  const { signOut } = useAuthUser();
+  const { login_name } = props;
+
   return (
     <nav className="bg-green-normal py-3">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
           <div className="flex space-x-4">
             <div>
-              <Link href="/#">
+              <Link href="/">
                 <span className="font-bold text-white text-3xl">Soar</span>
               </Link>
             </div>
@@ -17,26 +30,10 @@ export default function NavBar() {
               <h3 className="text-2xl font-medium text-white">Explore</h3>
             </Link>
           </div>
-          <div className="hidden md:flex items-center space-x-1">
-            {/* <a href="" className="py-5 px-3">
-                Login
-              </a> */}
-            <Link href="/login">
-              <button className="font-sans font-bold px-4 py-2 text-white bg-green-normal rounded-md shadow-md">
-                Sign in
-              </button>
-            </Link>
-          </div>
-
-          <div className="md:hidden flex items-center">
-            <Link href="/login">
-              <button className=" font-sans  px-4 py-2 text-white bg-green rounded-md shadow-md">
-                Sign in
-              </button>
-            </Link>
-          </div>
+          <NavMenu first_name={login_name} />
         </div>
       </div>
     </nav>
   );
 }
+

@@ -18,7 +18,7 @@ export default function ProjectCard() {
           <div className="content-center">
             <div className=" text-center font-bold text-xl ">Theil Doe</div>
             <p className=" text-center text-gray-500 font-semibold mb-3">
-              Sofware Developer
+              Software Developer
             </p>
           </div>
 
@@ -28,6 +28,7 @@ export default function ProjectCard() {
           <p className="text-gray-500 font-normal">Skills and Interests:</p>
         </div>
         <div className="px-6  pb-2">
+
           <span className="inline-block bg-blue-normal rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
             UX Design
           </span>

@@ -1,16 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { verifyIdToken } from "next-firebase-auth";
 
-import type { User } from "../../../types/models";
+import type { Skill } from "../../../types/models";
 import dbConnect from "../../../utils/dbConnect";
-import UserModel from "../../../models/User";
-import uploadImage from "../../../utils/upload";
+import SkillModel from "../../../models/Skills";
+
+import mongoose from "mongoose";
 
 type Data = {
   success: boolean;
-  data?: User;
+  data?: Skill;
 };
-
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,31 +24,24 @@ export default async function handler(
         console.log("No Auth token");
         throw new Error("No authorization token");
       }
-
-
       await verifyIdToken(req?.headers?.authorization);
     } catch (error) {
       return res.status(401).json({ success: false });
     }
 
-    const { Location } = await uploadImage(
-      Buffer.from(
-        req.body.profilePicture.replace(/data:.*\/.*;base64,/, ""),
-        "base64"
-      ),
-      `${req.body._id}-profilePicture`
-    );
-
-
-    await dbConnect();
+    //await dbConnect();
 
     try {
-      const user: User = await UserModel.create({
-        ...req.body,
-        profilePicture: Location,
+      req.body = {
+        _id: new mongoose.Types.ObjectId().toHexString(),
+        ...req.body
+      }
+      const skill: Skill = await SkillModel.create({
+        ...req.body
       });
-      return res.status(200).json({ success: true, data: user });
+      return res.status(200).json({ success: true, data: skill });
     } catch (error) {
+      console.log(error);
       return res.status(400).json({ success: false });
     }
   } else return res.status(500).json({ success: false });

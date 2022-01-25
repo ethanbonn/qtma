@@ -10,6 +10,8 @@ const firebaseAuthConfig = {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       requireDisplayName: false,
     },
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
   ],
   signInSuccessUrl: "/",
   credentialHelper: "none",
@@ -32,6 +34,7 @@ const FirebaseAuth = () => {
           uiConfig={firebaseAuthConfig}
           firebaseAuth={firebase.auth()}
         />
+        
       ) : null}
     </>
   );
