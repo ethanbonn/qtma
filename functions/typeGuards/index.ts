@@ -9,6 +9,10 @@ export const isUser = (user: UnregisteredUser | User): user is User => {
     return (user as User).userName !== undefined;
 }
 
+export const isRegistered = (user: UnregisteredUser | null | undefined): user is UnregisteredUser => {
+    return (user as UnregisteredUser).email != undefined;
+}
+
 export const handleUserType = (props: UnregisteredUser | User) => {
     const router = useRouter();
     const {email} = props;

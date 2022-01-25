@@ -20,6 +20,9 @@ const schema = new Schema<Project>({
   skills : {type: [skillSchema], required: false},
   description: {type: String, required: true},
   date_created: {type: Date, required: true},
+  author_name: {type: String, required: false},
+  author_picture: {type: String, required: false},
+  author_title: {type: String, required: false},
   desired_relationship_type: {type: String, required: true},
   duration: {type: String, required: false},   // short (<1 month) | medium (1-4 months) | long (4+ months)
 

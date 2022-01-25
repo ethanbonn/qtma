@@ -18,6 +18,10 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { UnregisteredUser } from "../../types";
+import { isUser, handleUserType, isRegistered } from "../../functions/typeGuards";
+import type { User } from "../../types/models";
+import { useAuthUser } from "next-firebase-auth";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -34,12 +38,15 @@ const NavLink = ({ children }: { children: ReactNode }) => (
   </Link>
 );
 
-export default function Nav() {
+export default function Nav(props: UnregisteredUser | User | undefined) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const isTypeUser = isUser(props);
+  const isReg = isRegistered(props);
+  const { signOut } = useAuthUser();
   return (
     <>
-      <Box bg={useColorModeValue("green.100", "gray.900")} px={4}>
+      <Box bg={useColorModeValue("green.300", "gray.600")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Box>
             <Image alt="Soar Logo" src="/soarlogo.png"></Image>
@@ -51,29 +58,76 @@ export default function Nav() {
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
 
-              <Menu>
-                <MenuButton as={Button} colorScheme="green">
-                  Profile
-                </MenuButton>
-                <MenuList alignItems={"center"}>
-                  <br />
-                  <Center>
-                    <Avatar
-                      size={"2xl"}
-                      src={"https://avatars.dicebear.com/api/male/username.svg"}
-                    />
-                  </Center>
-                  <br />
-                  <Center>
-                    <p>Username</p>
-                  </Center>
-                  <br />
-                  <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
+              {isTypeUser ? 
+                <Menu>
+                  <MenuButton as={Button} colorScheme="green">
+                    {props.firstName} 
+                  </MenuButton>
+                  <MenuList alignItems={"center"}>
+                    <br />
+                    <Center>
+                      <Avatar
+                        size={"2xl"}
+                        src={props.profilePicture ? props.profilePicture : "https://avatars.dicebear.com/api/male/username.svg"}
+                      />
+                    </Center>
+                    <br />
+                    <Center>
+                      <p>{props.userName}</p>
+                    </Center>
+                    <br />
+                    <MenuDivider />
+                    <Link href="/profile">
+                      <MenuItem>Profile</MenuItem>
+                    </Link>
+                    <Link href="/profile/edit">
+                      <MenuItem>Edit Profile</MenuItem>
+                    </Link>
+                    <Link href="/" >
+                      <a onClick={() => {signOut()}} >
+                        <MenuItem>Sign Out</MenuItem>
+                      </a>
+                    </Link>
+                  </MenuList>
+                </Menu>
+              : isReg ?  
+                <Menu>
+                  <MenuButton as={Button} colorScheme="green">
+                    {props.email} 
+                  </MenuButton>
+                  <MenuList alignItems={"center"}>
+                    <br />
+                    {/* <Center>
+                      <Avatar
+                        size={"2xl"}
+                        src={props.profilePicture ? props.profilePicture : "https://avatars.dicebear.com/api/male/username.svg"}
+                      />
+                    </Center> */}
+                    <br />
+                    <Center>
+                      <p>"Finish Your Profile"</p>
+                    </Center>
+                    <br />
+                    <MenuDivider />
+                    <Link href="/profile/edit">
+                      <MenuItem>Edit Profile</MenuItem>
+                    </Link>
+                    <Link href="/" >
+                      <a onClick={() => {signOut()}} >
+                        <MenuItem>Sign Out</MenuItem>
+                      </a>
+                    </Link>
+                  </MenuList>
+                </Menu>
+                : 
+                <Link href="/profile">
+                  <Button as={Button} colorScheme="green">
+                      Get Started 
+                  </Button>
+                </Link>
+                  
+              }
+
             </Stack>
           </Flex>
         </Flex>

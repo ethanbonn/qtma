@@ -131,6 +131,7 @@ export default async function handler(
           } 
       
         if (!result) throw new Error("Data not found");
+        console.log("data queried", result);
         return res.status(200).json({ success: true, data: result });
       } catch (error) {
         return res.status(400).json({ success: false });
