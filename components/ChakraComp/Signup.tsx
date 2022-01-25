@@ -14,7 +14,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export default function LoginPage() {
+export default function Signup() {
   return (
     <Flex
       minH={"100vh"}
@@ -24,9 +24,9 @@ export default function LoginPage() {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Log in to Soar 🚀</Heading>
+          <Heading fontSize={"4xl"}>Welcome to Soar ⭐</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Sign in  to enjoy all of our features
+            Sign up to enjoy all of our features
           </Text>
         </Stack>
         <Box
@@ -44,7 +44,10 @@ export default function LoginPage() {
               <FormLabel>Password</FormLabel>
               <Input rounded="3xl" type="password" />
             </FormControl>
-
+            <FormControl id="password">
+              <FormLabel>Re-enter Password</FormLabel>
+              <Input rounded="3xl" type="password" />
+            </FormControl>
             <Stack spacing={10}>
               {" "}
               <Button
@@ -55,7 +58,7 @@ export default function LoginPage() {
                   bg: "green.500",
                 }}
               >
-                Sign In
+                Sign up
               </Button>
             </Stack>
           </Stack>
@@ -63,9 +66,9 @@ export default function LoginPage() {
 
           <Stack pt={6}>
             <Text align={"center"}>
-              Don’t have an account yet?{" "}
+              Already have an account?{" "}
               <Link href="/login" color={"green.400"}>
-                Click here to sign up
+                Click here to login
               </Link>
             </Text>
           </Stack>

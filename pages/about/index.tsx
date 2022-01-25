@@ -3,6 +3,8 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  Grid,
+  GridItem,
   Select,
   Center,
   Divider,
@@ -28,6 +30,7 @@ import {
   useColorMode,
   VStack,
   chakra,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -41,6 +44,8 @@ import Footer from "../../components/ChakraComp/Footer";
 import Navbar from "../../components/ChakraComp/Navbar";
 import ProjectCard from "../../components/ChakraComp/ProjectCard";
 import Login from "../../components/ChakraComp/Login";
+import Signup from "../../components/ChakraComp/Signup";
+import QueryFilter from "../../components/ChakraComp/QueryFilter";
 
 import ProfileCard from "../../components/ChakraComp/ProfileCard";
 
@@ -60,8 +65,6 @@ export default function WithSubnavigation() {
           minH={"55px"}
           py={{ base: 2 }}
           px={{ base: 4 }}
-          borderBottom={1}
-          borderStyle={"solid"}
           borderColor={useColorModeValue("gray.200", "gray.900")}
           align={"center"}
         >
@@ -143,91 +146,7 @@ export default function WithSubnavigation() {
             </Heading>
           </Stack>
 
-          <Center>
-            <Box
-              maxW={"650px"}
-              w={"full"}
-              bg={useColorModeValue("white", "gray.900")}
-              boxShadow={"2xl"}
-              rounded={"lg"}
-              p={5}
-              mb="10"
-              // textAlign={"center"}
-            >
-              {/* <Stack direction={["column", "row"]} spacing="24px">
-                <Box >
-                  
-                </Box>
-
-
-                <Box >
-                                <Button colorScheme="green">Search</Button>
-
-                </Box>
-               
-               
-              </Stack> */}
-              <SimpleGrid
-                minChildWidth="70px"
-                spacing="30px"
-                columns={[2, 2, 2]}
-              >
-                <Box>
-                  {/* <Text fontWeight={600} fontSize="lg">
-                    I'm looking for{" "}
-                  </Text>
-                  <Input placeholder="a partner" />{" "} */}
-                  <FormControl>
-                    <FormLabel htmlFor="country">I'm Looking for</FormLabel>
-                    <Select id="country">
-                      <option>Profiles</option>
-                      <option>Projects</option>
-                    </Select>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl>
-                    <FormLabel htmlFor="country">Skilled In</FormLabel>
-                    <Select id="country">
-                      <option>Profiles</option>
-                      <option>Projects</option>
-                    </Select>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl>
-                    <FormLabel htmlFor="country">To Build</FormLabel>
-                    <Select id="country">
-                      <option>Profiles</option>
-                      <option>Projects</option>
-                    </Select>
-                  </FormControl>
-                </Box>
-
-                {/* <Box>
-             
-                  <FormControl>
-                    <FormLabel htmlFor="country">⭐</FormLabel>
-                    <Button colorScheme="green">
-                    Search
-                  </Button>
-                  </FormControl>
-                </Box> */}
-
-                {/* <Box mt="6">
-                  <Text fontSize="md">  </Text>
-
-                  <IconButton
-                    colorScheme="green"
-                    aria-label="Call Sage"
-                    fontSize="20px"
-                    icon={<SearchIcon />}
-                  />
-                </Box> */}
-              </SimpleGrid>
-              {/* <Center mt="4"> */} {/* </Center> */}
-            </Box>
-          </Center>
+          <QueryFilter />
 
           <Container maxW={"7xl"} p="10">
             <SimpleGrid columns={[1, 1, 3]} spacing="40px">
@@ -385,6 +304,7 @@ export default function WithSubnavigation() {
         </Container>
       </Center>
       <Login />
+      <Signup />
 
       <Footer />
     </div>
