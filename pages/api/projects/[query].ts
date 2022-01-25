@@ -127,23 +127,15 @@ export default async function handler(
           });
         } else var result = queryobj;
           
-        
+        if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
+            var result = await ProjectModel.find({});
+            console.log("ALL PROJECTS", result);
+          } 
+      
         if (!result) throw new Error("Data not found");
-        res.status(200).json({ success: true, data: result });
+        return res.status(200).json({ success: true, data: result });
       } catch (error) {
-        res.status(400).json({ success: false });
+        return res.status(400).json({ success: false });
       }
-    // } else res.status(400).json({ success: false });
-  
-      if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
-        try {
-          const queryobj = await ProjectModel.find({});
-          console.log("ALL PROJECTS", queryobj);
-          if (!queryobj) throw new Error("Data not found");
-          res.status(200).json({ success: true, data: queryobj });
-        } catch (error) {
-          res.status(400).json({ success: false });
-        }
-    }
   }
 }
