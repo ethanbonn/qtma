@@ -93,10 +93,10 @@ export default function Card({ stateChanger }) {
                   <Input placeholder="a partner" />{" "} */}
                   <FormControl>
                     <FormLabel htmlFor="country">I'm Looking for</FormLabel>
-                    <Select id="country" onSelect={(text) => set_relationship_type(String(text))}>
-                      <option></option>
-                      <option>collaborator</option>
-                      <option>sponsor</option>
+                    <Select id="country" onChange={event => set_relationship_type(event.currentTarget.value)}>
+                      <option value=""></option>
+                      <option value="collaborator">collaborator</option>
+                      <option value="sponsor">sponsor</option>
                     </Select>
                   </FormControl>
                 </Box>
@@ -109,7 +109,7 @@ export default function Card({ stateChanger }) {
                 <Box>
                   <FormControl>
                     <FormLabel htmlFor="country">To Build</FormLabel>
-                    <Input id="country" placeholder="anything you want!" onChange={(text) => set_search(String(text))}>
+                    <Input id="country" placeholder="anything you want!" onChange={event => set_search(event.currentTarget.value)}>
                     </Input>
                   </FormControl>
                 </Box>
