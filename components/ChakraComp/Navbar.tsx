@@ -80,7 +80,7 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                     <Link href="/profile">
                       <MenuItem>Profile</MenuItem>
                     </Link>
-                    <Link href={`/profile/${props.id_}edit`}>
+                    <Link href={`/profile/${props._id}edit`}>
                       <MenuItem>Edit Profile</MenuItem>
                     </Link>
                     <Link href="/" >
@@ -91,7 +91,7 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                   </MenuList>
                 </Menu>
               )
-                ) : isReg ? (
+               : isReg ? (
                 <Menu>
                   <MenuButton as={Button} colorScheme="green">
                     {props.email}
@@ -110,21 +110,21 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                     </Center>
                     <br />
                     <MenuDivider />
-                    <Link href={`/profile/${props.id_}edit`}>
+                    <Link href={`/profile/${props._id}edit`}>
                       <MenuItem>Edit Profile</MenuItem>
-                    </Link>
-                    <Link href="/">
-                      <a
-                        onClick={() => {
-                          signOut();
-                        }}
-                     >
-                        <MenuItem>Sign Out</MenuItem>
-                      </a>
-                    </Link>
-                  </MenuList>
-                </Menu>
-                  : (
+                        </Link>
+                        <Link href="/">
+                          <a
+                            onClick={() => {
+                              signOut();
+                            }}
+                        >
+                            <MenuItem>Sign Out</MenuItem>
+                          </a>
+                        </Link>
+                      </MenuList>
+                    </Menu>
+                )  : (
                 <Link href="/profile">
                   <Button as={Button} colorScheme="green">
                       Get Started 
