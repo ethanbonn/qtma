@@ -30,8 +30,7 @@ export default function LoginPage() {
             Sign in  to enjoy all of our features
           </Text>
         </Stack>
-        <FirebaseAuth />
-        {/* <Box
+        <Box
           rounded={"3xl"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
@@ -71,7 +70,7 @@ export default function LoginPage() {
               </Link>
             </Text>
           </Stack>
-        </Box> */}
+        </Box>
       </Stack>
     </Flex>
   );

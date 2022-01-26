@@ -16,8 +16,8 @@ import {
   
   export default function Explore() {
 
-        Return(
-
+        return (
+            <></>
             
         )
 
