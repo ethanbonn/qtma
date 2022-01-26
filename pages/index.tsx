@@ -8,7 +8,6 @@ import { FunctionComponent, useEffect } from "react";
 import type { User } from "../types/models";
 import getUserData from "../functions/server/getUserData";
 import LandingPage from "../components/LandingPage";
-import NavBar from "../components/NavBar/NavBar";
 import firebase from "firebase";
 import { isUser, handleUserType } from "../functions/typeGuards";
 import { useRouter } from "next/router";
@@ -28,14 +27,11 @@ const styles = {
 };
 
 const Index = (props: UnregisteredUser | User) => {
-  // const { email } = props;
-  // var navNameDisplay = handleUserType(props); // handles user access and redirects
 
 
 
   return (
     <div>
-      {/* <NavBar login_name={navNameDisplay}/> */}
       <LandingPage {... props} />
     </div>
   );

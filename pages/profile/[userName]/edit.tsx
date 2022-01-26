@@ -11,8 +11,9 @@ import getUserData from "../../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../../types";
 import { isUser } from "../../../functions/typeGuards";
 import Footer from "../../../components/Footer";
-import NavBar from "../../../components/NavBar/NavBar";
+import Navbar from "../../../components/ChakraComp/Navbar";
 import baseUrl from "../../../utils/baseUrl";
+import { Input, Select, Textarea } from "@chakra-ui/react";
 
 const timezones = [
   "ACST",
@@ -92,7 +93,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       }
       if (response.status === 200) {
         setUniqueUsername(true);
-        window.location.href = `/profile/${props._id}`;
+        window.location.href = `/profile/`;
       } else {
         setUnexpectedError(true);
       }
@@ -114,7 +115,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
 
   return (
     <>
-      <NavBar login_name={isTypeUser ? props.firstName : email} />
+      <Navbar {...props} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
@@ -144,13 +145,20 @@ const EditProfile = (props: UnregisteredUser | User) => {
         >
           Username
           <br />
-          <input
+            <Input
+              type="text"
+              id="userName"
+              className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+              defaultValue={isTypeUser ? props.userName : undefined}
+              {...register("userName", { required: true, maxLength: 12 })}>
+            </Input>
+          {/* <input
             type="text"
             id="userName"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.userName : undefined}
             {...register("userName", { required: true, maxLength: 12 })}
-          />
+          /> */}
           {errors.userName && <span>This field is required</span>}
           {!uniqueUsername && <span>Username exists already, try again</span>}
         </label>
@@ -158,13 +166,12 @@ const EditProfile = (props: UnregisteredUser | User) => {
         <label htmlFor="firstName" className="text-black-normal font-bold">
           First Name
           <br />
-          <input
+          <Input
             type="text"
             id="firstName"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.firstName : undefined}
-            {...register("firstName", { required: true, maxLength: 24 })}
-          />
+            {...register("firstName", { required: true, maxLength: 24 })}></Input>
           {errors.firstName && <span>This field is required</span>}
         </label>
         <br />
@@ -174,7 +181,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
         >
           Last Name
           <br />
-          <input
+          <Input
             type="text"
             id="lastName"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
@@ -190,7 +197,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
         >
           Job Title
           <br />
-          <input
+          <Input
             type="text"
             id="jobTitle"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
@@ -205,13 +212,21 @@ const EditProfile = (props: UnregisteredUser | User) => {
         >
           Description
           <br />
-          <input
+            <Textarea
+              placeholder="Help our community get to know you by introducing yourself"                 
+              type="text"
+              id="userDescription"
+              className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+              defaultValue={isTypeUser ? props.userDescription : undefined}
+              {...register("userDescription", { maxLength: 240 })}>
+            </Textarea>
+          {/* <input
             type="text"
             id="userDescription"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.userDescription : undefined}
             {...register("userDescription", { maxLength: 240 })}
-          />
+          /> */}
         </label>
         <br />
         <label
@@ -220,7 +235,21 @@ const EditProfile = (props: UnregisteredUser | User) => {
         >
           Timezone
           <br />
-          <select
+          <Select id="timezone" defaultValue={isTypeUser ? props.timezone : undefined} {...register("timezone", { required: true, maxLength: 4 })}>
+              <option value="EST">Eastern Standard Time (EST)</option>
+              <option value="PST">Pacific Standard Time (PST)</option>
+              <option value="ACST">Australian Central Standard Time (ACST)</option>
+              <option value="AEST">Australian Eastern Standard Time (AEST)</option>
+              <option value="AKST">Alaska Standard Time (AKST)</option>
+              <option value="AST">Atlantic Standard Time (AST)</option>
+              <option value="AWST">Australian Western Standard Time (AWST)</option>
+              <option value="CET">Central European Time (CET)</option>
+              <option value="CST">Central Standard Time (CST)</option>
+              <option value="EET">Eastern European Time (EET)</option>
+              <option value="MST">Mountain Standard Time (MST)</option>
+              <option value="WET">Western European Time (WET)</option>
+            </Select>
+          {/* <select
             id="timezone"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.timezone : undefined}
@@ -229,7 +258,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
             {timezones.map((x) => (
               <option value={x}>{x}</option>
             ))}
-          </select>
+          </select> */}
           {errors.timezone && <span>This field is required</span>}
         </label>
 
@@ -273,7 +302,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
             </label>
           </>
         ))}
-        <br /> */}
+         */}
+        <br />
 
         <label
           htmlFor="user-links"
@@ -295,7 +325,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
                     <label htmlFor={`site${i}`}>
                       Add Link:
                       <br />
-                      <input
+                      <Input
                         type="text"
                         className="font-sans my-1 border border-gray-200 rounded-lg mr-1 pl-1"
                         style={{ width: "49%" }}
@@ -317,7 +347,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
                     </label>
                   </>
                 )}
-                <input
+                <Input
                   type="text"
                   placeholder="your url here"
                   id={`url${i}`}

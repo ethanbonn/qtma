@@ -15,9 +15,10 @@ import { handleUserType, isUser } from "../../../functions/typeGuards";
 import ProfilePageCard from "../../../components/Cards/ProfilePageCard";
 import SkillCard from "../../../components/Cards/SkillCard";
 import LinkCard from "../../../components/Cards/LinkCard";
-import ProjectCard from "../../../components/Cards/ProjectCard";
-import NavBar from "../../../components/NavBar/NavBar";
+import ProjectCard from "../../../components/ChakraComp/ProjectCard";
+import Navbar from "../../../components/ChakraComp/Navbar";
 import Footer from "../../../components/Footer";
+import getProjectByUID from "../../../functions/server/getProjectByID";
 
 const styles = {
   container: {
@@ -31,8 +32,14 @@ const styles = {
     cursor: "pointer",
   },
 };
+
+
+
 export const ViewProfile = (props: UnregisteredUser | User) => {
   const [userProfile, setUserProfile] = useState(props as User);
+
+  const [userProjects, setUserProjects] = useState([]);
+
 
   const isUserType = isUser(props);
   // handles user access and redirects & returns nav menu arg
@@ -45,7 +52,9 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
     async function getTargetUser(username) {
       try {
         const user = await getUserByUsername(username);
+        const usersProjects = await getProjectByUID(user._id);
         setUserProfile(user);
+        setUserProjects(usersProjects);
       } catch (err) {
         console.log("error", err);
       }
@@ -63,7 +72,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
       {isUserType && userProfile && (
         <div className="grid grid-cols-4 auto-cols-min">
           <div className="col-span-4">
-            <NavBar login_name={displayName} />
+            <Navbar {...props} />
           </div>
           <div className="col-span-1">
             <ProfilePageCard user={userProfile} />
@@ -90,7 +99,10 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
               </div>
             </div>
             <div className="flex flex-wrap content-center -mx-12 -my-2 ">
-              {/* <ProjectCard /> */}
+              {userProjects.map((Proj) => {
+                console.log("ADDING PROJECT", Proj);
+                return <ProjectCard {... Proj}/>
+              })}
             </div>
           </div>
           <div className="col-span-4">

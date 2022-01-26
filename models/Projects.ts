@@ -15,7 +15,7 @@ const skillSchema = new Schema<Skill>({
 const schema = new Schema<Project>({
   _id: { type: String, required: true },
   name: {type: String, required: true},
-  author_id: {type: String, required: true},
+  author_ids: {type: [String], required: true},
   author_timezone: {type: String, required: true},
   skills : {type: [skillSchema], required: false},
   description: {type: String, required: true},

@@ -11,8 +11,9 @@ import {
   import type { UnregisteredUser } from "../../types";
   import { isUser } from "../../functions/typeGuards";
   import Footer from "../../components/Footer";
-  import NavBar from "../../components/NavBar/NavBar";
+  import Navbar from "../../components/ChakraComp/Navbar";
   import baseUrl from "../../utils/baseUrl";
+import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
   
   const CreateProject = (props: UnregisteredUser | User) => {
     const {
@@ -30,7 +31,7 @@ import {
     const onSubmit = async (data: any) => {
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
-        author_id: _id,
+        author_ids: [_id],
         author_picture: (props.profilePicture ?? "https://avatars.dicebear.com/api/male/username.svg"),
         author_name: (props.firstName + " " + props.lastName),
         author_title: props.jobTitle,
@@ -60,7 +61,7 @@ import {
   
     return (
       <>
-        <NavBar login_name={isTypeUser ? props.firstName : email}/>
+        <Navbar {...props}/>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
@@ -75,38 +76,57 @@ import {
         >
             Name
             <br />
-            <input
+            <Input
+                placeholder="Mars Rover 2.0"                 
                 type="text"
                 id="projectName"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-                {...register("name", { required: true, maxLength: 100 })}
-            />
+                {...register("name", { required: true, maxLength: 100 })}>
+            </Input>
             {errors.projectName && <span>This field is required</span>}
         </label>
         <br />
         <label htmlFor="relationship" className="text-black-normal font-bold">
             Relationship Type
             <br />
-            <input
+            <Select id="country" {...register("desired_relationship_type", { required: true})}>
+              <option value="collaborator">collaborator</option>
+              <option value="sponsor">sponsor</option>
+            </Select>
+            {/* <input
                 type="text"
                 id="relationship"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
                 defaultValue={"collaborator"}
-                {...register("desired_relationship_type", { required: true, maxLength: 12 })}
-            />
+                
+            /> */}
             {errors.relationship && <span>This field is required</span>}
         </label>
         <br />
         <label htmlFor="timezone" className="text-black-normal font-bold">
             Timezone
             <br />
-            <input
+            <Select id="country" {...register("author_timezone", { required: true})}>
+              <option value="EST">Eastern Standard Time (EST)</option>
+              <option value="PST">Pacific Standard Time (PST)</option>
+              <option value="ACST">Australian Central Standard Time (ACST)</option>
+              <option value="AEST">Australian Eastern Standard Time (AEST)</option>
+              <option value="AKST">Alaska Standard Time (AKST)</option>
+              <option value="AST">Atlantic Standard Time (AST)</option>
+              <option value="AWST">Australian Western Standard Time (AWST)</option>
+              <option value="CET">Central European Time (CET)</option>
+              <option value="CST">Central Standard Time (CST)</option>
+              <option value="EET">Eastern European Time (EET)</option>
+              <option value="MST">Mountain Standard Time (MST)</option>
+              <option value="WET">Western European Time (WET)</option>
+            </Select>
+            {/* <input
                 type="text"
                 id="timezone"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
                 defaultValue={"EST"}
-                {...register("author_timezone", { required: true, minLength: 3, maxLength: 3 })}
-            />
+                
+            /> */}
             {errors.timezone && <span>This field is required</span>}
         </label>
         <br />
@@ -116,12 +136,13 @@ import {
         >
             Description
             <br />
-            <input
-              type="text"
-              id="description"
-              className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-              {...register("description", { required: true, maxLength: 1000 })}
-            />
+            <Textarea
+                placeholder="Here are my mars rover plans"                 
+                type="text"
+                id="description"
+                className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+                {...register("description", { required: true, maxLength: 1000 })}>
+            </Textarea>
         </label>
         <br />
           <label
@@ -130,19 +151,25 @@ import {
           >
             Duration
             <br />
-            <input
-              type="text"
-              id="duration"
-              className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-              {...register("duration", { maxLength: 24 })}
-            />
+            <Select id="country" {...register("duration", { required: true})}>
+              {/* <option value="short"   style={{color: "green"}}>short (less than 1 month)</option>
+              <option value="medium" style={{color: "yellow"}}>medium (1-4 months)</option>
+              <option value="long" style={{color: "red"}}>long (4+ months)</option> */}
+              <option value="short"   >short (less than 1 month)</option>
+              <option value="medium" >medium (1-4 months)</option>
+              <option value="long" >long (4+ months)</option>
+            </Select>
         </label>
         <br />
-        <input
+        <Button
             type="submit"
-            className=" font-sans px-4 py-2 text-white bg-green-normal rounded-full shadow-md w-1/5 self-center"
-            value="Create"
-          />
+            // className=" font-sans px-4 py-2 text-white bg-green-normal rounded-full shadow-md w-1/5 self-center"
+            className=" font-sans px-4 py-2 text-black bg-green-normal rounded-full shadow-md w-1/5 self-center"
+
+            value="Create">
+        Create
+        </Button>
+
         </form>
         {isTypeUser && <Footer />}
       </>

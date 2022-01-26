@@ -54,6 +54,12 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
 
           <Flex alignItems="center">
             <Stack direction="row" spacing={7}>
+              <a href="/projects/create">                
+                <Button colorScheme="green" >
+                  New Project
+                </Button>
+              </a>
+
               <Button colorScheme="green" onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
@@ -80,7 +86,7 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                     <Link href="/profile">
                       <MenuItem>Profile</MenuItem>
                     </Link>
-                    <Link href={`/profile/${props._id}edit`}>
+                    <Link href={`/profile/${props._id}/edit`}>
                       <MenuItem>Edit Profile</MenuItem>
                     </Link>
                     <Link href="/" >
@@ -110,7 +116,7 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                     </Center>
                     <br />
                     <MenuDivider />
-                    <Link href={`/profile/${props._id}edit`}>
+                    <Link href={`/profile/${props._id}/edit`}>
                       <MenuItem>Edit Profile</MenuItem>
                         </Link>
                         <Link href="/">

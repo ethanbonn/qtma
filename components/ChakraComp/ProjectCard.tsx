@@ -15,7 +15,9 @@ import { Project } from "../../types/models";
 
 
 export default function ProjectCard(props : Project) {
+  // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
   const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
+
   // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
     <Center py={6}>

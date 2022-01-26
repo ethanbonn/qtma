@@ -68,7 +68,7 @@ export type Skill = {
 export type Project = {
   _id: string;
   name: string;
-  author_id: string;
+  author_ids: string[];
   author_timezone: string;
   skills : Skill[];
   description: string;

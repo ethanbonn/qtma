@@ -35,10 +35,10 @@ export default async function handler(
 
     // Type guard for the URl query parameters
     type ProjectQuery = {
-      author_timezone: string | string[] | undefined;
-      desired_relationship_type: string | null;
-      search: string | null;
-      skills: string[] | undefined;
+      author_timezone: string | string[] | null | undefined;
+      desired_relationship_type: string | null | undefined;
+      search: string | null | undefined;
+      skills: string[] | null | undefined;
     };
 
     // Set the value of an object to the provided URL query parameters
@@ -94,6 +94,7 @@ export default async function handler(
 
     console.log("all", all_params);
     try {
+
       var queryobj = [];
       if (Object.keys(search_obj).length > 0) {
         var queryobj = await ProjectModel.aggregate(
@@ -125,8 +126,14 @@ export default async function handler(
               .indexOf(obj.name) == pos;
           });
         } else var result = queryobj;
-          
-        if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
+
+        
+        if (search_params.get("uid")){
+          console.log("finding project by id");
+          console.log(search_params.get("uid"));
+          var result = await ProjectModel.find({author_ids: search_params.get("uid")});
+          console.log(result);
+        } else if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
             var result = await ProjectModel.find({});
           } 
       

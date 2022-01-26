@@ -10,19 +10,21 @@ import getUserData from "../functions/server/getUserData";
 import { isUser } from "../functions/typeGuards";
 import { UnregisteredUser } from "../types";
 import { User } from "../types/models";
+import baseUrl from "../utils/baseUrl";
 
-async function sendEmail() {
+async function sendEmail(_id : string) {
   await firebase
     .auth()
     .currentUser?.sendEmailVerification({
       // props.email?
-      url: "http://localhost:3000/profile/edit",
+      url: `${baseUrl}/profile/${_id}/edit`,
     })
     .then(() => {
       // The link was successfully sent. Inform the user.
       // Save the email locally so you don't need to ask the user for it again
       // if they open the link on the same device.
       // ...
+      alert('verification link was sent')
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -39,7 +41,10 @@ const Verify = (props: UnregisteredUser | User) => {
   // var display_name = null; // for NavMenu Component
   if (isUserType) {
     // user account already created
-    router.push("/");
+    useEffect(() => {
+      router.push("/");
+    }, [])
+    
   } else {
     useEffect(() => {
       // if (!isUserType) {
@@ -47,7 +52,7 @@ const Verify = (props: UnregisteredUser | User) => {
       console.log("verified: ", emailVerified);
 
       if (!emailVerified) {
-        displayError = sendEmail();
+        displayError = sendEmail(_id);
       } else {
         // user is already verified
         console.log("verified should be true: ", emailVerified);
