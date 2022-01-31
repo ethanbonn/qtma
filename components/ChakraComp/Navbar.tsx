@@ -90,7 +90,9 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                       <MenuItem>Edit Profile</MenuItem>
                     </Link>
                     <Link href="/" >
-                      <a onClick={() => {signOut()}} >
+                      <a onClick={() => {
+                        signOut()
+                      }} >
                         <MenuItem>Sign Out</MenuItem>
                       </a>
                     </Link>

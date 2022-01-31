@@ -102,7 +102,18 @@ export default async function handler(
             "$search": {
                 "compound": search_obj
               }
-        }]);
+        },
+        {
+          "$lookup": {
+            "from": "users",
+            "localField": "author_ids",
+            "foreignField": "_id",
+            "as": "authors",
+
+          }
+        },
+      
+      ]);
       }
       if (skills_arr.length > 0){
         const querySkills = await ProjectModel.aggregate([
@@ -115,8 +126,21 @@ export default async function handler(
                     }
                   }
               
+              },
+              
+            },
+            {
+              "$lookup": {
+                "from": "users",
+                "localField": "author_ids",
+                "foreignField": "_id",
+                "as": "authors",
+
               }
-            }
+            },
+
+
+
           ]);
 
           // merge jsons and remove duplicates
@@ -131,10 +155,53 @@ export default async function handler(
         if (search_params.get("uid")){
           console.log("finding project by id");
           console.log(search_params.get("uid"));
-          var result = await ProjectModel.find({author_ids: search_params.get("uid")});
+
+          // var result = await ProjectModel.find({author_ids: search_params.get("uid")});
+          var result = await ProjectModel.aggregate([
+            {"$match": {"$expr": {"$in": [search_params.get("uid"), "$author_ids"]}}},
+            {
+              "$lookup": {
+                "from": "users",
+                "localField": "author_ids",
+                "foreignField": "_id",
+                "as": "authors",
+
+              }
+            }
+          ]);
+
           console.log(result);
         } else if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
-            var result = await ProjectModel.find({});
+            // var result = await ProjectModel.find({});
+            var result = await ProjectModel.aggregate([
+              {
+                  $sort: { "date_created": -1 } // sort the data
+              },
+              {
+                "$limit": 6
+              }, 
+              {
+                "$lookup": {
+                  "from": "users",
+                  "localField": "author_ids",
+                  "foreignField": "_id",
+                  "as": "authors",
+  
+                }
+              }
+              // {
+              //     $group: {
+              //         _id: null, // group everything into one single bucket
+              //         docs: { $push: "$$ROOT" } // push all documents into an array (this will be massive for huge collections...)
+              //     }
+              // }, 
+              // {
+              //     $project: {
+              //         "docsTop10": { $slice: [ "$docs", 10 ] }, // take the first 10 elements from the ASC sorted array
+              //         "docsBottom10": { $reverseArray: { $slice: [ "$docs", -10 ] } } // take the last 10 elements from the array but reverse their order
+              //     }
+              // }
+            ])
           } 
       
         if (!result) throw new Error("Data not found");

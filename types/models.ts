@@ -80,6 +80,7 @@ export type Project = {
   author_username: string;
   // hours_per_week?: number;
   duration?: string;
+  authors?: [User];
   
 };
 

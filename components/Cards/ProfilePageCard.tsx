@@ -1,3 +1,5 @@
+import { Avatar } from "@chakra-ui/react";
+import profile from "../../pages/profile";
 import type { User } from "../../types/models";
 
 interface userWrapper {
@@ -8,15 +10,25 @@ export default function ProfilePageCard(props: userWrapper) {
   const user : User = props.user;
   const { profilePicture, firstName, lastName, jobTitle, userDescription } =
     user;
+
+  console.log(profilePicture);
   return (
     <>
       <div className="font-sans max-w-auto min-w-auto mx-10 bg-white rounded-xl shadow-lg flex flex-row m-10 border-2 border-green-normal">
         <div className="max-w-xs w-full rounded-xl  overflow-hidden shadow-lg">
-          <img
+        <Avatar
+              className="block mx-auto rounded-full w-32 h-32 sm:flex-shrink-0 mt-3"
+              size='2xl'
+              name={firstName + " " + lastName}
+              src={profilePicture}
+              
+              // alt={"Author"}
+            />
+          {/* <img
             className="block mx-auto rounded-full w-32 h-32 sm:flex-shrink-0 mt-3"
             src={profilePicture}
-            alt="user headshot"
-          />
+            alt="Author"
+          /> */}
 
           <div className="px-6 py-4">
             <div className="content-center">

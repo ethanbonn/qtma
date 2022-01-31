@@ -11,22 +11,18 @@ export const isRegistered = (
   user: UnregisteredUser | null | undefined
 ): user is UnregisteredUser => (user as UnregisteredUser).email != undefined;
 
-export const handleUserType = (props: UnregisteredUser | User) => {
+export const handleUserType = (props: UnregisteredUser | User | null | undefined) => {
   const router = useRouter();
-  const { email } = props;
-
-  var displayName = email;
+//   const { email } = props;
 
   // redirects
   useEffect(() => {
-    if (!isUser(props) && email !== null) {
+    if (!isUser(props) && isRegistered(props)) {
       const { _id, emailVerified, email } = props;
       const display_name = email;
       console.log("IsVerified: ", emailVerified);
-
       console.log("Unregistered User", props);
       // verify email here
-      // router.push("/profile/edit");
       if (!emailVerified) {
         router.push("/verify");
         // router.reload();
@@ -34,15 +30,6 @@ export const handleUserType = (props: UnregisteredUser | User) => {
         router.push(`/profile/${_id}/edit`);
         // router.reload();
       }
-      if (isUser(props)) {
-        const displayName = props.firstName;
-      }
     }
   });
-
-  if (isUser(props)) {
-    var displayName = props.firstName;
-  }
-
-  return displayName;
 };

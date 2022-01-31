@@ -10,13 +10,14 @@ import {
   Badge,
   Avatar,
   useColorModeValue,
+  AvatarGroup,
 } from "@chakra-ui/react";
 import { Project } from "../../types/models";
 
 
 export default function ProjectCard(props : Project) {
   // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
-  const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
+  const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created, authors } = props;
 
   // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
@@ -51,10 +52,17 @@ export default function ProjectCard(props : Project) {
           </Heading>
 
           <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-            <Avatar
-              src={author_picture}
-              alt={"Author"}
-            />
+            <AvatarGroup size='md' max={2}>
+              {authors.map(user => {
+                return (<Avatar
+                src={user.profilePicture}
+                name={user.firstName + " " + user.lastName}
+              />)
+              })}
+              
+            </AvatarGroup>
+              
+
             <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
               <Text fontWeight={600}>{author_name}</Text>
               <Text color={"gray.500"}>{author_title}</Text>

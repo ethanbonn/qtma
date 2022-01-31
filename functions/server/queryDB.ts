@@ -50,6 +50,7 @@ const queryDB = async (relationship?: string, searchInput?: string, skillsInput?
         .then((projects) => {
             return projects.data;
         });
+    console.log(projects);
     return projects;
 
 

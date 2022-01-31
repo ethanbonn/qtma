@@ -27,9 +27,7 @@ const styles = {
 };
 
 const Index = (props: UnregisteredUser | User) => {
-
-
-
+  handleUserType(props);
   return (
     <div>
       <LandingPage {... props} />
