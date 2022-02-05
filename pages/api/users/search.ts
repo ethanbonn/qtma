@@ -7,7 +7,7 @@ import UserModel from "../../../models/User";
 
 type Data = {
   success: boolean;
-  data?: User;
+  data?: User[];
 };
 
 export default async function handler(
@@ -35,7 +35,7 @@ export default async function handler(
           ]
       });
       if (!users) throw new Error("Data not found");
-      return res.status(200).json({ success: true, users: users });
+      return res.status(200).json({ success: true, data: users });
     } catch (error) {
       return res.status(400).json({ success: false });
     }
