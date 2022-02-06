@@ -5,7 +5,7 @@ import {
     useAuthUser,
   } from "next-firebase-auth";
   import { useForm } from "react-hook-form";
-  import { FunctionComponent, useState } from "react";
+  import { FunctionComponent, useState, useEffect } from "react";
   import type { User, Link, Skill } from "../../types/models";
   import getUserData from "../../functions/server/getUserData";
   import type { UnregisteredUser } from "../../types";
@@ -14,8 +14,11 @@ import {
   import Navbar from "../../components/ChakraComp/Navbar";
   import baseUrl from "../../utils/baseUrl";
 import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
+import SkillSelect from "./SkillSelect";
 
 const CreateProject = (props: UnregisteredUser | User) => {
+    const [skill, set_skill] = useState([]);
+
     const {
       register,
       handleSubmit,
@@ -29,6 +32,15 @@ const CreateProject = (props: UnregisteredUser | User) => {
 
   
     const onSubmit = async (data: any) => {
+      
+      var skills = skill.map((x: Skill) => {return {
+        _id: x._id,
+        name: x.value,
+        colour: x.colour,
+        followers: x.followers,
+        project_ids: x.project_ids
+      }});
+
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
         author_ids: [_id],
@@ -39,11 +51,13 @@ const CreateProject = (props: UnregisteredUser | User) => {
 
   
   
-        ...data
+        ...data,
+        skills: skills
       }) : JSON.stringify({
         author_id: _id,
   
-        ...data
+        ...data,
+        skills: skills
       });
       await fetch(
         `${baseUrl}/api/projects/create`,
@@ -163,6 +177,8 @@ const CreateProject = (props: UnregisteredUser | User) => {
               <option value="long" >long (4+ months)</option>
             </Select>
         </label>
+        <br />
+        <SkillSelect stateChanger={set_skill} />
         <br />
         <Button
             type="submit"
