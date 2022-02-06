@@ -14,8 +14,8 @@ import {
   import Navbar from "../../components/ChakraComp/Navbar";
   import baseUrl from "../../utils/baseUrl";
 import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
-  
-  const CreateProject = (props: UnregisteredUser | User) => {
+
+const CreateProject = (props: UnregisteredUser | User) => {
     const {
       register,
       handleSubmit,
@@ -81,9 +81,10 @@ import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
                 type="text"
                 id="projectName"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-                {...register("name", { required: true, maxLength: 100 })}>
+                {...register("name", { required: true, maxLength: 40 })}>
             </Input>
-            {errors.projectName && <span>This field is required</span>}
+            {errors.name && errors.name.type === "required" && <span>This field is required</span>}
+            {errors.name && errors.name.type === "maxLength" && <span>Project name should be less than 40 characters</span>}
         </label>
         <br />
         <label htmlFor="relationship" className="text-black-normal font-bold">
@@ -141,8 +142,10 @@ import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
                 type="text"
                 id="description"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-                {...register("description", { required: true, maxLength: 1000 })}>
+                {...register("description", { required: true, maxLength: 100 })}>
             </Textarea>
+            {errors.description && errors.description.type === "required" && <span>This field is required</span>}
+            {errors.description && errors.description.type === "maxLength" && <span>Project description should be less than 100 characters</span>}
         </label>
         <br />
           <label
