@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { verifyIdToken } from "next-firebase-auth";
 
-import type { User } from "../../../types/models";
-import dbConnect from "../../../utils/dbConnect";
-import UserModel from "../../../models/User";
+import type { User } from "../../../../types/models";
+import dbConnect from "../../../../utils/dbConnect";
+import UserModel from "../../../../models/User";
 
 type Data = {
   success: boolean;
@@ -14,23 +14,34 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { method } = req;
+
+  const method = req.method;
+  const queryBody = req.query;
+  const query_string = queryBody.query;
 
   if (method === "GET") {
     await dbConnect();
-
     try {
     
       var users = await UserModel.find({
           "$or": [
               {
-                  userName: req.body.query
+                  userName: {
+                    "$regex": query_string,
+                    "$options": "i"
+                  }
               },
               {
-                  firstName: req.body.query
+                  firstName: {
+                    "$regex": query_string,
+                    "$options": "i"
+                  }
               },
               {
-                  lastName: req.body.query
+                  lastName: {
+                    "$regex": query_string,
+                    "$options": "i"
+                  }
               }
           ]
       });
