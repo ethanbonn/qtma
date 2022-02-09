@@ -1,10 +1,8 @@
-
-
 export type Link = {
   _id?: string;
   site?: string;
   url?: string;
-  colour? : string
+  colour?: string;
 };
 
 export type User = {
@@ -37,11 +35,9 @@ export type User = {
 //           date: Date;
 //         },
 //             ]
-//     } 
-//   ]; 
+//     }
+//   ];
 // };
-
-
 // export type Conversation = {
 //   _id: string;
 //   participants_id: string[];
@@ -60,6 +56,8 @@ export type User = {
 export type Skill = {
   _id: string;
   name: string;
+  value: string;
+  label: string;
   colour: string;
   followers: string[]; // ids
   project_ids: string[];
@@ -70,18 +68,15 @@ export type Project = {
   name: string;
   author_ids: string[];
   author_timezone: string;
-  skills : Skill[];
+  skills: Skill[];
   description: string;
   date_created: Date;
   desired_relationship_type: string;
   author_name: string;
   author_title: string;
-  author_picture?: string; 
+  author_picture?: string;
   author_username: string;
   // hours_per_week?: number;
   duration?: string;
   authors?: [User];
-  
 };
-
-

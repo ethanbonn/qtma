@@ -27,13 +27,20 @@ export default async function handler(
       return res.status(400).json({ success: false });
     }
 
-    const { Location } = await uploadImage(
-      Buffer.from(
-        req.body.profilePicture.replace(/data:.*\/.*;base64,/, ""),
-        "base64"
-      ),
-      `${req.body._id}-profilePicture`
-    );
+    let Location = req.body.profilePicture;
+
+    // if the user has uploaded a new image, we upload it to S3
+    // Location will only start with the url below if they edited their profile and did not
+    // choose to upload a new photo
+    if (!Location.startsWith("https://qtma-2022-team-4.s3")) {
+      ({ Location } = await uploadImage(
+        Buffer.from(
+          req.body.profilePicture.replace(/data:.*\/.*;base64,/, ""),
+          "base64"
+        ),
+        `${req.body._id}-profilePicture`
+      ));
+    }
 
     await dbConnect();
 
