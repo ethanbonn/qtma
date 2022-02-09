@@ -13,14 +13,6 @@ export default function SkillCard(props: userWrapper) {
   // query for each skill in the db to get the "skill name"
   // display each skill
 
-  const dummySkills = [
-    { skill: "UX Design", colour: "red" },
-    { skill: "Frontend Development", colour: "yellow" },
-    { skill: "Mobile Development", colour: "skyBlue" },
-    { skill: "Graphic Design", colour: "green" },
-    { skill: "Photography", colour: "pink" },
-    { skill: "Videography", colour: "orange" },
-  ];
 
   return (
     <>
@@ -29,7 +21,7 @@ export default function SkillCard(props: userWrapper) {
           <div className="px-2 pb-2">
             {skills.map((x) => (
               <span
-                className={`inline-block bg-${x.colour}-normal rounded-full px-3 py-1 text-sm font-semibold text-black mx-2 my-2`}
+                className={`inline-block bg-blue-normal rounded-full px-3 py-1 text-sm font-semibold text-black mx-2 my-2`}
               >
                 {x.name}
               </span>

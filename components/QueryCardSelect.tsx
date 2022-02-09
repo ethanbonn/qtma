@@ -12,7 +12,6 @@ import baseUrl from "../utils/baseUrl";
 export interface SkillOption {
     readonly value: string;
     readonly label: string;
-    readonly colour: string;
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
   }
@@ -42,7 +41,7 @@ export default function AsyncMulti({stateChanger}) {
       var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
                                                                       value: x.name, 
                                                                       label: x.name,
-                                                                      colour: x.colour}});      
+                                                                      }});      
       if (typeof(inputValue) === "string"){
         return filterSkills(inputValue, sOptions);
         }
@@ -71,7 +70,6 @@ export default function AsyncMulti({stateChanger}) {
         },
         body: JSON.stringify({
           name: inputValue,
-          colour: 'blue'
         })
       }
     );

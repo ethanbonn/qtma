@@ -13,8 +13,12 @@ import {
   useColorModeValue,
   SimpleGrid,
 } from "@chakra-ui/react";
+import { User } from "../../types/models";
 
-export default function SocialProfileSimple() {
+export default function SocialProfileSimple(props: User) {
+
+  const { userName, firstName, lastName, profilePicture, jobTitle, userDescription, date_created, skills} = props;
+
   return (
     <Center py={6}>
       <Box
@@ -29,18 +33,17 @@ export default function SocialProfileSimple() {
       >
         <Avatar
           size={"2xl"}
-          src={
-           "https://www.cs.queensu.ca/people/images/user/51.jpg"
-          }
-          alt={"Avatar Alt"}
+          src={profilePicture}
+          name={firstName + " " + lastName}
           mb={4}
           pos={"relative"}
         />
+
         <Heading fontSize={"2xl"} fontFamily={"body"}>
-          John West
+          {firstName + " " + lastName}
         </Heading>
         <Text fontWeight={600} mt="2" color={"gray.500"} mb={4}>
-          Software Developer
+          {jobTitle}
         </Text>
 
         <VStack alignItems="flex-start" mt="2">
@@ -48,39 +51,22 @@ export default function SocialProfileSimple() {
             Skills and Interests
           </chakra.h2>
         </VStack>
-
+        
         <Stack direction={["column", "row"]} spacing="5px">
-          <Badge
-            px={2}
-            py={1}
-            bg={useColorModeValue("blue.500", "gray.800")}
-            fontWeight={"400"}
-            color="white"
-            rounded="xl"
-          >
-            Python
-          </Badge>
-
-          <Badge
-            px={2}
-            py={1}
-            bg={useColorModeValue("blue.500", "gray.800")}
-            fontWeight={"400"}
-            color="white"
-            rounded="xl"
-          >
-            JavaScript
-          </Badge>
-          <Badge
-            px={2}
-            py={1}
-            bg={useColorModeValue("blue.500", "gray.800")}
-            fontWeight={"400"}
-            color="white"
-            rounded="xl"
-          >
-            FL Studio
-          </Badge>
+          
+          {skills.map((x) => {return (
+            <Badge
+              px={2}
+              py={1}
+              bg={useColorModeValue("blue.500", "gray.800")}
+              fontWeight={"400"}
+              color="white"
+              rounded="xl"
+            >
+              {x.name}
+            </Badge>
+            )}
+          )}
         </Stack>
         {/* </Stack> */}
       </Box>

@@ -18,6 +18,22 @@ import { Project } from "../../types/models";
 export default function ProjectCard(props : Project) {
   // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
   const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created, authors } = props;
+  var current_date = new Date();
+  var date_parsed = new Date(JSON.parse("\"" + date_created + "\""));
+  var diffence_in_days = ((current_date.getTime() - date_parsed.getTime()) / (1000 * 3600 * 24));
+
+  if (diffence_in_days <= 1){
+    var display_date = "today"
+  } else if (diffence_in_days <= 7){
+    var display_date = "this week"
+  } else {
+    var display_date = date_parsed.toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+  
+
+
+
+
 
   // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
@@ -74,7 +90,7 @@ export default function ProjectCard(props : Project) {
           </Text>
           <Text mb="2px" color={"gray.500"}>Project Duration: <chakra.span fontWeight={600}  color={duration == "short" ? "green.400" : duration == "medium" ? "yellow.400" : "red.400"}> {duration} </chakra.span>  </Text>
           
-          <Text mb="2px" color={"gray.500"}>Date Created: <chakra.span fontWeight={600}  color={"green.400" }> {String(date_created.toLocaleString())} </chakra.span>  </Text>
+          <Text mb="2px" color={"gray.500"}>Date Created: <chakra.span fontWeight={600}  color={"green.400" }> {display_date} </chakra.span>  </Text>
 
 
           {/* <Text color={"gray.500"}>

@@ -5,7 +5,6 @@ import SkillModel from "./Skills";
 const skillSchema = new Schema<Skill>({
   _id: { type: String, required: true },
   name: { type: String, required: true },
-  colour: { type: String, required: true },
   followers: { type: [String], required: false },
   project_ids: { type: [String], required: false },
 });
@@ -20,6 +19,7 @@ const schema = new Schema<User>({
   profilePicture: { type: String, required: false },
   jobTitle: { type: String, required: false },
   userDescription: { type: String, required: false },
+  date_created: {type: Date, required: true},
   links: {
     type: [
       new Schema<Link>(

@@ -39,9 +39,11 @@ export default async function handler(
     await dbConnect();
 
     try {
+      var current_timestamp = new Date();
       const user: User = await UserModel.create({
         ...req.body,
         profilePicture: Location,
+        date_created: current_timestamp.toISOString(),
       });
       return res.status(200).json({ success: true, data: user });
     } catch (error) {

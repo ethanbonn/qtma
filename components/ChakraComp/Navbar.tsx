@@ -72,10 +72,13 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                   <MenuList alignItems={"center"}>
                     <br />
                     <Center>
-                      <Avatar
-                        size={"2xl"}
-                        src={props.profilePicture ? props.profilePicture : "https://avatars.dicebear.com/api/male/username.svg"}
-                      />
+                    <Avatar
+                      size={"2xl"}
+                      src={props.profilePicture}
+                      name={props.firstName + " " + props.lastName}
+                      mb={4}
+                      pos={"relative"}
+                    />
                     </Center>
                     <br />
                     <Center>

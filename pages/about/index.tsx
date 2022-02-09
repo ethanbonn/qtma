@@ -286,9 +286,7 @@ export default function WithSubnavigation() {
           </VStack>
 
           <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
+
           </SimpleGrid>
 
           <Center mt="8px" mb="30px">

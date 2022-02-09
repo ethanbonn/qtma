@@ -1,4 +1,4 @@
-import type { Project, Skill, User } from "../types/models";
+import type { Project, Skill, User, Link } from "../types/models";
 import UserModel from "../models/User";
 import Mongoose, { Schema, model, ObjectId } from "mongoose";
 
@@ -6,7 +6,6 @@ import Mongoose, { Schema, model, ObjectId } from "mongoose";
 const skillSchema = new Schema<Skill>({
   _id: { type: String, required: true },
   name: { type: String, required: true },
-  colour: { type: String, required: true },
   followers: {type: [String], required: false},
   project_ids: { type: [String], required: false },
 });

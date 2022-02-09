@@ -58,6 +58,7 @@ import ProfileCard from "../../components/ChakraComp/ProfileCard";
 import { UnregisteredUser } from "../../types";
 import { User } from "../../types/models";
 import QueryCard from "../Cards/QueryCard";
+import getProfiles from "../../functions/server/getProfiles";
 
 
 export default function LandingPage(props: UnregisteredUser | User) {
@@ -73,6 +74,11 @@ export default function LandingPage(props: UnregisteredUser | User) {
 
 
   useEffect( () => {
+    async function loadProfiles(){
+      var display_profiles = await getProfiles();
+      update_profiles(display_profiles);
+    }
+    loadProfiles();
   }, [projects]);
 
   useEffect( () => {

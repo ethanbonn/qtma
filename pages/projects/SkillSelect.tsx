@@ -12,7 +12,6 @@ import baseUrl from "../../utils/baseUrl";
 export interface SkillOption {
     readonly value: string;
     readonly label: string;
-    readonly colour: string;
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
   }
@@ -43,7 +42,6 @@ export default function AsyncMulti({stateChanger}) {
                                                                       _id: x._id,
                                                                       value: x.name, 
                                                                       label: x.name,
-                                                                      colour: x.colour,
                                                                       followers: x.followers,
                                                                       project_ids: x.project_ids
                                                                     }});
@@ -75,7 +73,6 @@ export default function AsyncMulti({stateChanger}) {
         },
         body: JSON.stringify({
           name: inputValue,
-          colour: 'blue'
         })
       }
     );

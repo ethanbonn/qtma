@@ -35,8 +35,7 @@ const CreateProject = (props: UnregisteredUser | User) => {
       
       var skills = skill.map((x: Skill) => {return {
         _id: x._id,
-        name: x.value,
-        colour: x.colour,
+        name: x.name,
         followers: x.followers,
         project_ids: x.project_ids
       }});
@@ -177,9 +176,17 @@ const CreateProject = (props: UnregisteredUser | User) => {
               <option value="long" >long (4+ months)</option>
             </Select>
         </label>
-        <br />
-        <SkillSelect stateChanger={set_skill} />
-        <br />
+        <br/>
+        <label
+          htmlFor="skills"
+          className="font-sans text-black-normal font-bold"
+        >
+          Required Skills
+          <br />
+            <SkillSelect stateChanger={set_skill} />
+          <br />
+        </label>
+        
         <Button
             type="submit"
             // className=" font-sans px-4 py-2 text-white bg-green-normal rounded-full shadow-md w-1/5 self-center"

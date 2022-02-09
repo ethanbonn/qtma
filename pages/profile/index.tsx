@@ -15,7 +15,6 @@ import { handleUserType, isUser } from "../../functions/typeGuards";
 import ProfilePageCard from "../../components/Cards/ProfilePageCard";
 import SkillCard from "../../components/Cards/SkillCard";
 import LinkCard from "../../components/Cards/LinkCard";
-import ProjectCard from "../../components/Cards/ProjectCard";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer";
 import ViewProfile from "./[userName]/index";

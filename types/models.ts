@@ -17,6 +17,7 @@ export type User = {
   jobTitle?: string;
   userDescription?: string;
   links?: Link[];
+  date_created: Date;
   interests?: string[];
   timezone: string;
   projectIds?: string[];
@@ -60,7 +61,6 @@ export type User = {
 export type Skill = {
   _id: string;
   name: string;
-  colour: string;
   followers: string[]; // ids
   project_ids: string[];
 };
