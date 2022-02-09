@@ -69,18 +69,19 @@ export type Project = {
   _id: string;
   name: string;
   author_ids: string[];
-  author_timezone: string;
-  skills : Skill[];
+  // author_timezone: string;
+  skills? : Skill[];
   description: string;
   date_created: Date;
   desired_relationship_type: string;
-  author_name: string;
-  author_title: string;
-  author_picture?: string; 
-  author_username: string;
+  // author_name: string;
+  // author_title: string;
+  // author_picture?: string; 
+  // author_username: string;
   // hours_per_week?: number;
   duration?: string;
   authors?: [User];
+  skill_ids?: string[];
   
 };
 

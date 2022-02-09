@@ -40,23 +40,27 @@ const CreateProject = (props: UnregisteredUser | User) => {
         project_ids: x.project_ids
       }});
 
+      var skill_ids = skill.map((x: Skill) => 
+        x._id
+      );
+      console.log("SKILL IDS", skill_ids);
+
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
         author_ids: [_id],
-        author_picture: (props.profilePicture ?? "https://avatars.dicebear.com/api/male/username.svg"),
-        author_name: (props.firstName + " " + props.lastName),
-        author_title: props.jobTitle,
-        author_username: props.userName,
-
-  
-  
+        // author_picture: (props.profilePicture ?? "https://avatars.dicebear.com/api/male/username.svg"),
+        // author_name: (props.firstName + " " + props.lastName),
+        // author_title: props.jobTitle,
+        // author_username: props.userName,
+        skill_ids: skill_ids,
         ...data,
-        skills: skills
+        
       }) : JSON.stringify({
         author_id: _id,
   
         ...data,
-        skills: skills
+        skill_ids: skill_ids,
+        // skills: skills
       });
       await fetch(
         `${baseUrl}/api/projects/create`,
@@ -117,7 +121,7 @@ const CreateProject = (props: UnregisteredUser | User) => {
             {errors.relationship && <span>This field is required</span>}
         </label>
         <br />
-        <label htmlFor="timezone" className="text-black-normal font-bold">
+        {/* <label htmlFor="timezone" className="text-black-normal font-bold">
             Timezone
             <br />
             <Select id="country" {...register("author_timezone", { required: true})}>
@@ -141,8 +145,8 @@ const CreateProject = (props: UnregisteredUser | User) => {
                 defaultValue={"EST"}
                 
             /> */}
-            {errors.timezone && <span>This field is required</span>}
-        </label>
+            {/* {errors.timezone && <span>This field is required</span>}
+        </label> */} 
         <br />
         <label
             htmlFor="description"

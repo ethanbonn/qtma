@@ -112,6 +112,15 @@ export default async function handler(
 
           }
         },
+        {
+          "$lookup": {
+            "from": "skills",
+            "localField": "skill_ids",
+            "foreignField": "_id",
+            "as": "skills",
+
+          }
+        }
       
       ]);
       }
@@ -138,6 +147,15 @@ export default async function handler(
 
               }
             },
+            {
+              "$lookup": {
+                "from": "skills",
+                "localField": "skill_ids",
+                "foreignField": "_id",
+                "as": "skills",
+    
+              }
+            }
 
 
 
@@ -167,6 +185,15 @@ export default async function handler(
                 "as": "authors",
 
               }
+            },
+            {
+              "$lookup": {
+                "from": "skills",
+                "localField": "skill_ids",
+                "foreignField": "_id",
+                "as": "skills",
+    
+              }
             }
           ]);
 
@@ -187,6 +214,15 @@ export default async function handler(
                   "foreignField": "_id",
                   "as": "authors",
   
+                }
+              },
+              {
+                "$lookup": {
+                  "from": "skills",
+                  "localField": "skill_ids",
+                  "foreignField": "_id",
+                  "as": "skills",
+      
                 }
               }
               // {

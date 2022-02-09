@@ -17,7 +17,7 @@ import { Project } from "../../types/models";
 
 export default function ProjectCard(props : Project) {
   // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
-  const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created, authors } = props;
+  const { name, skills, duration, date_created, authors } = props;
   var current_date = new Date();
   var date_parsed = new Date(JSON.parse("\"" + date_created + "\""));
   var diffence_in_days = ((current_date.getTime() - date_parsed.getTime()) / (1000 * 3600 * 24));
@@ -80,13 +80,13 @@ export default function ProjectCard(props : Project) {
               
 
             <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
-              <Text fontWeight={600}>{author_name}</Text>
-              <Text color={"gray.500"}>{author_title}</Text>
+              <Text fontWeight={600}>{authors[0].firstName + " " + authors[0].lastName}</Text>
+              <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
             </Stack>
           </Stack>
 
           <Text mt="2px" color={"gray.500"}>
-            <Text mb="2px" color={"gray.500"}>Timezone: <chakra.span fontWeight={600}  color="blue.600">{author_timezone}</chakra.span></Text>
+            <Text mb="2px" color={"gray.500"}>Timezone: <chakra.span fontWeight={600}  color="blue.600">{authors[0].timezone}</chakra.span></Text>
           </Text>
           <Text mb="2px" color={"gray.500"}>Project Duration: <chakra.span fontWeight={600}  color={duration == "short" ? "green.400" : duration == "medium" ? "yellow.400" : "red.400"}> {duration} </chakra.span>  </Text>
           
