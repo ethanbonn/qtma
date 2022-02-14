@@ -73,6 +73,7 @@ const schema = new Schema<Project>({
   duration: {type: String, required: false},   // short (<1 month) | medium (1-4 months) | long (4+ months)
   authors: {type: [userSchema], required: false},
   skill_ids: { type: [String], required: false },
+  active: {type: Boolean, required: false},
 
 
 });

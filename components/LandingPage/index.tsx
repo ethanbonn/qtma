@@ -6,6 +6,7 @@ import PreviewCard from "./PreviewCard";
 // import Footer from "../Footer";
 import Card from "../Cards/QueryCard";
 import queryDB from "../../functions/server/queryDB";
+import ProfileSearchBar from "../ProfileSearchBar"
 
 
 import {
@@ -84,6 +85,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
 
   return (
     <div>
+      {/* <ProfileSearchBar/> */}
       <Box>
         <Navbar {... props}/>
         <Flex

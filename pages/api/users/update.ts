@@ -38,14 +38,33 @@ export default async function handler(
     await dbConnect();
 
     try {
-      const updatedUser: User = await UserModel.findByIdAndUpdate(
-        req?.body?._id,
+      console.log("request",         {
+        ...req?.body,
+        profilePicture: Location,
+      });
+      // const updatedUser: User = await UserModel.findByIdAndUpdate(
+      //   req?.body?._id,
+      //   {
+          
+      //     "$set": 
+      //       {...req?.body,
+      //       profilePicture: Location}
+          
+      //   },
+      // );
+      await UserModel.updateOne(
+        {_id: req?.body?._id},
         {
-          ...req?.body,
-          profilePicture: Location,
-        }
+          
+          "$set": 
+            {...req?.body,
+            profilePicture: Location}
+          
+        },
       );
-      return res.status(200).json({ success: true, data: updatedUser });
+      // console.log("after", updatedUser);
+      // return res.status(200).json({ success: true, data: updatedUser });
+      return res.status(200).json({success: true})
     } catch (error) {
       // duplicate username error
       if (error.code === 11000) {

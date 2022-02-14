@@ -3,19 +3,20 @@
 
 import { useAuthUser } from 'next-firebase-auth';
 import React, { Component, useEffect, useState } from 'react';
-import dbConnect from "../utils/dbConnect";
+import dbConnect from "../../../utils/dbConnect";
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select';
 
-import getSkills from '../functions/server/getSkills';
-import type { Skill } from "../types/models";
-import baseUrl from "../utils/baseUrl";
+import getSkills from '../../../functions/server/getSkills';
+import type { Skill } from "../../../types/models";
+import baseUrl from "../../../utils/baseUrl";
 
 export interface SkillOption {
     readonly value: string;
     readonly label: string;
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
+    readonly _id: string;
   }
 
 
@@ -44,6 +45,7 @@ export default function AsyncMulti({stateChanger}) {
       var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
                                                                       value: x.name, 
                                                                       label: x.name,
+                                                                      _id: x._id
                                                                       }});      
       if (typeof(inValue) === "string"){
         return filterSkills(inValue, sOptions);
@@ -80,9 +82,9 @@ export default function AsyncMulti({stateChanger}) {
     console.log("response", response);
     console.log(response.json);
     console.log(JSON.stringify(response.body));
-    console.log(data);
+    console.log(data._id);
     
-    setInputValue(inputValue => [...inputValue, {value: inValue, label: inValue}]);
+    setInputValue(inputValue => [...inputValue, {value: inValue, label: inValue, _id: data._id}]);
 
     setReloadOption(reloadOptions + 1);
 

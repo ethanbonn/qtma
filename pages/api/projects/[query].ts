@@ -127,6 +127,15 @@ export default async function handler(
       if (skills_arr.length > 0){
         const querySkills = await ProjectModel.aggregate([
             {
+              "$lookup": {
+                "from": "skills",
+                "localField": "skill_ids",
+                "foreignField": "_id",
+                "as": "skills",
+    
+              }
+            },
+            {
               "$match":{
                   
                 "skills": {
@@ -145,15 +154,6 @@ export default async function handler(
                 "foreignField": "_id",
                 "as": "authors",
 
-              }
-            },
-            {
-              "$lookup": {
-                "from": "skills",
-                "localField": "skill_ids",
-                "foreignField": "_id",
-                "as": "skills",
-    
               }
             }
 

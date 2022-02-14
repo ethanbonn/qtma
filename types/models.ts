@@ -18,10 +18,13 @@ export type User = {
   userDescription?: string;
   links?: Link[];
   date_created: Date;
-  interests?: string[];
   timezone: string;
-  projectIds?: string[];
+  project_ids?: string[];
+  projects?: [Project];
   skills?: Skill[];
+  skill_ids?: string[];
+
+
 };
 
 // export type Chat = {
@@ -82,6 +85,7 @@ export type Project = {
   duration?: string;
   authors?: [User];
   skill_ids?: string[];
+  active: boolean;
   
 };
 

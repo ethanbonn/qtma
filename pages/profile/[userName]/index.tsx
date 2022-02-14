@@ -52,9 +52,12 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
     async function getTargetUser(username) {
       try {
         const user = await getUserByUsername(username);
-        const usersProjects = await getProjectByUID(user._id);
+        // const usersProjects = await getProjectByUID(user._id);
+        console.log(user);
+        console.log(user.projects);
+      
         setUserProfile(user);
-        setUserProjects(usersProjects);
+        setUserProjects(user.projects);
       } catch (err) {
         console.log("error", err);
       }

@@ -5,7 +5,7 @@ import {
   useAuthUser,
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import type { User, Link, Skill } from "../../../types/models";
 import getUserData from "../../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../../types";
@@ -14,6 +14,8 @@ import Footer from "../../../components/Footer";
 import Navbar from "../../../components/ChakraComp/Navbar";
 import baseUrl from "../../../utils/baseUrl";
 import { Input, Select, Textarea } from "@chakra-ui/react";
+import ProfileSkills from "../../../components/Cards/SelectSkills/ProfileSkills";
+import { UserMetadata } from "firebase-admin/lib/auth/user-record";
 
 const timezones = [
   "ACST",
@@ -30,7 +32,7 @@ const timezones = [
   "WET",
 ];
 
-const EditProfile = (props: UnregisteredUser | User) => {
+const EditProfile = (props: UnregisteredUser | UserMetadata) => {
   const {
     register,
     handleSubmit,
@@ -38,6 +40,10 @@ const EditProfile = (props: UnregisteredUser | User) => {
     formState: { errors },
   } = useForm();
   const isTypeUser = isUser(props);
+
+  console.log("USER DATA", props);
+
+  // need skills in profile
 
   const [uniqueUsername, setUniqueUsername] = useState(true);
   const [unexpectedError, setUnexpectedError] = useState(false);
@@ -54,13 +60,20 @@ const EditProfile = (props: UnregisteredUser | User) => {
     isTypeUser && props.skills ? props.skills : []
   );
   const [projectsList, setProjectsList] = useState(
-    isTypeUser && props.projectIds ? props.projectIds : []
+    isTypeUser && props.project_ids ? props.project_ids : []
   );
+
+  useEffect(()=> {
+    console.log("UseE skills", skillsList);
+    // register("skill_ids");
+  }, [skillsList]);
+
   const { _id, email } = props;
   const { getIdToken } = useAuthUser();
 
   const onSubmit = async (data: any) => {
     const token = await getIdToken();
+    console.log("ON SUBMIT", data);
 
     const toBase64 = (file: File) =>
       new Promise((resolve, reject) => {
@@ -79,6 +92,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
       body: JSON.stringify({
         _id,
         email,
+        skill_ids: skillsList,
         ...data,
         profilePicture:
           data.profilePicture.length !== 0
@@ -378,6 +392,21 @@ const EditProfile = (props: UnregisteredUser | User) => {
             </>
           ))}
         </div>
+
+
+        <br />
+
+        <label
+          htmlFor="user-skills"
+          className="font-sans text-black-normal font-bold"
+        >
+          Skills
+        </label>
+        <div id="user-skills" className="font-sans text-black-normal">
+
+        <ProfileSkills stateChanger={setSkillsList} initSkills={skillsList}/>
+        </div>
+
         <br />
 
         {/* {projectsList.map((_, i) => (
@@ -443,6 +472,7 @@ export const getServerSideProps = withAuthUserSSR({
 })(async ({ AuthUser }) => {
   const { email, id } = AuthUser;
   const userData = await getUserData(id);
+
 
   return {
     props: userData ?? { email, _id: id },

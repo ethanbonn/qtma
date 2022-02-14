@@ -25,10 +25,12 @@ export default async function handler(
       if (typeof _id !== "string") throw new Error("Invalid _id");
       const user = await UserModel.findById(_id);
       var skills = [];
-      for (var i = 0; i < user.skills.length; i++){
-        var skill = await SkillsModel.findById(user.skills[i]);
+      console.log(user.skill_ids);
+      for (var i = 0; i < user.skill_ids.length; i++){
+        var skill = await SkillsModel.findById(user.skill_ids[i]);
         skills.push(skill);
       }
+      user.skills = skills;
       if (!user) throw new Error("User not found");
       res.status(200).json({ success: true, data: user?.toObject() });
     } catch (error) {

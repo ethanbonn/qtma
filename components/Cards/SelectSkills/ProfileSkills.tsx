@@ -3,29 +3,41 @@
 
 import { useAuthUser } from 'next-firebase-auth';
 import React, { Component, useEffect, useState } from 'react';
-import dbConnect from "../utils/dbConnect";
+import dbConnect from "../../../utils/dbConnect";
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select';
 
-import getSkills from '../functions/server/getSkills';
-import type { Skill } from "../types/models";
-import baseUrl from "../utils/baseUrl";
+import getSkills from '../../../functions/server/getSkills';
+import type { Skill } from "../../../types/models";
+import baseUrl from "../../../utils/baseUrl";
 
 export interface SkillOption {
     readonly value: string;
     readonly label: string;
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
+    readonly _id: string;
   }
 
 
 
-export default function AsyncMulti({stateChanger}) {
+export default function AsyncMulti({stateChanger, initSkills}) {
   const [inputValue, setInputValue] = useState<SkillOption[] | []>([]);
   const [reloadOptions, setReloadOption] = useState(0);
 
+  initSkills = [
+    {
+      _id: '61ef67b73c5bc285d88b36a2',
+      name: 'javascript',
+      followers: [],
+      project_ids: []
+    }
+  ];
+  var def = initSkills.map((x : Skill) =>  { return  { value: x.name, label: x.name, _id: x._id } })
+  console.log(def);
+  console.log("INIT SKILLS", initSkills);
   useEffect(() => {
-    stateChanger(inputValue);
+    stateChanger(inputValue.map((x) => { return x._id}));
   }, [inputValue]);
 
   // change this using mongo to a search
@@ -44,6 +56,7 @@ export default function AsyncMulti({stateChanger}) {
       var sOptions : SkillOption[] = options.map((x : Skill) => {return {    
                                                                       value: x.name, 
                                                                       label: x.name,
+                                                                      _id: x._id
                                                                       }});      
       if (typeof(inValue) === "string"){
         return filterSkills(inValue, sOptions);
@@ -82,7 +95,7 @@ export default function AsyncMulti({stateChanger}) {
     console.log(JSON.stringify(response.body));
     console.log(data);
     
-    setInputValue(inputValue => [...inputValue, {value: inValue, label: inValue}]);
+    setInputValue(inputValue => [...inputValue, {value: inValue, label: inValue, _id: data._id}]);
 
     setReloadOption(reloadOptions + 1);
 
@@ -100,6 +113,7 @@ export default function AsyncMulti({stateChanger}) {
         // />
           key={reloadOptions}
           value={inputValue}
+          defaultValue={def}
           onChange={promiseOptions}
           isMulti
           isSearchable
