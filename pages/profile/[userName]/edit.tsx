@@ -260,7 +260,7 @@ const timezones = [
           <br />
           <Textarea
             placeholder="Help our community get to know you by introducing yourself"
-            type="text"
+            // type="text"
             id="userDescription"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.userDescription : undefined}
