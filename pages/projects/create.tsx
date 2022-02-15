@@ -157,7 +157,6 @@ const CreateProject = (props: UnregisteredUser | User) => {
             <br />
             <Textarea
                 placeholder="Here are my mars rover plans"                 
-                type="text"
                 id="description"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
                 {...register("description", { required: true, maxLength: 100 })}>
