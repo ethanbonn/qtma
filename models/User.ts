@@ -18,7 +18,17 @@ const schema = new Schema<User>({
   userDescription: { type: String, required: false },
   date_created: {type: Date, required: true},
   links: {
-    type: [linkSchema.schema],
+    type: [
+      new Schema<Link>(
+        {
+          _id: { type: String, required: false },
+          site: { type: String, required: false },
+          url: { type: String, required: false },
+          colour: { type: String, required: false },
+        },
+        { strict: false }
+      ),
+    ],
     default: [
       {
         site: "Linkedin",

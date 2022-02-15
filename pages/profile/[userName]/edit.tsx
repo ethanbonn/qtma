@@ -86,11 +86,11 @@ const timezones = [
     const token = await getIdToken();
     console.log("ON SUBMIT", data);
 
-    let allSkills = skillsList;
-    if (isTypeUser && props.skills) {
-      allSkills = props.skills;
-      Array.prototype.push.apply(allSkills, skillsList);
-    }
+    // let allSkills = skillsList;
+    // if (isTypeUser && props.skills) {
+    //   allSkills = props.skills;
+    //   Array.prototype.push.apply(allSkills, skillsList);
+    // }
 
     const toBase64 = (file: File) =>
       new Promise((resolve, reject) => {
@@ -318,11 +318,11 @@ const timezones = [
           {errors.timezone && <span>This field is required</span>}
         </label>
 
-        <br />
+        {/* <br />
 
         <SkillQuery stateChanger={setSkillsList} />
 
-        <br />
+        <br /> */}
 
         <label
           htmlFor="user-links"

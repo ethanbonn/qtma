@@ -40,11 +40,32 @@ export default async function handler(
 
     try {
       var current_timestamp = new Date();
-      const user: User = await UserModel.create({
+      console.log("CREATING", {
         ...req.body,
+        project_ids: [],
         profilePicture: Location,
         date_created: current_timestamp.toISOString(),
       });
+
+      const usr : User = {
+        ...req.body,
+        project_ids: [],
+        profilePicture: Location,
+        date_created: current_timestamp.toISOString(),
+      };
+
+      console.log("CREATE OBJ", usr);
+      try{const user: User = await UserModel.create({
+        ...req.body,
+        project_ids: [],
+        profilePicture: Location,
+        date_created: current_timestamp.toISOString(),
+      })} catch (err){
+        console.log(err);
+      }
+      
+      
+      console.log("recieved", user);
       return res.status(200).json({ success: true, data: user });
     } catch (error) {
       // duplicate username error

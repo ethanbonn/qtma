@@ -13,29 +13,7 @@ import { User } from "../types/models";
 import baseUrl from "../utils/baseUrl";
 import { Flex, Heading, Stack, Text, useColorModeValue } from "@chakra-ui/react";
 
-async function sendEmail(_id : string) {
-  var verified = "";
-  await firebase
-    .auth()
-    .currentUser?.sendEmailVerification({
-      // props.email?
-      url: `${baseUrl}/profile/${_id}/edit`,
-    })
-    .then(() => {
-      // The link was successfully sent. Inform the user.
-      // Save the email locally so you don't need to ask the user for it again
-      // if they open the link on the same device.
-      // ...
-      verified = "verification link has been sent (check your spam folder just in case";
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-      return errorMessage;
-    });
-  return verified
-}
+
 
 const Verify = (props: UnregisteredUser | User) => {
   const [verifyMessage, setVerifyMessage] = useState("");
@@ -51,21 +29,51 @@ const Verify = (props: UnregisteredUser | User) => {
     }, [])
     
   } else {
-    useEffect(() => {
-      // if (!isUserType) {
-      const { _id, emailVerified } = props;
+    useEffect(()  => {
+    const { _id, emailVerified } = props;
+     async function handle(_id, emailVerified) {
+       // if (!isUserType) {
+      
       console.log("verified: ", emailVerified);
 
       if (!emailVerified) {
-        message = sendEmail(_id);
-        console.log("Message", message);
-        setVerifyMessage(message);
+        await sendEmail(_id);
+        // console.log("Message", message);
+        // setVerifyMessage(message);
       } else {
         // user is already verified
         console.log("verified should be true: ", emailVerified);
         router.push(`/profile/${_id}/edit`);
       }
-    }, []);
+       
+     }
+     handle(_id, emailVerified);
+      
+    }, [verifyMessage]);
+  }
+
+  async function sendEmail(_id : string) {
+    // var verified = "";
+    await firebase
+      .auth()
+      .currentUser?.sendEmailVerification({
+        // props.email?
+        url: `${baseUrl}/profile/${_id}/edit`,
+      })
+      .then(() => {
+        // The link was successfully sent. Inform the user.
+        // Save the email locally so you don't need to ask the user for it again
+        // if they open the link on the same device.
+        // ...
+        setVerifyMessage("verification link has been sent (check your spam folder just in case)");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // return errorMessage;
+        setVerifyMessage(errorMessage);
+      });
   }
 
   return (
