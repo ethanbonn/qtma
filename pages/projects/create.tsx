@@ -60,7 +60,7 @@ const CreateProject = (props: UnregisteredUser | User) => {
         author_id: _id,
   
         ...data,
-        skill_ids: skill_ids,
+        skill_ids: skill,
         // skills: skills
       });
       await fetch(

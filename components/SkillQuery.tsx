@@ -1,3 +1,8 @@
+// this file is not in use
+// refer to ProjectSkills instead
+
+
+
 import React, { useState, useEffect } from "react";
 
 import { Listbox, Transition } from "@headlessui/react";
@@ -37,7 +42,7 @@ export default function Card({ stateChanger }) {
     <Box>
       <FormControl>
         <FormLabel htmlFor="country">Skilled In</FormLabel>
-        <ProjectSkills stateChanger={stateChanger} />
+        <ProjectSkills stateChanger={stateChanger} initSkills={null}/>
       </FormControl>
     </Box>
   );
