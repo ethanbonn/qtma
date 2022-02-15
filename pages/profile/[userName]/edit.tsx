@@ -5,9 +5,6 @@ import {
   useAuthUser,
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
-<<<<<<< HEAD
-import { FunctionComponent, useEffect, useState } from "react";
-=======
 import { FunctionComponent, useState, useEffect } from "react";
 import {
   Input,
@@ -17,7 +14,6 @@ import {
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
->>>>>>> c720e918552de72a9064729da07dda5ae8f4e613
 import type { User, Link, Skill } from "../../../types/models";
 import getUserData from "../../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../../types";
@@ -25,14 +21,10 @@ import { isUser } from "../../../functions/typeGuards";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/ChakraComp/Navbar";
 import baseUrl from "../../../utils/baseUrl";
-<<<<<<< HEAD
-import { Input, Select, Textarea } from "@chakra-ui/react";
-import ProfileSkills from "../../../components/Cards/SelectSkills/ProfileSkills";
-import { UserMetadata } from "firebase-admin/lib/auth/user-record";
-=======
 import QueryCard from "../../../components/Cards/QueryCard";
 import SkillQuery from "../../../components/SkillQuery";
->>>>>>> c720e918552de72a9064729da07dda5ae8f4e613
+import { UserMetadata } from "firebase-admin/lib/auth/user-record";
+import ProfileSkills from "../../../components/Cards/SelectSkills/ProfileSkills";
 
 const timezones = [
   "ACST",
@@ -49,7 +41,9 @@ const timezones = [
   "WET",
 ];
 
-const EditProfile = (props: UnregisteredUser | UserMetadata) => {
+// const EditProfile = (props: UnregisteredUser | UserMetadata) => {
+  const EditProfile = (props: UnregisteredUser | User) => {
+
   const {
     register,
     handleSubmit,
@@ -115,11 +109,7 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
       body: JSON.stringify({
         _id,
         email,
-<<<<<<< HEAD
         skill_ids: skillsList,
-=======
-        skills: allSkills,
->>>>>>> c720e918552de72a9064729da07dda5ae8f4e613
         ...data,
         profilePicture:
           data.profilePicture.length !== 0

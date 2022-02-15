@@ -2,9 +2,9 @@ import mongoose, { Schema, model } from "mongoose";
 import type { User, Link, Skill, Project } from "../types/models";
 import SkillModel from "./Skills";
 
-const projectSchema = require('Projects');
-const skillSchema = require('Skills');
-const linkSchema = require('Links');
+const projectSchema = require('../models/Projects');
+const skillSchema = require('../models/Skills');
+const linkSchema = require('../models/Links');
 
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
