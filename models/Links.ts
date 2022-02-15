@@ -13,13 +13,3 @@ const schema = new Schema<Link>(
 );
 // Create and export the model.
 export default mongoose.models.Link ?? model<Link>("Link", schema);
-
-//
-// new Schema<Link>(
-//   {
-//     site: { type: String, required: false },
-//     url: { type: String, required: false },
-//     colour : {type: String, required : false},
-//   },
-//   { strict: false }
-// ),

@@ -7,6 +7,11 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["image.shutterstock.com", "media.istockphoto.com"],
+    domains: [
+      "image.shutterstock.com",
+      "media.istockphoto.com",
+      "qtma-2022-team-4.s3.us-east-2.amazonaws.com",
+      "qtma-2022-team-4.s3.amazonaws.com",
+    ],
   },
 };

@@ -33,14 +33,10 @@ const styles = {
   },
 };
 
-
-
 export const ViewProfile = (props: UnregisteredUser | User) => {
   const [userProfile, setUserProfile] = useState(props as User);
 
   const [userProjects, setUserProjects] = useState([]);
-
-
   const isUserType = isUser(props);
   // handles user access and redirects & returns nav menu arg
   const displayName = handleUserType(props);
@@ -104,7 +100,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
             <div className="flex flex-wrap content-center -mx-12 -my-2 ">
               {userProjects.map((Proj) => {
                 console.log("ADDING PROJECT", Proj);
-                return <ProjectCard {... Proj}/>
+                return <ProjectCard {...Proj} />;
               })}
             </div>
           </div>

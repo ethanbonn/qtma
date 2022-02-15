@@ -2,34 +2,9 @@ import mongoose, { Schema, model } from "mongoose";
 import type { User, Link, Skill, Project } from "../types/models";
 import SkillModel from "./Skills";
 
-const projectSchema = require('../models/Projects');
-
-const skillSchema = new Schema<Skill>({
-  _id: { type: String, required: true },
-  name: { type: String, required: true },
-  followers: { type: [String], required: false },
-  project_ids: { type: [String], required: false },
-});
-
-// const projectSchema = new Schema<Project>({
-//   _id: { type: String, required: true },
-//   name: {type: String, required: true},
-//   author_ids: {type: [String], required: true},
-//   // author_timezone: {type: String, required: true},
-//   skills : {type: [skillSchema], required: false},
-//   description: {type: String, required: true},
-//   date_created: {type: Date, required: true},
-//   // author_name: {type: String, required: true},
-//   // author_picture: {type: String, required: false},
-//   // author_title: {type: String, required: true},
-//   // author_username: {type: String, required: true},
-//   desired_relationship_type: {type: String, required: true},
-//   duration: {type: String, required: false},   // short (<1 month) | medium (1-4 months) | long (4+ months)
-//   authors: {type: [schema], required: false},
-//   skill_ids: { type: [String], required: false },
-
-
-// });
+const projectSchema = require('Projects');
+const skillSchema = require('Skills');
+const linkSchema = require('Links');
 
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
@@ -43,17 +18,7 @@ const schema = new Schema<User>({
   userDescription: { type: String, required: false },
   date_created: {type: Date, required: true},
   links: {
-    type: [
-      new Schema<Link>(
-        {
-          _id: { type: String, required: false },
-          site: { type: String, required: false },
-          url: { type: String, required: false },
-          colour: { type: String, required: false },
-        },
-        { strict: false }
-      ),
-    ],
+    type: [linkSchema.schema],
     default: [
       {
         site: "Linkedin",
@@ -75,7 +40,7 @@ const schema = new Schema<User>({
   timezone: { type: String, required: true },
   project_ids: { type: [String], required: false },
   projects: {type: [projectSchema.schema], required: false},
-  skills: { type: [skillSchema], required: false },
+  skills: { type: [skillSchema.schema], required: false },
   skill_ids: {type: [String], required: false},
 });
 

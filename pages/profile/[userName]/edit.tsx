@@ -5,7 +5,19 @@ import {
   useAuthUser,
 } from "next-firebase-auth";
 import { useForm } from "react-hook-form";
+<<<<<<< HEAD
 import { FunctionComponent, useEffect, useState } from "react";
+=======
+import { FunctionComponent, useState, useEffect } from "react";
+import {
+  Input,
+  Select,
+  Textarea,
+  Box,
+  FormControl,
+  FormLabel,
+} from "@chakra-ui/react";
+>>>>>>> c720e918552de72a9064729da07dda5ae8f4e613
 import type { User, Link, Skill } from "../../../types/models";
 import getUserData from "../../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../../types";
@@ -13,9 +25,14 @@ import { isUser } from "../../../functions/typeGuards";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/ChakraComp/Navbar";
 import baseUrl from "../../../utils/baseUrl";
+<<<<<<< HEAD
 import { Input, Select, Textarea } from "@chakra-ui/react";
 import ProfileSkills from "../../../components/Cards/SelectSkills/ProfileSkills";
 import { UserMetadata } from "firebase-admin/lib/auth/user-record";
+=======
+import QueryCard from "../../../components/Cards/QueryCard";
+import SkillQuery from "../../../components/SkillQuery";
+>>>>>>> c720e918552de72a9064729da07dda5ae8f4e613
 
 const timezones = [
   "ACST",
@@ -75,6 +92,12 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
     const token = await getIdToken();
     console.log("ON SUBMIT", data);
 
+    let allSkills = skillsList;
+    if (isTypeUser && props.skills) {
+      allSkills = props.skills;
+      Array.prototype.push.apply(allSkills, skillsList);
+    }
+
     const toBase64 = (file: File) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -92,7 +115,11 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
       body: JSON.stringify({
         _id,
         email,
+<<<<<<< HEAD
         skill_ids: skillsList,
+=======
+        skills: allSkills,
+>>>>>>> c720e918552de72a9064729da07dda5ae8f4e613
         ...data,
         profilePicture:
           data.profilePicture.length !== 0
@@ -127,6 +154,20 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
     listToUpdate(list);
   };
 
+  // useEffect(() => {
+  //   async function handler() {
+  //     console.log(skillsList);
+  //     console.log(typeof props.skills, props.skills, props.links);
+  //     //   await queryDB(skill.map((x) => x.value))
+  //     //     .then((response) => response)
+  //     //     .then((res) => stateChanger(res));
+  //     setSkillsList((existingSkills) => ({
+  //       ...existingSkills,
+  //     }));
+  //   }
+  //   handler();
+  // }, []);
+
   return (
     <>
       <Navbar {...props} />
@@ -159,13 +200,13 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
         >
           Username
           <br />
-            <Input
-              type="text"
-              id="userName"
-              className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-              defaultValue={isTypeUser ? props.userName : undefined}
-              {...register("userName", { required: true, maxLength: 12 })}>
-            </Input>
+          <Input
+            type="text"
+            id="userName"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.userName : undefined}
+            {...register("userName", { required: true, maxLength: 12 })}
+          />
           {/* <input
             type="text"
             id="userName"
@@ -185,7 +226,8 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
             id="firstName"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
             defaultValue={isTypeUser ? props.firstName : undefined}
-            {...register("firstName", { required: true, maxLength: 24 })}></Input>
+            {...register("firstName", { required: true, maxLength: 24 })}
+          />
           {errors.firstName && <span>This field is required</span>}
         </label>
         <br />
@@ -226,14 +268,14 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
         >
           Description
           <br />
-            <Textarea
-              placeholder="Help our community get to know you by introducing yourself"                 
-              type="text"
-              id="userDescription"
-              className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
-              defaultValue={isTypeUser ? props.userDescription : undefined}
-              {...register("userDescription", { maxLength: 240 })}>
-            </Textarea>
+          <Textarea
+            placeholder="Help our community get to know you by introducing yourself"
+            type="text"
+            id="userDescription"
+            className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
+            defaultValue={isTypeUser ? props.userDescription : undefined}
+            {...register("userDescription", { maxLength: 240 })}
+          />
           {/* <input
             type="text"
             id="userDescription"
@@ -249,20 +291,30 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
         >
           Timezone
           <br />
-          <Select id="timezone" defaultValue={isTypeUser ? props.timezone : undefined} {...register("timezone", { required: true, maxLength: 4 })}>
-              <option value="EST">Eastern Standard Time (EST)</option>
-              <option value="PST">Pacific Standard Time (PST)</option>
-              <option value="ACST">Australian Central Standard Time (ACST)</option>
-              <option value="AEST">Australian Eastern Standard Time (AEST)</option>
-              <option value="AKST">Alaska Standard Time (AKST)</option>
-              <option value="AST">Atlantic Standard Time (AST)</option>
-              <option value="AWST">Australian Western Standard Time (AWST)</option>
-              <option value="CET">Central European Time (CET)</option>
-              <option value="CST">Central Standard Time (CST)</option>
-              <option value="EET">Eastern European Time (EET)</option>
-              <option value="MST">Mountain Standard Time (MST)</option>
-              <option value="WET">Western European Time (WET)</option>
-            </Select>
+          <Select
+            id="timezone"
+            defaultValue={isTypeUser ? props.timezone : undefined}
+            {...register("timezone", { required: true, maxLength: 4 })}
+          >
+            <option value="EST">Eastern Standard Time (EST)</option>
+            <option value="PST">Pacific Standard Time (PST)</option>
+            <option value="ACST">
+              Australian Central Standard Time (ACST)
+            </option>
+            <option value="AEST">
+              Australian Eastern Standard Time (AEST)
+            </option>
+            <option value="AKST">Alaska Standard Time (AKST)</option>
+            <option value="AST">Atlantic Standard Time (AST)</option>
+            <option value="AWST">
+              Australian Western Standard Time (AWST)
+            </option>
+            <option value="CET">Central European Time (CET)</option>
+            <option value="CST">Central Standard Time (CST)</option>
+            <option value="EET">Eastern European Time (EET)</option>
+            <option value="MST">Mountain Standard Time (MST)</option>
+            <option value="WET">Western European Time (WET)</option>
+          </Select>
           {/* <select
             id="timezone"
             className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
@@ -276,47 +328,10 @@ const EditProfile = (props: UnregisteredUser | UserMetadata) => {
           {errors.timezone && <span>This field is required</span>}
         </label>
 
-        {/* {skillsList.map((_, i) => (
-          <>
-            <br />
-            <label
-              htmlFor={`skills${i}`}
-              className={
-                i === 0
-                  ? "font-sans text-black-normal font-bold"
-                  : "font-sans text-black-normal"
-              }
-            >
-              {i === 0 && "Skills:"}
-              <br />
-              <input
-                type="text"
-                id={`skills${i}`}
-                // defaultValue={isTypeUser ? props.skills : undefined}
-                {...register(`skills.${i}`, {
-                  maxLength: 500,
-                  onChange: (e) =>
-                    handleInputChange(
-                      e,
-                      i,
-                      "skills",
-                      skillsList,
-                      setSkillsList
-                    ),
-                })}
-              />
-              {i === 0 && (
-                <button
-                  type="button"
-                  onClick={() => setSkillsList([...skillsList, { skills: "" }])}
-                >
-                  +
-                </button>
-              )}
-            </label>
-          </>
-        ))}
-         */}
+        <br />
+
+        <SkillQuery stateChanger={setSkillsList} />
+
         <br />
 
         <label
