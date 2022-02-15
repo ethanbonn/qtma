@@ -23,12 +23,12 @@ export default function ProfilePageCard(props: userWrapper) {
             name={`${firstName} ${lastName}`}
             src={profilePicture}
           />
-          <Image src={profilePicture} width={500} height={500} />
+          {/* <Image src={profilePicture} width={500} height={500} />
           <img
             className="block mx-auto rounded-full w-32 h-32 sm:flex-shrink-0 mt-3"
             src={profilePicture}
             alt="Author"
-          />
+          /> */}
 
           <div className="px-6 py-4">
             <div className="content-center">

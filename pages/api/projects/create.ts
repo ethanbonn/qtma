@@ -4,6 +4,8 @@ import { verifyIdToken } from "next-firebase-auth";
 import type { Project } from "../../../types/models";
 import dbConnect from "../../../utils/dbConnect";
 import ProjectModel from "../../../models/Projects";
+import UserModel from "../../../models/User";
+import SkillModel from "../../../models/Skills"
 
 import mongoose from "mongoose";
 
@@ -41,6 +43,25 @@ export default async function handler(
       const proj: Project = await ProjectModel.create({
         ...req.body
       });
+      console.log("proj returned", proj);
+      // adding project link
+      for (var i = 0; i < req.body.author_ids.length; i++){
+        const updatedUser = await UserModel.updateOne(
+          { _id: req.body.author_ids[i]},
+          { $push: { project_ids: proj._id}}
+        );
+        // console.log("Created link", updatedUser);
+      }
+
+      // adding skill link
+      for (var i = 0; i < req.body.skill_ids.length; i++){
+        const updatedUser = await SkillModel.updateOne(
+          { _id: req.body.skill_ids[i]},
+          { $push: { project_ids: proj._id}}
+        );
+      }
+      
+
       console.log("REQ BODY", req.body);
       return res.status(200).json({ success: true, data: proj });
     } catch (error) {

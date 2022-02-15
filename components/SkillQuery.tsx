@@ -16,6 +16,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import queryDB from "../functions/server/queryDB";
 import QueryCardRelationship from "./QueryCardRelationship";
 import QueryCardSelect from "./QueryCardSelect";
+import ProjectSkills from "./Cards/SelectSkills/ProjectSkills";
 
 export default function Card({ stateChanger }) {
   const [skill, setSkill] = useState([]);
@@ -36,7 +37,7 @@ export default function Card({ stateChanger }) {
     <Box>
       <FormControl>
         <FormLabel htmlFor="country">Skilled In</FormLabel>
-        <QueryCardSelect stateChanger={stateChanger} />
+        <ProjectSkills stateChanger={stateChanger} />
       </FormControl>
     </Box>
   );

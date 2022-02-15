@@ -38,7 +38,7 @@ const schema = new Schema<User>({
     ],
   },
   timezone: { type: String, required: true },
-  project_ids: { type: [String], required: false },
+  project_ids: { type: [String], required: true },
   projects: {type: [projectSchema.schema], required: false},
   skills: { type: [skillSchema.schema], required: false },
   skill_ids: {type: [String], required: false},

@@ -17,7 +17,7 @@ export type User = {
   links?: Link[];
   date_created: Date;
   timezone: string;
-  project_ids?: string[];
+  project_ids: string[];
   projects?: [Project];
   skills?: Skill[];
   skill_ids?: string[];

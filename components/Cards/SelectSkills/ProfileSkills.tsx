@@ -25,18 +25,19 @@ export default function AsyncMulti({stateChanger, initSkills}) {
   const [inputValue, setInputValue] = useState<SkillOption[] | []>([]);
   const [reloadOptions, setReloadOption] = useState(0);
 
-  initSkills = [
-    {
-      _id: '61ef67b73c5bc285d88b36a2',
-      name: 'javascript',
-      followers: [],
-      project_ids: []
-    }
-  ];
-  var def = initSkills.map((x : Skill) =>  { return  { value: x.name, label: x.name, _id: x._id } })
-  console.log(def);
+  // initSkills = [
+  //   {
+  //     _id: '61ef67b73c5bc285d88b36a2',
+  //     name: 'javascript',
+  //     followers: [],
+  //     project_ids: []
+  //   }
+  // ];
+  // var def = initSkills.map((x : Skill) =>  { return  { value: x.name, label: x.name, _id: x._id } })
+  // console.log(def);
   console.log("INIT SKILLS", initSkills);
   useEffect(() => {
+    console.log("MAPPING", inputValue);
     stateChanger(inputValue.map((x) => { return x._id}));
   }, [inputValue]);
 
@@ -89,13 +90,14 @@ export default function AsyncMulti({stateChanger, initSkills}) {
         })
       }
     );
-    const data = await response.json();
-    console.log("response", response);
-    console.log(response.json);
-    console.log(JSON.stringify(response.body));
-    console.log(data);
+    const res = await response.json();
+    // console.log("response", response);
+    // console.log(response.json);
+    // console.log(JSON.stringify(response.body));
+    // console.log(data['data']);
     
-    setInputValue(inputValue => [...inputValue, {value: inValue, label: inValue, _id: data._id}]);
+    // console.log(data['data']._id);
+    setInputValue(inputValue => [...inputValue, {value: inValue, label: inValue, _id: res['data']._id}]);
 
     setReloadOption(reloadOptions + 1);
 
@@ -113,7 +115,7 @@ export default function AsyncMulti({stateChanger, initSkills}) {
         // />
           key={reloadOptions}
           value={inputValue}
-          defaultValue={def}
+          // defaultValue={def}
           onChange={promiseOptions}
           isMulti
           isSearchable
