@@ -39,6 +39,7 @@ export default async function handler(
       const skill: Skill = await SkillModel.create({
         ...req.body
       });
+      console.log("RES", skill);
       return res.status(200).json({ success: true, data: skill });
     } catch (error) {
       console.log(error);

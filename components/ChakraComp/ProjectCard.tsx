@@ -61,7 +61,6 @@ export default function ProjectCard(props: Project) {
         overflow={"hidden"}
         borderWidth="1px"
       >
-
         <Stack>
           {/* <Text
             color={"green.500"}
@@ -163,11 +162,13 @@ export default function ProjectCard(props: Project) {
               </Badge>
             );
           })}
-
-
-          
         </Stack>
-        <Button onClick={onOpen}>Open Modal</Button>
+        <Center>
+          {" "}
+          <Button borderRadius="2xl" mt="2" colorScheme="green" onClick={onOpen}>
+            View Project
+          </Button>
+        </Center>
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />

@@ -23,7 +23,7 @@ interface userWrapper {
 }
 
 export default function ProfilePageCard(props: userWrapper) {
-  const user: User = props.user;
+  const { user } = props;
   const { profilePicture, firstName, lastName, jobTitle, userDescription } =
     user;
 

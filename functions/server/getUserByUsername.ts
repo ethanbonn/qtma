@@ -6,6 +6,7 @@ const getUserByUsername = async (
 ): Promise<User | null> => {
   if (userName === null || userName === undefined) return null;
   const response = await fetch(`${baseUrl}/api/profile/${userName}`);
+  console.log("RES", response);
 
   switch (response.status) {
     case 200:

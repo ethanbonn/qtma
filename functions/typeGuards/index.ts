@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import type { UnregisteredUser } from "../../types";
 import type { User } from "../../types/models";
+import { UserMetadata } from "firebase-admin/lib/auth/user-record";
 
-export const isUser = (user: UnregisteredUser | User): user is User =>
+export const isUser = (user: UnregisteredUser | User | UserMetadata): user is User =>
   (user as User).userName !== undefined;
 
 export const isRegistered = (

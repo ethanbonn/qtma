@@ -49,6 +49,8 @@ import QueryFilter from "../../components/ChakraComp/QueryFilter";
 
 import ProfileCard from "../../components/ChakraComp/ProfileCard";
 
+import ProfileSearchBar from "../../components/ProfileSearchBar";
+
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -267,7 +269,7 @@ export default function WithSubnavigation() {
               Featured Projects
             </chakra.h2>
           </VStack>
-
+          <ProfileSearchBar />
           <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
   
           </SimpleGrid>

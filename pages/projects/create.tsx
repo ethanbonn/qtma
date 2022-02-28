@@ -15,6 +15,7 @@ import {
   import baseUrl from "../../utils/baseUrl";
 import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
 import SkillSelect from "./SkillSelect";
+import ProfileSkills from "../../components/Cards/SelectSkills/ProfileSkills";
 
 const CreateProject = (props: UnregisteredUser | User) => {
     const [skill, set_skill] = useState([]);
@@ -33,17 +34,17 @@ const CreateProject = (props: UnregisteredUser | User) => {
   
     const onSubmit = async (data: any) => {
       
-      var skills = skill.map((x: Skill) => {return {
-        _id: x._id,
-        name: x.name,
-        followers: x.followers,
-        project_ids: x.project_ids
-      }});
+      // var skills = skill.map((x: Skill) => {return {
+      //   _id: x._id,
+      //   name: x.name,
+      //   followers: x.followers,
+      //   project_ids: x.project_ids
+      // }});
 
-      var skill_ids = skill.map((x: Skill) => 
-        x._id
-      );
-      console.log("SKILL IDS", skill_ids);
+      // var skill_ids = skill.map((x: Skill) => 
+      //   x._id
+      // );
+      console.log("SKILL IDS", skill);
 
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
@@ -52,14 +53,14 @@ const CreateProject = (props: UnregisteredUser | User) => {
         // author_name: (props.firstName + " " + props.lastName),
         // author_title: props.jobTitle,
         // author_username: props.userName,
-        skill_ids: skill_ids,
+        skill_ids: skill,
         ...data,
         
       }) : JSON.stringify({
         author_id: _id,
   
         ...data,
-        skill_ids: skill_ids,
+        skill_ids: skill,
         // skills: skills
       });
       await fetch(
@@ -156,7 +157,6 @@ const CreateProject = (props: UnregisteredUser | User) => {
             <br />
             <Textarea
                 placeholder="Here are my mars rover plans"                 
-                type="text"
                 id="description"
                 className="font-sans my-1 border border-gray-200 rounded-lg w-full pl-1"
                 {...register("description", { required: true, maxLength: 100 })}>
@@ -187,7 +187,7 @@ const CreateProject = (props: UnregisteredUser | User) => {
         >
           Required Skills
           <br />
-            <SkillSelect stateChanger={set_skill} />
+            <ProfileSkills stateChanger={set_skill} initSkills={null}/>
           <br />
         </label>
         

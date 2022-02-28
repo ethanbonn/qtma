@@ -1,13 +1,10 @@
 import mongoose, { Schema, model } from "mongoose";
-import type { User, Link, Skill } from "../types/models";
+import type { User, Link, Skill, Project } from "../types/models";
 import SkillModel from "./Skills";
 
-const skillSchema = new Schema<Skill>({
-  _id: { type: String, required: true },
-  name: { type: String, required: true },
-  followers: { type: [String], required: false },
-  project_ids: { type: [String], required: false },
-});
+const projectSchema = require('../models/Projects');
+const skillSchema = require('../models/Skills');
+const linkSchema = require('../models/Links');
 
 // Schema corresponding to the document interface.
 const schema = new Schema<User>({
@@ -21,17 +18,7 @@ const schema = new Schema<User>({
   userDescription: { type: String, required: false },
   date_created: {type: Date, required: true},
   links: {
-    type: [
-      new Schema<Link>(
-        {
-          _id: { type: String, required: false },
-          site: { type: String, required: false },
-          url: { type: String, required: false },
-          colour: { type: String, required: false },
-        },
-        { strict: false }
-      ),
-    ],
+    type: [linkSchema.schema],
     default: [
       {
         site: "Linkedin",
@@ -50,10 +37,11 @@ const schema = new Schema<User>({
       },
     ],
   },
-  interests: { type: [String], required: false },
   timezone: { type: String, required: true },
-  projectIds: { type: [String], required: false },
-  skills: { type: [skillSchema], required: false },
+  project_ids: { type: [String], required: true },
+  projects: {type: [projectSchema.schema], required: false},
+  skills: { type: [skillSchema.schema], required: false },
+  skill_ids: {type: [String], required: false},
 });
 
 // Create and export the model.

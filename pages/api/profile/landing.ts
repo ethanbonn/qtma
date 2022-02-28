@@ -28,6 +28,15 @@ export default async function handler(
             $sort: { "date_created": -1 } // sort the data
         },
         {
+          "$lookup": {
+            "from": "skills",
+            "localField": "skill_ids",
+            "foreignField": "_id",
+            "as": "skills",
+
+          }
+        },
+        {
           "$limit": 6
         }, 
         // {
