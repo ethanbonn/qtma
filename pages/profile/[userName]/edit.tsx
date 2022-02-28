@@ -93,11 +93,11 @@ const EditProfile = (props: UnregisteredUser | User) => {
     const token = await getIdToken();
     console.log("ON SUBMIT", data);
 
-    let allSkills = skillsList;
-    if (isTypeUser && props.skills) {
-      allSkills = props.skills;
-      Array.prototype.push.apply(allSkills, skillsList);
-    }
+    // let allSkills = skillsList;
+    // if (isTypeUser && props.skills) {
+    //   allSkills = props.skills;
+    //   Array.prototype.push.apply(allSkills, skillsList);
+    // }
 
     const toBase64 = (file: File) =>
       new Promise((resolve, reject) => {
@@ -573,10 +573,14 @@ const EditProfile = (props: UnregisteredUser | User) => {
               <option value={x}>{x}</option>
             ))}
           </select> */}
-            {errors.timezone && <span>This field is required</span>}
-          </label>
+          {errors.timezone && <span>This field is required</span>}
+        </label>
 
-          <br />
+        {/* <br />
+
+        <SkillQuery stateChanger={setSkillsList} />
+
+        <br /> */}
 
           <SkillQuery stateChanger={setSkillsList} />
 
