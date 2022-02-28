@@ -93,6 +93,9 @@ const EditProject = (props: UnregisteredUser | User) => {
         // skills: skills
       });
 
+      console.log("REQ BODY", reqBody);
+      console.log(proj_name);
+
       await fetch(
         `${baseUrl}/api/projects/update`,
         {

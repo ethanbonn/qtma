@@ -15,10 +15,11 @@ import { handleUserType, isUser } from "../../../functions/typeGuards";
 import ProfilePageCard from "../../../components/Cards/ProfilePageCard";
 import SkillCard from "../../../components/Cards/SkillCard";
 import LinkCard from "../../../components/Cards/LinkCard";
-import ProjectCard from "../../../components/ChakraComp/ProjectCard";
+import ProjectCard from "../../../components/ChakraComp/OwnProjectCard";
 import Navbar from "../../../components/ChakraComp/Navbar";
 import Footer from "../../../components/Footer";
 import getProjectByUID from "../../../functions/server/getProjectByID";
+import { EditIcon } from "@chakra-ui/icons";
 
 const styles = {
   container: {
