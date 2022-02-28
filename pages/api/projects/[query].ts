@@ -39,6 +39,7 @@ export default async function handler(
       desired_relationship_type: string | null | undefined;
       search: string | null | undefined;
       skills: string[] | null | undefined;
+      id: string;
     };
 
     // Set the value of an object to the provided URL query parameters
@@ -46,7 +47,8 @@ export default async function handler(
       "author_timezone": search_params.get("author_timezone")?.split(","),
       "desired_relationship_type": search_params.get("desired_relationship_type"),
       "search": search_params.get("search"),
-      "skills": search_params.get("skills")?.split(",")
+      "skills": search_params.get("skills")?.split(","),
+      "id": search_params.get("id")
     };
     if (all_params.search && all_params.search !== "") {
       search_obj["should"] =  
@@ -239,7 +241,11 @@ export default async function handler(
               // }
             ])
           } 
-      
+
+          if (search_params.get("id")) {
+            var result = await ProjectModel.find({ _id: search_params.get("id") });
+          }
+
         if (!result) throw new Error("Data not found");
         // console.log("data queried", result);
         return res.status(200).json({ success: true, data: result });
