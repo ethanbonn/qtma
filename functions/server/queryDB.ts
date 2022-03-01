@@ -95,7 +95,9 @@ const queryDB = async (
   )
     .then((response) => response.json())
     .then((users) => users.data);
-  console.log(users);
+
+  console.log("PROF SS", profileQueryString);
+  console.log("RET", users);
   return projects;
 };
 
