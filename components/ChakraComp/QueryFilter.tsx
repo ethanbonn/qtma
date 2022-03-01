@@ -27,11 +27,11 @@ export default function QueryFilter() {
         mb="10"
         // textAlign={"center"}
       >
-        <Grid
-          templateRows="repeat(1, 1fr)"
-          templateColumns="repeat(6, 1fr)"
-          gap={2}
-        >
+    <Grid
+      templateRows="repeat(1, 1fr)"
+      templateColumns="repeat(6, 1fr)"
+      gap={2}
+    >
           <GridItem rowSpan={0} colSpan={5}>
             <SimpleGrid minChildWidth="70px" spacing="30px" columns={[2, 2, 2]}>
               <Box>
@@ -41,7 +41,7 @@ export default function QueryFilter() {
           <Input placeholder="a partner" />{" "} */}
                 <FormControl>
                   <FormLabel htmlFor="country">I'm Looking for</FormLabel>
-                  <Select id="country">
+                  <Select id="slect">
                     <option>Profiles</option>
                     <option>Projects</option>
                   </Select>

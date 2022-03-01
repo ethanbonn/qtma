@@ -19,7 +19,22 @@ import ProjectCard from "../../../components/ChakraComp/OwnProjectCard";
 import Navbar from "../../../components/ChakraComp/Navbar";
 import Footer from "../../../components/Footer";
 import getProjectByUID from "../../../functions/server/getProjectByID";
-import { EditIcon } from "@chakra-ui/icons";
+import {
+  Heading,
+  Avatar,
+  VStack,
+  chakra,
+  Box,
+  Center,
+  Text,
+  Grid,
+  GridItem,
+  Stack,
+  Button,
+  Badge,
+  useColorModeValue,
+  SimpleGrid,
+} from "@chakra-ui/react";
 
 const styles = {
   container: {
@@ -70,43 +85,78 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
         <div>Sorry, the user you are trying to access does not exist.</div>
       )}
       {isUserType && userProfile && (
-        <div className="grid grid-cols-4 auto-cols-min">
-          <div className="col-span-4">
-            <Navbar {...props} />
-          </div>
-          <div className="col-span-1">
-            <ProfilePageCard user={userProfile} />
-            <SkillCard user={userProfile} />
-            <LinkCard user={userProfile} />
-          </div>
-          <div className="col-span-3 pt-10 px-20">
-            <div className="flex flex-row justify-between">
-              <p className="font-sans text-3xl font-bold  text-black ">
-                Projects
-              </p>
-              <div className="content-end">
-                {isSelf && (
-                  <Link href={`/profile/${props._id}/edit`}>
-                    <button
-                      type="button"
-                      style={styles.button}
-                      className="px-4 py-2 text-black bg-gray-light rounded-full shadow-md self-center"
-                    >
-                      Edit Profile
-                    </button>
-                  </Link>
-                )}
-              </div>
-            </div>
-            <div className="flex flex-wrap content-center -mx-12 -my-2 ">
+        <div>
+          <Navbar {...props} />
+          <Grid
+            h="200px"
+            templateRows="repeat(2, 1fr)"
+            templateColumns="repeat(5, 1fr)"
+            gap={4}
+          >
+            <GridItem rowSpan={2} colSpan={1} bg="tomato" />
+            <GridItem colSpan={2} bg="papayawhip" />
+            <GridItem colSpan={2} bg="papayawhip" />
+            <GridItem colSpan={2} bg="tomato" />
+            <GridItem colSpan={2} bg="tomato" />
+
+          </Grid>
+          <Grid
+            p="10"
+            // h="200px"
+            templateRows="repeat(2, 1fr)"
+            templateColumns="repeat(4, 1fr)"
+            gap={4}
+          >
+            <GridItem rowSpan={2} colSpan={1}>
+              <ProfilePageCard user={userProfile} />
+              <SkillCard user={userProfile} />
+              <LinkCard user={userProfile} />
+            </GridItem>
+
+            <GridItem rowSpan={2} colSpan={2}>
+              <Heading size="lg">Projects</Heading>
+              {isSelf && (
+                <Link href={`/profile/${props._id}/edit`}>
+                  <Button colorScheme="green">Edit Profile </Button>
+                </Link>
+              )}
               {userProjects.map((Proj) => {
                 console.log("ADDING PROJECT", Proj);
                 return <ProjectCard {...Proj} />;
               })}
+            </GridItem>
+          </Grid>
+
+          <div className="grid grid-cols-4 auto-cols-min">
+            <div className="col-span-4"></div>
+            <div className="col-span-1">
+              <ProfilePageCard user={userProfile} />
+              <SkillCard user={userProfile} />
+              <LinkCard user={userProfile} />
             </div>
-          </div>
-          <div className="col-span-4">
-            <Footer />
+            <div className="col-span-3 pt-10 px-20">
+              <div className="flex flex-row justify-between">
+                <p className="font-sans text-3xl font-bold  text-black ">
+                  Projects
+                </p>
+                <div className="content-end">
+                  {isSelf && (
+                    <Link href={`/profile/${props._id}/edit`}>
+                      <Button colorScheme="green">Edit Profile </Button>
+                    </Link>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-wrap content-center -mx-12 -my-2 ">
+                {userProjects.map((Proj) => {
+                  console.log("ADDING PROJECT", Proj);
+                  return <ProjectCard {...Proj} />;
+                })}
+              </div>
+            </div>
+            <div className="col-span-4">
+              <Footer />
+            </div>
           </div>
         </div>
       )}
