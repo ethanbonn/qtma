@@ -20,7 +20,11 @@ import {
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useAuthUser } from "next-firebase-auth";
 import { UnregisteredUser } from "../../types";
-import { isUser, handleUserType, isRegistered } from "../../functions/typeGuards";
+import {
+  isUser,
+  handleUserType,
+  isRegistered,
+} from "../../functions/typeGuards";
 import type { User } from "../../types/models";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
@@ -46,18 +50,24 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
   const { signOut } = useAuthUser();
   return (
     <>
-      <Box bg={useColorModeValue("green.300", "gray.600")} px={4}>
+      <Box bg={useColorModeValue("green.300", "gray.900")} px={4}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
-          <Box>
+        <Link href="/">
+
+          <Box >
             <Image alt="Soar Logo" src="/soarlogo.png" />
           </Box>
+          </Link>
+
+          {/* <Flex alignItems="center" mx="1">
+            
+            <Button colorScheme="green">Explore </Button>
+          </Flex> */}
 
           <Flex alignItems="center">
-            <Stack direction="row" spacing={7}>
-              <a href="/projects/create">                
-                <Button colorScheme="green" >
-                  New Project
-                </Button>
+            <Stack direction="row" spacing={3}>
+              <a href="/projects/create">
+                <Button colorScheme="green">New Project</Button>
               </a>
 
               <Button colorScheme="green" onClick={toggleColorMode}>
@@ -67,18 +77,18 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
               {isTypeUser ? (
                 <Menu>
                   <MenuButton as={Button} colorScheme="green">
-                    {props.firstName} 
+                    {props.firstName}
                   </MenuButton>
                   <MenuList alignItems={"center"}>
                     <br />
                     <Center>
-                    <Avatar
-                      size={"2xl"}
-                      src={props.profilePicture}
-                      name={props.firstName + " " + props.lastName}
-                      mb={4}
-                      pos={"relative"}
-                    />
+                      <Avatar
+                        size={"2xl"}
+                        src={props.profilePicture}
+                        name={props.firstName + " " + props.lastName}
+                        mb={4}
+                        pos={"relative"}
+                      />
                     </Center>
                     <br />
                     <Center>
@@ -92,17 +102,18 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                     <Link href={`/profile/${props._id}/edit`}>
                       <MenuItem>Edit Profile</MenuItem>
                     </Link>
-                    <Link href="/" >
-                      <a onClick={() => {
-                        signOut()
-                      }} >
+                    <Link href="/">
+                      <a
+                        onClick={() => {
+                          signOut();
+                        }}
+                      >
                         <MenuItem>Sign Out</MenuItem>
                       </a>
                     </Link>
                   </MenuList>
                 </Menu>
-              )
-               : isReg ? (
+              ) : isReg ? (
                 <Menu>
                   <MenuButton as={Button} colorScheme="green">
                     {props.email}
@@ -123,26 +134,25 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
                     <MenuDivider />
                     <Link href={`/profile/${props._id}/edit`}>
                       <MenuItem>Edit Profile</MenuItem>
-                        </Link>
-                        <Link href="/">
-                          <a
-                            onClick={() => {
-                              signOut();
-                            }}
-                        >
-                            <MenuItem>Sign Out</MenuItem>
-                          </a>
-                        </Link>
-                      </MenuList>
-                    </Menu>
-                )  : (
+                    </Link>
+                    <Link href="/">
+                      <a
+                        onClick={() => {
+                          signOut();
+                        }}
+                      >
+                        <MenuItem>Sign Out</MenuItem>
+                      </a>
+                    </Link>
+                  </MenuList>
+                </Menu>
+              ) : (
                 <Link href="/profile">
                   <Button as={Button} colorScheme="green">
-                      Get Started 
+                    Get Started
                   </Button>
                 </Link>
               )}
-
             </Stack>
           </Flex>
         </Flex>

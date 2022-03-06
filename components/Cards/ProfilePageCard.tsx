@@ -1,7 +1,22 @@
-import { Avatar } from "@chakra-ui/react";
-import Image from "next/image";
+// import { Avatar } from "@chakra-ui/react";
 import profile from "../../pages/profile";
 import type { User } from "../../types/models";
+
+import {
+  Heading,
+  Avatar,
+  VStack,
+  chakra,
+  Box,
+  Center,
+  Text,
+  Stack,
+  Button,
+  Link,
+  Badge,
+  useColorModeValue,
+  SimpleGrid,
+} from "@chakra-ui/react";
 
 interface userWrapper {
   user: User;
@@ -15,33 +30,36 @@ export default function ProfilePageCard(props: userWrapper) {
   console.log(profilePicture);
   return (
     <>
-      <div className="font-sans max-w-auto min-w-auto mx-10 bg-white rounded-xl shadow-lg flex flex-row m-10 border-2 border-green-normal">
-        <div className="max-w-xs w-full rounded-xl  overflow-hidden shadow-lg">
-          <Avatar
-            className="block mx-auto rounded-full w-32 h-32 sm:flex-shrink-0 mt-3"
-            size="2xl"
-            name={`${firstName} ${lastName}`}
-            src={profilePicture}
-          />
-          {/* <Image src={profilePicture} width={500} height={500} />
-          <img
-            className="block mx-auto rounded-full w-32 h-32 sm:flex-shrink-0 mt-3"
-            src={profilePicture}
-            alt="Author"
-          /> */}
+      <Box
+        maxW={"320px"}
+        w={"full"}
+        bg={useColorModeValue("white", "gray.900")}
+        boxShadow={"lg"}
+        rounded={"2xl"}
+        p={6}
+        textAlign={"center"}
+        borderWidth="1px"
+        borderColor="green.300"
+      >
+        <Avatar
+          size={"2xl"}
+          src={profilePicture}
+          name={firstName + " " + lastName}
+          mb={4}
+          pos={"relative"}
+        />
 
-          <div className="px-6 py-4">
-            <div className="content-center">
-              <div className=" text-center font-bold text-xl ">{`${firstName} ${lastName}`}</div>
-              <p className=" text-center text-gray-500 font-semibold mb-3">
-                {jobTitle}
-              </p>
-            </div>
+        <Heading fontSize={"2xl"} fontFamily={"body"}>
+          {firstName + " " + lastName}
+        </Heading>
+        <Text fontWeight={600} mt="2" color={"gray.500"} mb={4}>
+          {jobTitle}
+        </Text>
 
-            <p className="text-gray-400 font-normal">{`${userDescription}`}</p>
-          </div>
-        </div>
-      </div>
+        <VStack alignItems="flex-start" mt="2">
+          <chakra.h2 fontSize="md">{`${userDescription}`}</chakra.h2>
+        </VStack>
+      </Box>
     </>
   );
 }
