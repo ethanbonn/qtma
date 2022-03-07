@@ -37,6 +37,18 @@ export default function AsyncMulti({stateChanger, initSkills}) {
   // console.log(def);
   console.log("INIT SKILLS", initSkills);
   useEffect(() => {
+    if (inputValue){
+      const temp = initSkills.map((x : Skill) => {return {    
+        value: x.name, 
+        label: x.name,
+        _id: x._id
+        }});
+      console.log(temp);
+      setInputValue(temp);
+    }
+  },[initSkills]);
+
+  useEffect(() => {
     console.log("MAPPING", inputValue);
     stateChanger(inputValue.map((x) => { return x._id}));
   }, [inputValue]);

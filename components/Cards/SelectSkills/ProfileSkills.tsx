@@ -22,8 +22,13 @@ export interface SkillOption {
 
 
 export default function AsyncMulti({stateChanger, initSkills}) {
-  const [inputValue, setInputValue] = useState<SkillOption[] | []>([]);
+  const [inputValue, setInputValue] = useState<SkillOption[] | []>(initSkills.map((x : Skill) => {return {    
+    value: x.name, 
+    label: x.name,
+    _id: x._id
+    }}));
   const [reloadOptions, setReloadOption] = useState(0);
+  const [defaultSkills, setDefaultSkills] = useState(initSkills);
 
   // initSkills = [
   //   {
@@ -36,6 +41,12 @@ export default function AsyncMulti({stateChanger, initSkills}) {
   // var def = initSkills.map((x : Skill) =>  { return  { value: x.name, label: x.name, _id: x._id } })
   // console.log(def);
   console.log("INIT SKILLS", initSkills);
+
+  useEffect(() => {
+    console.log("Default S", defaultSkills);
+
+  }, []);
+
   useEffect(() => {
     console.log("MAPPING", inputValue);
     stateChanger(inputValue.map((x) => { return x._id}));
@@ -58,7 +69,8 @@ export default function AsyncMulti({stateChanger, initSkills}) {
                                                                       value: x.name, 
                                                                       label: x.name,
                                                                       _id: x._id
-                                                                      }});      
+                                                                      }});     
+      // console.log(sOptions); 
       if (typeof(inValue) === "string"){
         return filterSkills(inValue, sOptions);
         }

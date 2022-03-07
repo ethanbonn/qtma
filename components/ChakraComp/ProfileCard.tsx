@@ -30,6 +30,8 @@ export default function SocialProfileSimple(props: User) {
         p={6}
         textAlign={"center"}
         borderWidth="1px"
+        _hover={{bg: "grey.300", boxShadow: "outline"}}
+        cursor={"pointer"}
       >
         <Avatar
           size={"2xl"}
@@ -48,7 +50,7 @@ export default function SocialProfileSimple(props: User) {
 
         <VStack alignItems="flex-start" mt="2">
           <chakra.h2 fontSize="md" fontWeight="600">
-            Skills and Interests
+            Skills
           </chakra.h2>
         </VStack>
         
