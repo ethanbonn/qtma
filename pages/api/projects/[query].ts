@@ -199,7 +199,6 @@ export default async function handler(
             }
           ]);
 
-          console.log(result);
         } else if (skills_arr.length == 0 && Object.keys(search_obj).length == 0){
             // var result = await ProjectModel.find({});
             var result = await ProjectModel.aggregate([
@@ -243,12 +242,26 @@ export default async function handler(
           } 
 
           if (search_params.get("id")) {
-            var result = await ProjectModel.find({ _id: search_params.get("id") });
+            // var result = await ProjectModel.find({ _id: search_params.get("id") });
+            var result = await ProjectModel.aggregate([
+              {
+                 "$match": { "_id": { "$eq": search_params.get("id") } } 
+              },
+              { $limit: 1 },
+              {
+                $lookup: {
+                  from: "skills",
+                  localField: "skill_ids",
+                  foreignField: "_id",
+                  as: "skills",
+                },
+              },
+            ]);
           }
 
         if (!result) throw new Error("Data not found");
         // console.log("data queried", result);
-        return res.status(200).json({ success: true, data: result });
+        return res.status(200).json({ success: true, data: result[0] });
       } catch (error) {
         return res.status(400).json({ success: false });
       }

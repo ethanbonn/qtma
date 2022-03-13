@@ -87,7 +87,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
       {isUserType && userProfile && (
         <div>
           <Navbar {...props} />
-          <Grid
+          {/* <Grid
             h="200px"
             templateRows="repeat(2, 1fr)"
             templateColumns="repeat(5, 1fr)"
@@ -99,7 +99,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
             <GridItem colSpan={2} bg="tomato" />
             <GridItem colSpan={2} bg="tomato" />
 
-          </Grid>
+          </Grid> */}
           <Grid
             p="10"
             // h="200px"
@@ -113,7 +113,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
               <LinkCard user={userProfile} />
             </GridItem>
 
-            <GridItem rowSpan={2} colSpan={2}>
+            <GridItem rowSpan={2} colSpan={3}>
               <Heading size="lg">Projects</Heading>
               {isSelf && (
                 <Link href={`/profile/${props._id}/edit`}>
@@ -128,13 +128,14 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
           </Grid>
 
           <div className="grid grid-cols-4 auto-cols-min">
-            <div className="col-span-4"></div>
+            {/* <div className="col-span-4"></div>
             <div className="col-span-1">
               <ProfilePageCard user={userProfile} />
               <SkillCard user={userProfile} />
               <LinkCard user={userProfile} />
-            </div>
-            <div className="col-span-3 pt-10 px-20">
+            </div> */}
+            
+            {/* <div className="col-span-3 pt-10 px-20">
               <div className="flex flex-row justify-between">
                 <p className="font-sans text-3xl font-bold  text-black ">
                   Projects
@@ -153,7 +154,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
                   return <ProjectCard {...Proj} />;
                 })}
               </div>
-            </div>
+            </div> */}
             <div className="col-span-4">
               <Footer />
             </div>

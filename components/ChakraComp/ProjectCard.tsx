@@ -22,13 +22,26 @@ import {
   Avatar,
   useColorModeValue,
   AvatarGroup,
+  Tooltip,
+  Flex,
 } from "@chakra-ui/react";
 
+import { EmailIcon } from "@chakra-ui/icons";
+
 import { Project } from "../../types/models";
+import MailButton from "./Mail";
+
+  // // create a clickable primitive
+  // const Clickable = (props) => {
+  //   const clickable = useClickable(props)
+  //   return <chakra.button display="inline-flex" {...clickable} />
+  // }
+
+
 
 export default function ProjectCard(props: Project) {
   // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
-  const { name, skills, duration, date_created, authors } = props;
+  const { name, skills, duration, date_created, authors, description, active, desired_relationship_type } = props;
   var current_date = new Date();
   var date_parsed = new Date(JSON.parse('"' + date_created + '"'));
   var diffence_in_days =
@@ -46,139 +59,158 @@ export default function ProjectCard(props: Project) {
     });
   }
 
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+
 
   // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
-    <Center py={6}>
-      <Box
-        maxW={"445px"}
-        w={"full"}
-        bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"lg"}
-        rounded={"2xl"}
-        p={6}
-        overflow={"hidden"}
-        borderWidth="1px"
-      >
-        <Stack>
-          {/* <Text
-            color={"green.500"}
-            textTransform={"uppercase"}
-            fontWeight={800}
-            fontSize={"sm"}
-            letterSpacing={1.1}
-          >
-            Project
-          </Text> */}
-          <Heading
-            color={useColorModeValue("blue.500", "white")}
-            fontSize={"2xl"}
-            fontFamily={"body"}
-            mb="2px"
-          >
-            {name}
-          </Heading>
+    <Flex
+    onClick={onOpen}
+    >
+      <Center py={6}>
 
-          <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-            <AvatarGroup size="md" max={2}>
-              {authors.map((user) => {
-                return (
-                  <Avatar
-                    src={user.profilePicture}
-                    name={user.firstName + " " + user.lastName}
-                  />
-                );
-              })}
-            </AvatarGroup>
+        <Box
+          maxW={"445px"}
+          w={"full"}
+          bg={useColorModeValue("white", "gray.900")}
+          boxShadow={"lg"}
+          rounded={"2xl"}
+          p={6}
+          overflow={"hidden"}
+          borderWidth="1px"
+          _hover={{bg: "grey.300", boxShadow: "outline"}}
+          cursor={"pointer"}
+          
+        >
+          <Stack>
+            {/* <Text
+              color={"green.500"}
+              textTransform={"uppercase"}
+              fontWeight={800}
+              fontSize={"sm"}
+              letterSpacing={1.1}
+            >
+              Project
+            </Text> */}
+            <Heading
+              color={useColorModeValue("blue.500", "white")}
+              fontSize={"2xl"}
+              fontFamily={"body"}
+              mb="2px"
+            >
+              {name}
+            </Heading>
 
-            <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
-              <Text fontWeight={600}>
-                {authors[0].firstName + " " + authors[0].lastName}
-              </Text>
-              <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
+            <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
+              <AvatarGroup size="md" max={2}>
+                {authors.map((user) => {
+                  return (
+                    <Avatar
+                      src={user.profilePicture}
+                      name={user.firstName + " " + user.lastName}
+                    />
+                  );
+                })}
+              </AvatarGroup>
+
+              <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
+                <Text fontWeight={600}>
+                  {authors[0].firstName + " " + authors[0].lastName}
+                </Text>
+                <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
+              </Stack>
             </Stack>
+
+            <Text mt="2px" color={"gray.500"}>
+              <Text mb="2px" color={"gray.500"}>
+                Timezone:{" "}
+                <chakra.span fontWeight={600} color="blue.600">
+                  {authors[0].timezone}
+                </chakra.span>
+              </Text>
+            </Text>
+            <Text mb="2px" color={"gray.500"}>
+              Project Duration:{" "}
+              <chakra.span
+                fontWeight={600}
+                color={
+                  duration == "short"
+                    ? "green.400"
+                    : duration == "medium"
+                    ? "yellow.400"
+                    : "red.400"
+                }
+              >
+                {" "}
+                {duration}{" "}
+              </chakra.span>{" "}
+            </Text>
+
+            <Text mb="2px" color={"gray.500"}>
+              Date Created:{" "}
+              <chakra.span fontWeight={600} color={"green.400"}>
+                {" "}
+                {display_date}{" "}
+              </chakra.span>{" "}
+            </Text>
+
+            {/* <Text color={"gray.500"}>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+              et ea rebum.
+            </Text> */}
           </Stack>
 
-          <Text mt="2px" color={"gray.500"}>
-            <Text mb="2px" color={"gray.500"}>
-              Timezone:{" "}
-              <chakra.span fontWeight={600} color="blue.600">
-                {authors[0].timezone}
-              </chakra.span>
-            </Text>
-          </Text>
-          <Text mb="2px" color={"gray.500"}>
-            Project Duration:{" "}
-            <chakra.span
-              fontWeight={600}
-              color={
-                duration == "short"
-                  ? "green.400"
-                  : duration == "medium"
-                  ? "yellow.400"
-                  : "red.400"
-              }
-            >
-              {" "}
-              {duration}{" "}
-            </chakra.span>{" "}
-          </Text>
+          <VStack alignItems="flex-start" mt="3" mb="2px">
+            <chakra.h2 fontSize="md" fontWeight="600">
+              Skills
+            </chakra.h2>
+          </VStack>
 
-          <Text mb="2px" color={"gray.500"}>
-            Date Created:{" "}
-            <chakra.span fontWeight={600} color={"green.400"}>
-              {" "}
-              {display_date}{" "}
-            </chakra.span>{" "}
-          </Text>
-
-          {/* <Text color={"gray.500"}>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum.
-          </Text> */}
-        </Stack>
-
-        <VStack alignItems="flex-start" mt="3" mb="2px">
-          <chakra.h2 fontSize="md" fontWeight="600">
-            Skills
-          </chakra.h2>
-        </VStack>
-
-        <Stack p="2" direction={["column", "row"]} spacing="5px">
-          {skills.map((x) => {
-            return (
-              <Badge
-                px={2}
-                py={1}
-                bg={useColorModeValue("blue.500", "gray.800")}
-                fontWeight={"400"}
-                color="white"
-                rounded="xl"
-              >
-                {x.name}
-              </Badge>
-            );
-          })}
-        </Stack>
-        <Center>
-          {" "}
-          <Button borderRadius="2xl" mt="2" colorScheme="green" onClick={onOpen}>
-            View Project
-          </Button>
-        </Center>
+          <Stack p="2" direction={["column", "row"]} spacing="5px">
+            {skills.map((x) => {
+              return (
+                <Badge
+                  px={2}
+                  py={1}
+                  bg={useColorModeValue("blue.500", "gray.800")}
+                  fontWeight={"400"}
+                  color="white"
+                  rounded="xl"
+                >
+                  {x.name}
+                </Badge>
+              );
+            })}
+          </Stack>
+          {/* <Center>
+            {" "}
+            <Button borderRadius="2xl" mt="2" colorScheme="green" onClick={onOpen}>
+              View Project
+            </Button>
+          </Center> */}
+      
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader> {name}</ModalHeader>
+            {/* <ModalHeader> {name}</ModalHeader> */}
+            <ModalHeader
+              color={useColorModeValue("blue.500", "white")}
+              fontSize={"2xl"}
+              fontFamily={"body"}
+              mb="2px"
+            >
+                {name}
+            </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              {" "}
+              {/* {" "} */}
               <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-                <AvatarGroup size="md" max={2}>
+                <AvatarGroup size="md" max={10}>
                   {authors.map((user) => {
                     return (
                       <Avatar
@@ -232,6 +264,66 @@ export default function ProjectCard(props: Project) {
                   {display_date}{" "}
                 </chakra.span>{" "}
               </Text>
+              
+              <br></br>
+
+              <Text mb="2px" fontWeight={700} color={"black.500"}>
+                {description}
+              </Text>
+
+              <br></br>
+
+              <VStack alignItems="flex-start" mt="3" mb="2px">
+            <chakra.h2 fontSize="md" fontWeight="600">
+              Desired Skills
+            </chakra.h2>
+          </VStack>
+
+          <Stack p="2" direction={["column", "row"]} spacing="5px">
+            {skills.map((x) => {
+              return (
+                <Badge
+                  px={2}
+                  py={1}
+                  bg={useColorModeValue("blue.500", "gray.800")}
+                  fontWeight={"400"}
+                  color="white"
+                  rounded="xl"
+                >
+                  {x.name}
+                </Badge>
+              );
+            })}
+          </Stack>
+
+              <br></br>
+
+              <Text mb="2px" color={"gray.500"}>
+                Working:{" "}
+                <chakra.span fontWeight={600} color={"green.400"}>
+                  {" "}
+                  {desired_relationship_type}{" "}
+                </chakra.span>{" "}
+              </Text>
+
+              <Text mb="2px" color={"gray.500"}>
+                Status:{" "}
+
+                {active ? (
+                  <chakra.span fontWeight={600} color={"green.400"}>
+                    Active
+                  </chakra.span>) : (
+                  <chakra.span fontWeight={600} color={"red.400"}>
+                     Idle
+                  </chakra.span>
+
+                  )
+                }
+              </Text>
+
+              <MailButton mailto={"recepient"} label={"My Label"} closer={onClose}/>
+
+
             </ModalBody>
 
             {/* 
@@ -245,5 +337,10 @@ export default function ProjectCard(props: Project) {
         </Modal>
       </Box>
     </Center>
+  </Flex>
   );
 }
+function useClickable(props: any) {
+  throw new Error("Function not implemented.");
+}
+

@@ -16,7 +16,7 @@ import {
   import baseUrl from "../../../utils/baseUrl";
 import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
 import SkillSelect from "../SkillSelect";
-import ProfileSkills from "../../../components/Cards/SelectSkills/ProfileSkills";
+import ProjectSkills from "../../../components/Cards/SelectSkills/ProjectSkills";
 import getProjectByUID from "../../../functions/server/getProjectByID";
 
 const EditProject = (props: UnregisteredUser | User) => {
@@ -24,7 +24,9 @@ const EditProject = (props: UnregisteredUser | User) => {
     const [proj_relationship_type, set_relationship_type] = useState("");
     const [proj_desc, set_desc] = useState("");
     const [proj_duration, set_duration] = useState("");
-    const [skill, set_skill] = useState([]);
+    const [skills, setSkills] = useState([]);
+    const [skillIDs, setSkillIDs] = useState([]);
+
 
     const {
       register,
@@ -48,12 +50,15 @@ const EditProject = (props: UnregisteredUser | User) => {
             })
             .then((response) => response.json())
             .then((project) => {
-                const data = project.data[0];
+                const data = project.data;
+                console.log("PROJECT", data);
                 set_name(data.name);
                 set_relationship_type(data.desired_relationship_type);
                 set_desc(data.description);
                 set_duration(data.duration);
-                set_skill(data.skill_ids);
+                setSkills(data.skills);
+                setSkillIDs(data.skill_ids);
+
             });
         };
         handler();
@@ -61,17 +66,17 @@ const EditProject = (props: UnregisteredUser | User) => {
 
     const onSubmit = async (data: any) => {
       
-      // var skills = skill.map((x: Skill) => {return {
+      // var skills = skills.map((x: Skill) => {return {
       //   _id: x._id,
       //   name: x.name,
       //   followers: x.followers,
       //   project_ids: x.project_ids
       // }});
 
-      // var skill_ids = skill.map((x: Skill) => 
+      // var skill_ids = skills.map((x: Skill) => 
       //   x._id
       // );
-      console.log("SKILL IDS", skill);
+      console.log("SKILL IDS", skills);
 
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
@@ -80,7 +85,7 @@ const EditProject = (props: UnregisteredUser | User) => {
         // author_name: (props.firstName + " " + props.lastName),
         // author_title: props.jobTitle,
         // author_username: props.userName,
-        skill_ids: skill,
+        skill_ids: skillIDs,
         ...data,
         _id: projectId
         
@@ -88,7 +93,7 @@ const EditProject = (props: UnregisteredUser | User) => {
         author_id: _id,
   
         ...data,
-        skill_ids: skill,
+        skill_ids: skillIDs,
         _id: projectId
         // skills: skills
       });
@@ -229,7 +234,7 @@ const EditProject = (props: UnregisteredUser | User) => {
         >
           Required Skills
           <br />
-            <ProfileSkills stateChanger={set_skill} initSkills={null}/>
+            <ProjectSkills stateChanger={setSkillIDs} initSkills={skills}/>
           <br />
         </label>
         
@@ -239,7 +244,7 @@ const EditProject = (props: UnregisteredUser | User) => {
             className=" font-sans px-4 py-2 text-black bg-green-normal rounded-full shadow-md w-1/5 self-center"
 
             value="Create">
-        Create
+        Submit
         </Button>
 
         </form>

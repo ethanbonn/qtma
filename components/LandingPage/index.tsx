@@ -73,7 +73,8 @@ export default function LandingPage(props: UnregisteredUser | User) {
       update_profiles(display_profiles);
     }
     loadProfiles();
-  }, [projects]);
+  // }, [projects]);
+  }, []);
 
   useEffect(() => {}, [profiles]);
 
