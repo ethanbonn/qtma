@@ -94,7 +94,7 @@ export default async function handler(
     await dbConnect();
     // if search_string
 
-    console.log("all", all_params);
+    // console.log("all", all_params);
     try {
 
       var queryobj = [];
@@ -162,7 +162,7 @@ export default async function handler(
             
 
           ]);
-          console.log("querySkills proj", querySkills, skills_arr);
+          // console.log("querySkills proj", querySkills, skills_arr);
           // merge jsons and remove duplicates
           // won't change result if queryobj have values
           var result = queryobj.concat(querySkills).filter((obj, pos, arr) => {
@@ -173,8 +173,8 @@ export default async function handler(
 
         
         if (search_params.get("uid")){
-          console.log("finding project by id");
-          console.log(search_params.get("uid"));
+          // console.log("finding project by id");
+          // console.log(search_params.get("uid"));
 
           // var result = await ProjectModel.find({author_ids: search_params.get("uid")});
           var result = await ProjectModel.aggregate([
@@ -239,7 +239,6 @@ export default async function handler(
               //     }
               // }
             ])
-            console.log("proj result", result);
 
           } 
 
@@ -263,7 +262,7 @@ export default async function handler(
 
         if (!result) throw new Error("Data not found");
         // console.log("data queried", result);
-        return res.status(200).json({ success: true, data: result[0] });
+        return res.status(200).json({ success: true, data: result });
       } catch (error) {
         return res.status(400).json({ success: false });
       }

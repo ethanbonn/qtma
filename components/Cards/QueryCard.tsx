@@ -29,6 +29,7 @@ export default function Card({ projectStateChanger, profileStateChanger }) {
 
   useEffect(() => {
     async function updateHandlers(res) {
+      console.log("yoyo", res[0], typeof res[0]);
       const projects = res[0];
       const users = res[1];
       projectStateChanger(projects);

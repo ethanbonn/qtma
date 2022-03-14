@@ -81,7 +81,7 @@ export default async function handler(
     await dbConnect();
     // if search_string
 
-    console.log("all user", allParams, queryString);
+    console.log("all user", allParams, queryString, skillsArr);
     try {
       let queryObj = [];
       let result;
@@ -112,27 +112,26 @@ export default async function handler(
               as: "skills",
             },
           },
-          // {
-          //   $match: {
-          //     skills: {
-          //       $elemMatch: {
-          //         $or: skillsArr,
-          //       },
-          //     },
-          //   },
-          // },
+          {
+            $match: {
+              skills: {
+                $elemMatch: {
+                  $or: skillsArr,
+                },
+              },
+            },
+          },
         ]);
-
-        console.log("querySkills user", querySkills, skillsArr);
-
         // merge jsons and remove duplicates
         // won't change result if queryObj have values
         result = queryObj
           .concat(querySkills)
           .filter(
             (obj, pos, arr) =>
-              arr.map((mapObj) => mapObj.name).indexOf(obj.name) === pos
+              arr.map((mapObj) => mapObj.userName).indexOf(obj.userName) === pos
           );
+
+        console.log("querySkills user", querySkills, skillsArr, result);
       } else result = queryObj;
 
       if (skillsArr.length === 0 && Object.keys(searchObj).length === 0) {
@@ -180,7 +179,7 @@ export default async function handler(
           ],
         });
       }
-      console.log(result);
+      console.log("result", result);
       if (!result) throw new Error("Data not found");
       // console.log("data queried", result);
       return res.status(200).json({ success: true, data: result });
