@@ -17,6 +17,7 @@ import {
 import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
 import SkillSelect from "../SkillSelect";
 import ProjectSkills from "../../../components/Cards/SelectSkills/ProjectSkills";
+import UserSelect from "../UserSelect";
 import getProjectByUID from "../../../functions/server/getProjectByID";
 
 const EditProject = (props: UnregisteredUser | User) => {
@@ -26,7 +27,8 @@ const EditProject = (props: UnregisteredUser | User) => {
     const [proj_duration, set_duration] = useState("");
     const [skills, setSkills] = useState([]);
     const [skillIDs, setSkillIDs] = useState([]);
-
+    const [users, setUsers] = useState([]);
+    const [userIDs, setUserIDs] = useState([]);
 
     const {
       register,
@@ -58,14 +60,15 @@ const EditProject = (props: UnregisteredUser | User) => {
                 set_duration(data.duration);
                 setSkills(data.skills);
                 setSkillIDs(data.skill_ids);
-
+                setUsers(data.users);
+                setUserIDs(data.author_ids);
             });
         };
         handler();
     }, []);
 
     const onSubmit = async (data: any) => {
-      
+      console.log(data);
       // var skills = skills.map((x: Skill) => {return {
       //   _id: x._id,
       //   name: x.name,
@@ -80,26 +83,31 @@ const EditProject = (props: UnregisteredUser | User) => {
 
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
-        author_ids: [_id],
+        author_ids: userIDs,
         // author_picture: (props.profilePicture ?? "https://avatars.dicebear.com/api/male/username.svg"),
         // author_name: (props.firstName + " " + props.lastName),
         // author_title: props.jobTitle,
         // author_username: props.userName,
         skill_ids: skillIDs,
-        ...data,
+        name: data.name ? data.name : proj_name,
+        desired_relationship_type: proj_relationship_type,
+        description: data.description ? data.description : proj_desc,
+        duration: proj_duration,
         _id: projectId
         
       }) : JSON.stringify({
-        author_id: _id,
+        author_id: userIDs,
   
-        ...data,
         skill_ids: skillIDs,
+        name: proj_name,
+        desired_relationship_type: proj_relationship_type,
+        description: proj_desc,
+        duration: proj_duration,
         _id: projectId
         // skills: skills
       });
 
       console.log("REQ BODY", reqBody);
-      console.log(proj_name);
 
       await fetch(
         `${baseUrl}/api/projects/update`,
@@ -238,6 +246,16 @@ const EditProject = (props: UnregisteredUser | User) => {
           <br />
         </label>
         
+        <label
+          htmlFor="users"
+          className="font-sans text-black-normal font-bold"
+        >
+          Users
+          <br />
+            <UserSelect stateChanger={setUserIDs} initUsers={users}/>
+          <br />
+        </label>
+
         <Button
             type="submit"
             // className=" font-sans px-4 py-2 text-white bg-green-normal rounded-full shadow-md w-1/5 self-center"
