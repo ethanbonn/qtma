@@ -22,6 +22,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { UserMetadata } from "firebase-admin/lib/auth/user-record";
 import type { User, Link, Skill } from "../../../types/models";
 import getUserData from "../../../functions/server/getUserData";
 import type { UnregisteredUser } from "../../../types";
@@ -31,7 +32,6 @@ import Navbar from "../../../components/ChakraComp/Navbar";
 import baseUrl from "../../../utils/baseUrl";
 import QueryCard from "../../../components/Cards/QueryCard";
 import SkillQuery from "../../../components/SkillQuery";
-import { UserMetadata } from "firebase-admin/lib/auth/user-record";
 import ProfileSkills from "../../../components/Cards/SelectSkills/ProfileSkills";
 
 const timezones = [
@@ -56,6 +56,8 @@ const EditProfile = (props: UnregisteredUser | User) => {
     handleSubmit,
     setValue,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm();
   const isTypeUser = isUser(props);
 
@@ -85,9 +87,19 @@ const EditProfile = (props: UnregisteredUser | User) => {
   );
 
   useEffect(() => {
-    console.log("UseE skills", skillsList);
     // register("skill_ids");
-  }, [skillsList]);
+    if (skillIDList.length < 3) {
+      setError("skillsList", {
+        types: {
+          required: "This is required",
+        },
+        message: "Please enter at least three skills!",
+      });
+    } else {
+      clearErrors("skillsList");
+    }
+    // setMinThreeSkills(skillsList.length >= 3);
+  }, [skillIDList]);
 
   const { _id, email } = props;
   const { getIdToken } = useAuthUser();
@@ -172,26 +184,26 @@ const EditProfile = (props: UnregisteredUser | User) => {
     <>
       <Navbar {...props} />
       <Flex
-        minH={"100vh"}
-        align={"center"}
-        justify={"center"}
+        minH="100vh"
+        align="center"
+        justify="center"
         bg={useColorModeValue("gray.50", "gray.800")}
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="font-sans flex flex-col content-center  w-3/4 h-3/4 py-10 m-auto "
         >
-          <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-            <Stack align={"center"}>
-              <Heading fontSize={"4xl"} textAlign={"center"}>
+          <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
+            <Stack align="center">
+              <Heading fontSize="4xl" textAlign="center">
                 Complete Your Profile
               </Heading>
-              <Text fontSize={"lg"} color={"gray.600"}></Text>
+              <Text fontSize="lg" color="gray.600" />
             </Stack>
             <Box
-              rounded={"lg"}
+              rounded="lg"
               bg={useColorModeValue("white", "gray.700")}
-              boxShadow={"lg"}
+              boxShadow="lg"
               p={8}
             >
               <Stack spacing={4}>
@@ -312,7 +324,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
                   </Select>{" "}
                   {errors.timezone && <span>This field is required</span>}
                 </FormControl>
-{/* 
+                {/*
                 <FormControl id="username" isRequired>
                   <SkillQuery stateChanger={setSkillsList} />
                 </FormControl> */}
@@ -394,7 +406,7 @@ const EditProfile = (props: UnregisteredUser | User) => {
                   </div>
                 </FormControl>
                 <FormControl id="Skills">
-                <FormLabel>Skills</FormLabel>
+                  <FormLabel>Skills</FormLabel>
 
                   <div id="user-skills" className="font-sans text-black-normal">
                     <ProfileSkills
@@ -402,15 +414,16 @@ const EditProfile = (props: UnregisteredUser | User) => {
                       initSkills={skillsList}
                     />
                   </div>
+
+                  {errors.skillsList && <p>{errors.skillsList.message}</p>}
                 </FormControl>
                 <Stack spacing={10} pt={2}>
-
                   <Button
                     loadingText="Submitting"
                     size="lg"
                     type="submit"
-                    bg={"green.400"}
-                    color={"white"}
+                    bg="green.400"
+                    color="white"
                     _hover={{
                       bg: "green.500",
                     }}
@@ -420,14 +433,13 @@ const EditProfile = (props: UnregisteredUser | User) => {
                   </Button>
                 </Stack>
                 <Stack pt={6}>
-                  <Text align={"center"}>
+                  <Text align="center">
                     {/* Already a user? <Link color={"blue.400"}>Login</Link> */}
                   </Text>
                 </Stack>
               </Stack>
             </Box>
           </Stack>
-
         </form>
         {unexpectedError && (
           <span>
