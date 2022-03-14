@@ -159,10 +159,10 @@ export default async function handler(
               }
             }
 
-
+            
 
           ]);
-
+          console.log("querySkills proj", querySkills, skills_arr);
           // merge jsons and remove duplicates
           // won't change result if queryobj have values
           var result = queryobj.concat(querySkills).filter((obj, pos, arr) => {
@@ -239,6 +239,8 @@ export default async function handler(
               //     }
               // }
             ])
+            console.log("proj result", result);
+
           } 
 
           if (search_params.get("id")) {

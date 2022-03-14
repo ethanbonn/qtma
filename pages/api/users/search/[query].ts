@@ -3,6 +3,8 @@ import type { User } from "../../../../types/models";
 import dbConnect from "../../../../utils/dbConnect";
 import UserModel from "../../../../models/User";
 
+import ProductModel from "../../../../models/Projects";
+
 // the search is expensive and broad
 // once enough data is in the db we'll need to change the query logic
 
@@ -21,23 +23,23 @@ export default async function handler(
   // } = req;
   const { method } = req;
   const { query } = req;
-  const queryString = query.query;
 
   // Retrieve the search parameters from the URL
   const searchParams = new URLSearchParams(query.query as string);
 
-  let allParams; // : {[key : string] : string[]};
+  // Type guard for the URl query parameters
+  type UserQuery = {
+    userDescription: string | null | undefined;
+    search: string | null | undefined;
+    skills: string[] | null | undefined;
+  };
+
+  let allParams: UserQuery; // : {[key : string] : string[]};
   const searchObj = {};
   const skillsArr = [];
+  let queryString = "";
 
   if (searchParams.get("query") === null) {
-    // Type guard for the URl query parameters
-    type UserQuery = {
-      userDescription: string | null | undefined;
-      search: string | null | undefined;
-      skills: string[] | null | undefined;
-    };
-
     // Set the value of an object to the provided URL query parameters
     allParams = {
       userDescription: searchParams.get("userDescription"),
@@ -49,10 +51,11 @@ export default async function handler(
         {
           text: {
             query: allParams.search,
-            path: ["description"],
+            path: ["name", "description"],
           },
         },
       ];
+      queryString = allParams.search;
     }
 
     if (allParams.userDescription) {
@@ -78,7 +81,7 @@ export default async function handler(
     await dbConnect();
     // if search_string
 
-    console.log("all", allParams);
+    console.log("all user", allParams, queryString);
     try {
       let queryObj = [];
       let result;
@@ -109,16 +112,18 @@ export default async function handler(
               as: "skills",
             },
           },
-          {
-            $match: {
-              skills: {
-                $elemMatch: {
-                  $or: skillsArr,
-                },
-              },
-            },
-          },
+          // {
+          //   $match: {
+          //     skills: {
+          //       $elemMatch: {
+          //         $or: skillsArr,
+          //       },
+          //     },
+          //   },
+          // },
         ]);
+
+        console.log("querySkills user", querySkills, skillsArr);
 
         // merge jsons and remove duplicates
         // won't change result if queryObj have values

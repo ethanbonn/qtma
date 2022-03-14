@@ -20,12 +20,12 @@ export interface SkillOption {
 
 
 
-export default function AsyncMulti({stateChanger}) {
+export default function AsyncMulti({projectStateChanger}) {
   const [inputValue, setInputValue] = useState<SkillOption[] | []>([]);
   const [reloadOptions, setReloadOption] = useState(0);
 
   useEffect(() => {
-    stateChanger(inputValue);
+    projectStateChanger(inputValue);
   }, [inputValue]);
 
   // change this using mongo to a search
