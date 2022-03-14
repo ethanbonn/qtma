@@ -20,7 +20,11 @@ import queryDB from "../../functions/server/queryDB";
 import QueryCardRelationship from "../QueryCardRelationship";
 import QueryCardSelect from "../QueryCardSelect";
 
-export default function Card({ projectStateChanger, profileStateChanger }) {
+export default function Card({
+  projectStateChanger,
+  profileStateChanger,
+  queryStateChanger,
+}) {
   const [relationship_type, set_relationship_type] = useState("");
   const [skill, set_skill] = useState([]);
   const [search, set_search] = useState("");
@@ -49,6 +53,7 @@ export default function Card({ projectStateChanger, profileStateChanger }) {
         .then((res) => updateHandlers(res));
     }
     handler();
+    queryStateChanger(relationship_type);
   }, [button_pressed]);
 
   useEffect(() => {}, [skill]);
@@ -92,7 +97,7 @@ export default function Card({ projectStateChanger, profileStateChanger }) {
                 }
               >
                 <option value="" />
-                <option value="project">projects</option>
+                <option value="projects">projects</option>
                 <option value="people">people</option>
               </Select>
             </FormControl>

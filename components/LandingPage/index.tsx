@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Flex,
@@ -61,6 +61,10 @@ import getProfiles from "../../functions/server/getProfiles";
 export default function LandingPage(props: UnregisteredUser | User) {
   const [projects, update_projects] = useState([]);
   const [profiles, update_profiles] = useState([]);
+  const [buttonPress, setButtonPress] = useState([]);
+
+  const scrollToProjects = useRef(null);
+  const scrollToPeople = useRef(null);
 
   const { isOpen, onToggle } = useDisclosure();
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -68,12 +72,22 @@ export default function LandingPage(props: UnregisteredUser | User) {
   const SwitchIcon = useColorModeValue(MoonIcon, SunIcon);
 
   useEffect(() => {
+    console.log(buttonPress);
+    if (buttonPress === "projects") {
+      scrollToProjects.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (buttonPress === "people") {
+      scrollToPeople.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [buttonPress]);
+
+  useEffect(() => {
     async function loadProfiles() {
       const display_profiles = await getProfiles();
       update_profiles(display_profiles);
     }
     loadProfiles();
-  // }, [projects]);
+    // }, [projects]);
   }, []);
 
   useEffect(() => {}, [profiles]);
@@ -175,6 +189,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
           <QueryCard
             projectStateChanger={update_projects}
             profileStateChanger={update_profiles}
+            queryStateChanger={setButtonPress}
           />
 
           <Container maxW="7xl" p="10">
@@ -287,7 +302,12 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </Heading>
           </Stack>
 
-          <VStack alignItems="flex-start" spacing="20px" mt="20">
+          <VStack
+            alignItems="flex-start"
+            spacing="20px"
+            mt="20"
+            ref={scrollToProjects}
+          >
             <chakra.h2 fontSize="2xl" fontWeight="700">
               Featured Projects
             </chakra.h2>
@@ -318,9 +338,14 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </Button>
           </Center>
 
-          <VStack alignItems="flex-start" spacing="20px" mt="30">
+          <VStack
+            alignItems="flex-start"
+            spacing="20px"
+            mt="30"
+            ref={scrollToPeople}
+          >
             <chakra.h2 mt="30" fontSize="2xl" fontWeight="700">
-              Profiles
+              Featured Profiles
             </chakra.h2>
           </VStack>
 
