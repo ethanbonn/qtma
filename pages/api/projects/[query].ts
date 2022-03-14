@@ -257,6 +257,14 @@ export default async function handler(
                   as: "skills",
                 },
               },
+              {
+                $lookup: {
+                  from: "users",
+                  localField: "author_ids",
+                  foreignField: "_id",
+                  as: "users",
+                },
+              },
             ]);
           }
 
