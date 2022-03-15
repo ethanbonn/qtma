@@ -30,6 +30,9 @@ import { EmailIcon } from "@chakra-ui/icons";
 
 import { Project } from "../../types/models";
 import MailButton from "./Mail";
+import {Helmet} from "react-helmet";
+import { useRef, useEffect, useState } from "react";
+
 
   // // create a clickable primitive
   // const Clickable = (props) => {
@@ -40,8 +43,18 @@ import MailButton from "./Mail";
 
 
 export default function ProjectCard(props: Project) {
-  // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
+  const inputRef = useRef(null)
+
+  const [mail, setMail] = useState(false);
+
   const { name, skills, duration, date_created, authors, description, active, desired_relationship_type } = props;
+
+  var author_emails = "";
+  for(var i = 0 ; i < authors.length; i++ ){
+    author_emails += authors[i].email + ",";
+  }
+  const author_email_text = author_emails.slice(0, -1);
+
   var current_date = new Date();
   var date_parsed = new Date(JSON.parse('"' + date_created + '"'));
   var diffence_in_days =
@@ -63,154 +76,61 @@ export default function ProjectCard(props: Project) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
 
+  useEffect(() => {
+    if (mail){
+      setMail(false);
+      setTimeout(() => {inputRef.current.click()}, 500);
+    }
+  }, [mail]);
+
+
 
   // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
-    <Flex
-    onClick={onOpen}
-    >
-      <Center py={6}>
+    <Flex>
+      <a ref={inputRef} className="mailtoui" href={"mailto:" + author_email_text + "?subject=Soar%20Project:%20" + name + "&bcc=team@soarup.io&body=Introduce%20yourself!%20"} style={{visibility: "hidden", zIndex:1, padding: "0px", margin: "0px"}} ></a>
 
-        <Box
-          maxW={"445px"}
-          w={"full"}
-          bg={useColorModeValue("white", "gray.900")}
-          boxShadow={"lg"}
-          rounded={"2xl"}
-          p={6}
-          overflow={"hidden"}
-          borderWidth="1px"
-          _hover={{bg: "grey.300", boxShadow: "outline"}}
-          cursor={"pointer"}
-          
-        >
-          <Stack>
-            {/* <Text
-              color={"green.500"}
-              textTransform={"uppercase"}
-              fontWeight={800}
-              fontSize={"sm"}
-              letterSpacing={1.1}
-            >
-              Project
-            </Text> */}
-            <Heading
-              color={useColorModeValue("blue.500", "white")}
-              fontSize={"2xl"}
-              fontFamily={"body"}
-              mb="2px"
-            >
-              {name}
-            </Heading>
+      <Flex
+      onClick={onOpen}
+      >
 
-            <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-              <AvatarGroup size="md" max={2}>
-                {authors.map((user) => {
-                  return (
-                    <Avatar
-                      src={user.profilePicture}
-                      name={user.firstName + " " + user.lastName}
-                    />
-                  );
-                })}
-              </AvatarGroup>
+        <Center py={6}>
 
-              <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
-                <Text fontWeight={600}>
-                  {authors[0].firstName + " " + authors[0].lastName}
-                </Text>
-                <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
-              </Stack>
-            </Stack>
 
-            <Text mt="2px" color={"gray.500"}>
-              <Text mb="2px" color={"gray.500"}>
-                Timezone:{" "}
-                <chakra.span fontWeight={600} color="blue.600">
-                  {authors[0].timezone}
-                </chakra.span>
-              </Text>
-            </Text>
-            <Text mb="2px" color={"gray.500"}>
-              Project Duration:{" "}
-              <chakra.span
-                fontWeight={600}
-                color={
-                  duration == "short"
-                    ? "green.400"
-                    : duration == "medium"
-                    ? "yellow.400"
-                    : "red.400"
-                }
+          <Box
+            maxW={"445px"}
+            w={"full"}
+            bg={useColorModeValue("white", "gray.900")}
+            boxShadow={"lg"}
+            rounded={"2xl"}
+            p={6}
+            overflow={"hidden"}
+            borderWidth="1px"
+            _hover={{bg: "grey.300", boxShadow: "outline"}}
+            cursor={"pointer"}
+            
+          >
+            <Stack>
+              {/* <Text
+                color={"green.500"}
+                textTransform={"uppercase"}
+                fontWeight={800}
+                fontSize={"sm"}
+                letterSpacing={1.1}
               >
-                {" "}
-                {duration}{" "}
-              </chakra.span>{" "}
-            </Text>
-
-            <Text mb="2px" color={"gray.500"}>
-              Date Created:{" "}
-              <chakra.span fontWeight={600} color={"green.400"}>
-                {" "}
-                {display_date}{" "}
-              </chakra.span>{" "}
-            </Text>
-
-            {/* <Text color={"gray.500"}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.
-            </Text> */}
-          </Stack>
-
-          <VStack alignItems="flex-start" mt="3" mb="2px">
-            <chakra.h2 fontSize="md" fontWeight="600">
-              Skills
-            </chakra.h2>
-          </VStack>
-
-          <Stack p="2" direction={["column", "row"]} spacing="5px">
-            {skills.map((x) => {
-              return (
-                <Badge
-                  px={2}
-                  py={1}
-                  bg={useColorModeValue("blue.500", "gray.800")}
-                  fontWeight={"400"}
-                  color="white"
-                  rounded="xl"
-                >
-                  {x.name}
-                </Badge>
-              );
-            })}
-          </Stack>
-          {/* <Center>
-            {" "}
-            <Button borderRadius="2xl" mt="2" colorScheme="green" onClick={onOpen}>
-              View Project
-            </Button>
-          </Center> */}
-      
-
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            {/* <ModalHeader> {name}</ModalHeader> */}
-            <ModalHeader
-              color={useColorModeValue("blue.500", "white")}
-              fontSize={"2xl"}
-              fontFamily={"body"}
-              mb="2px"
-            >
+                Project
+              </Text> */}
+              <Heading
+                color={useColorModeValue("blue.500", "white")}
+                fontSize={"2xl"}
+                fontFamily={"body"}
+                mb="2px"
+              >
                 {name}
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {/* {" "} */}
+              </Heading>
+
               <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
-                <AvatarGroup size="md" max={10}>
+                <AvatarGroup size="md" max={2}>
                   {authors.map((user) => {
                     return (
                       <Avatar
@@ -221,18 +141,14 @@ export default function ProjectCard(props: Project) {
                   })}
                 </AvatarGroup>
 
-                <Stack
-                  direction={"column"}
-                  mt="3px"
-                  spacing={0}
-                  fontSize={"sm"}
-                >
+                <Stack direction={"column"} mt="3px" spacing={0} fontSize={"sm"}>
                   <Text fontWeight={600}>
                     {authors[0].firstName + " " + authors[0].lastName}
                   </Text>
                   <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
                 </Stack>
               </Stack>
+
               <Text mt="2px" color={"gray.500"}>
                 <Text mb="2px" color={"gray.500"}>
                   Timezone:{" "}
@@ -257,6 +173,7 @@ export default function ProjectCard(props: Project) {
                   {duration}{" "}
                 </chakra.span>{" "}
               </Text>
+
               <Text mb="2px" color={"gray.500"}>
                 Date Created:{" "}
                 <chakra.span fontWeight={600} color={"green.400"}>
@@ -264,79 +181,214 @@ export default function ProjectCard(props: Project) {
                   {display_date}{" "}
                 </chakra.span>{" "}
               </Text>
-              
-              <br></br>
 
-              <Text mb="2px" fontWeight={700} color={"black.500"}>
-                {description}
-              </Text>
+              {/* <Text color={"gray.500"}>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.
+              </Text> */}
+            </Stack>
 
-              <br></br>
+            <VStack alignItems="flex-start" mt="3" mb="2px">
+              <chakra.h2 fontSize="md" fontWeight="600">
+                Skills
+              </chakra.h2>
+            </VStack>
 
-              <VStack alignItems="flex-start" mt="3" mb="2px">
-            <chakra.h2 fontSize="md" fontWeight="600">
-              Desired Skills
-            </chakra.h2>
-          </VStack>
-
-          <Stack p="2" direction={["column", "row"]} spacing="5px">
-            {skills.map((x) => {
-              return (
-                <Badge
-                  px={2}
-                  py={1}
-                  bg={useColorModeValue("blue.500", "gray.800")}
-                  fontWeight={"400"}
-                  color="white"
-                  rounded="xl"
-                >
-                  {x.name}
-                </Badge>
-              );
-            })}
-          </Stack>
-
-              <br></br>
-
-              <Text mb="2px" color={"gray.500"}>
-                Working:{" "}
-                <chakra.span fontWeight={600} color={"green.400"}>
-                  {" "}
-                  {desired_relationship_type}{" "}
-                </chakra.span>{" "}
-              </Text>
-
-              <Text mb="2px" color={"gray.500"}>
-                Status:{" "}
-
-                {active ? (
-                  <chakra.span fontWeight={600} color={"green.400"}>
-                    Active
-                  </chakra.span>) : (
-                  <chakra.span fontWeight={600} color={"red.400"}>
-                     Idle
-                  </chakra.span>
-
-                  )
-                }
-              </Text>
-
-              <MailButton mailto={"recepient"} label={"My Label"} closer={onClose}/>
-
-
-            </ModalBody>
-
-            {/* 
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
+            <Stack p="2" direction={["column", "row"]} spacing="5px">
+              {skills.map((x) => {
+                return (
+                  <Badge
+                    px={2}
+                    py={1}
+                    bg={useColorModeValue("blue.500", "gray.800")}
+                    fontWeight={"400"}
+                    color="white"
+                    rounded="xl"
+                  >
+                    {x.name}
+                  </Badge>
+                );
+              })}
+            </Stack>
+            {/* <Center>
+              {" "}
+              <Button borderRadius="2xl" mt="2" colorScheme="green" onClick={onOpen}>
+                View Project
               </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter> */}
-          </ModalContent>
-        </Modal>
-      </Box>
-    </Center>
+            </Center> */}
+        
+
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              {/* <ModalHeader> {name}</ModalHeader> */}
+              <ModalHeader
+                color={useColorModeValue("blue.500", "white")}
+                fontSize={"2xl"}
+                fontFamily={"body"}
+                mb="2px"
+              >
+                  {name}
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                {/* {" "} */}
+                <Stack mt={6} direction={"row"} spacing={4} align={"center"}>
+                  <AvatarGroup size="md" max={10}>
+                    {authors.map((user) => {
+                      return (
+                        <Avatar
+                          src={user.profilePicture}
+                          name={user.firstName + " " + user.lastName}
+                        />
+                      );
+                    })}
+                  </AvatarGroup>
+
+                  <Stack
+                    direction={"column"}
+                    mt="3px"
+                    spacing={0}
+                    fontSize={"sm"}
+                  >
+                    <Text fontWeight={600}>
+                      {authors[0].firstName + " " + authors[0].lastName}
+                    </Text>
+                    <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
+                  </Stack>
+                </Stack>
+                <Text mt="2px" color={"gray.500"}>
+                  <Text mb="2px" color={"gray.500"}>
+                    Timezone:{" "}
+                    <chakra.span fontWeight={600} color="blue.600">
+                      {authors[0].timezone}
+                    </chakra.span>
+                  </Text>
+                </Text>
+                <Text mb="2px" color={"gray.500"}>
+                  Project Duration:{" "}
+                  <chakra.span
+                    fontWeight={600}
+                    color={
+                      duration == "short"
+                        ? "green.400"
+                        : duration == "medium"
+                        ? "yellow.400"
+                        : "red.400"
+                    }
+                  >
+                    {" "}
+                    {duration}{" "}
+                  </chakra.span>{" "}
+                </Text>
+                <Text mb="2px" color={"gray.500"}>
+                  Date Created:{" "}
+                  <chakra.span fontWeight={600} color={"green.400"}>
+                    {" "}
+                    {display_date}{" "}
+                  </chakra.span>{" "}
+                </Text>
+                
+                <br></br>
+
+                <Text mb="2px" fontWeight={700} color={"black.500"}>
+                  {description}
+                </Text>
+
+                <br></br>
+
+                <VStack alignItems="flex-start" mt="3" mb="2px">
+              <chakra.h2 fontSize="md" fontWeight="600">
+                Desired Skills
+              </chakra.h2>
+            </VStack>
+
+            <Stack p="2" direction={["column", "row"]} spacing="5px">
+              {skills.map((x) => {
+                return (
+                  <Badge
+                    px={2}
+                    py={1}
+                    bg={useColorModeValue("blue.500", "gray.800")}
+                    fontWeight={"400"}
+                    color="white"
+                    rounded="xl"
+                  >
+                    {x.name}
+                  </Badge>
+                );
+              })}
+            </Stack>
+
+                <br></br>
+
+                <Text mb="2px" color={"gray.500"}>
+                  Working:{" "}
+                  <chakra.span fontWeight={600} color={"green.400"}>
+                    {" "}
+                    {desired_relationship_type}{" "}
+                  </chakra.span>{" "}
+                </Text>
+
+                <Text mb="2px" color={"gray.500"}>
+                  Status:{" "}
+
+                  {active ? (
+                    <chakra.span fontWeight={600} color={"green.400"}>
+                      Active
+                    </chakra.span>) : (
+                    <chakra.span fontWeight={600} color={"red.400"}>
+                      Idle
+                    </chakra.span>
+
+                    )
+                  }
+                </Text>
+
+                {/* <MailButton mailto={"recepient"} label={"My Label"} closer={onClose} /> */}
+                <div >
+                  {/* <a id="mailButton" className="mailtoui" href="mailto:thor@example.com"  ></a> */}
+  
+                  <Button onClick={() => { 
+                    setMail(true);
+                    onClose();
+                    
+                    // setTimeout(() => {}, 500);
+                    
+                  } }>
+                  <EmailIcon />
+
+                      {/* NEED TO STYLE MAIL CONTENT */}
+                      
+                  </Button>
+                      
+                  
+                  <Helmet>
+                  
+                      <script src="https://cdn.jsdelivr.net/npm/mailtoui@1.0.3/dist/mailtoui-min.js"></script>
+
+                      {/* <script src="https://cdn.jsdelivr.net/npm/mailtoui@1.0.3/dist/mailtoui-min.js"></script> */}
+                  </Helmet>
+
+              </div>
+
+
+              </ModalBody>
+
+              {/* 
+              <ModalFooter>
+                <Button colorScheme="blue" mr={3} onClick={onClose}>
+                  Close
+                </Button>
+                <Button variant="ghost">Secondary Action</Button>
+              </ModalFooter> */}
+            </ModalContent>
+          </Modal>
+        </Box>
+      </Center>
+    </Flex>
   </Flex>
   );
 }

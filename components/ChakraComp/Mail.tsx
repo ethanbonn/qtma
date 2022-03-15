@@ -23,7 +23,8 @@ const MailButton = ({ mailto, label, closer }) => {
       
     return (
         <>
-            <div>
+
+            <div >
                 <Button onClick={() => { setMailClick(true)} }>
 
                     {/* NEED TO STYLE MAIL CONTENT */}

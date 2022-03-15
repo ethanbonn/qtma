@@ -111,8 +111,9 @@ const CreateProject = (props: UnregisteredUser | User) => {
             Work Style
             <br />
             <Select id="country" {...register("desired_relationship_type", { required: true})}>
-              <option value="independent">independent</option>
               <option value="collaborative">collaborative</option>
+              <option value="independent">independent</option>
+              
             </Select>
             {/* <input
                 type="text"

@@ -4,13 +4,17 @@
 import { useAuthUser } from 'next-firebase-auth';
 import React, { Component, useEffect, useState } from 'react';
 import dbConnect from "../../utils/dbConnect";
-import AsyncCreatableSelect from 'react-select/async-creatable';
+import AsyncSelect from 'react-select/async';
 import type { User } from "../../types/models";
 import baseUrl from "../../utils/baseUrl";
+import { Avatar } from '@chakra-ui/react';
 
 export interface UserOption {
     readonly value: string;
     readonly label: string;
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly profilePicture?: string;
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
   }
@@ -23,14 +27,17 @@ export default function AsyncMulti({stateChanger, initUsers}) {
     if (inputValue){
       const temp = initUsers.map((x : User) => {return {    
         value: x.firstName + " " + x.lastName,
-        label: x.firstName + " " + x.lastName,
-        _id: x._id
+        label: "@" + x.userName + " (" + x.firstName + " " + x.lastName + ")",
+        _id: x._id,
+        firstName: x.firstName,
+        lastName: x.lastName,
+        profilePicture: x.profilePicture,
         }});
       console.log(temp);
       setInputValue(temp);
     }
-  // },[initUsers]);
-  },[]);
+  },[initUsers]);
+  // },[]);
 
 
   useEffect(() => {
@@ -56,21 +63,22 @@ export default function AsyncMulti({stateChanger, initUsers}) {
         return {
           _id: x._id,
           value: x.firstName + " " + x.lastName,
-          label: x.firstName + " " + x.lastName,
-          email: x.email,
-          userName: x.userName,
+          label: "@" + x.userName + " (" + x.firstName + " " + x.lastName + ")",
+
+          // email: x.email,
+          // userName: x.userName,
           firstName: x.firstName,
           lastName: x.lastName,
           profilePicture: x.profilePicture,
-          jobTitle: x.jobTitle,
-          userDescription: x.userDescription,
-          links: x.links,
-          date_created: x.date_created,
-          timezone: x.timezone,
-          project_ids: x.project_ids,
-          projects: x.projects,
-          skills: x.skills,
-          skill_ids: x.skill_ids
+          // jobTitle: x.jobTitle,
+          // userDescription: x.userDescription,
+          // links: x.links,
+          // date_created: x.date_created,
+          // timezone: x.timezone,
+          // project_ids: x.project_ids,
+          // // projects: x.projects,
+          // // skills: x.skills,
+          // skill_ids: x.skill_ids
         }
       });
       if (typeof(inputValue) === "string"){
@@ -88,12 +96,25 @@ export default function AsyncMulti({stateChanger, initUsers}) {
   const { getIdToken } = useAuthUser();
 
     return (
-      <AsyncCreatableSelect
+      <AsyncSelect
         value={inputValue}
         onChange={promiseOptions}
         isMulti
         isSearchable
         // cacheOptions
+        formatOptionLabel={opt => (
+          <div>
+            <Avatar
+            size={"xs"}
+            src={opt.profilePicture}
+            name={opt.firstName + " " + opt.lastName}
+            mb={4}
+            pos={"relative"}
+          />
+          <span>&ensp; {opt.label}</span>
+            
+          </div>
+        )}
         defaultOptions
         loadOptions={promiseOptions}
       />

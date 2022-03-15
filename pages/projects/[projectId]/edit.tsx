@@ -14,7 +14,7 @@ import {
   import Footer from "../../../components/Footer";
   import Navbar from "../../../components/ChakraComp/Navbar";
   import baseUrl from "../../../utils/baseUrl";
-import { Button, chakra, Input, Select, Textarea } from "@chakra-ui/react";
+import { Button, chakra, FormControl, Input, Select, Textarea } from "@chakra-ui/react";
 import SkillSelect from "../SkillSelect";
 import ProjectSkills from "../../../components/Cards/SelectSkills/ProjectSkills";
 import UserSelect from "../UserSelect";
@@ -25,16 +25,18 @@ const EditProject = (props: UnregisteredUser | User) => {
     const [proj_relationship_type, set_relationship_type] = useState("");
     const [proj_desc, set_desc] = useState("");
     const [proj_duration, set_duration] = useState("");
-    const [skills, setSkills] = useState([]);
-    const [skillIDs, setSkillIDs] = useState([]);
-    const [users, setUsers] = useState([]);
-    const [userIDs, setUserIDs] = useState([]);
+    const [skills, set_skills] = useState([]);
+    const [skillIDs, set_skill_ids] = useState([]);
+    const [users, set_users] = useState([]);
+    const [userIDs, set_user_ids] = useState([]);
 
     const {
       register,
       handleSubmit,
       setValue,
       formState: { errors },
+      setError,
+      clearErrors,
     } = useForm();
     const isTypeUser = isUser(props);
   
@@ -52,20 +54,39 @@ const EditProject = (props: UnregisteredUser | User) => {
             })
             .then((response) => response.json())
             .then((project) => {
-                const data = project.data;
+                const data = project.data[0];
                 console.log("PROJECT", data);
                 set_name(data.name);
                 set_relationship_type(data.desired_relationship_type);
                 set_desc(data.description);
                 set_duration(data.duration);
-                setSkills(data.skills);
-                setSkillIDs(data.skill_ids);
-                setUsers(data.users);
-                setUserIDs(data.author_ids);
+                set_skills(data.skills);
+                set_skill_ids(data.skill_ids);
+                set_users(data.users);
+                set_user_ids(data.author_ids);
+
+                console.log("SKILLS HERE", data.skills);
             });
+
+            console.log("Passing into ProjectSkills", skills);
         };
         handler();
     }, []);
+
+    useEffect(() => {
+      // register("skill_ids");
+      if (users.length < 1) {
+        setError("users", {
+          types: {
+            required: "This is required",
+          },
+          message: "You must have atleast one project author",
+        });
+      } else {
+        clearErrors("users");
+      }
+      // setMinThreeSkills(skillsList.length >= 3);
+    }, [users]);
 
     const onSubmit = async (data: any) => {
       console.log(data);
@@ -79,7 +100,7 @@ const EditProject = (props: UnregisteredUser | User) => {
       // var skill_ids = skills.map((x: Skill) => 
       //   x._id
       // );
-      console.log("SKILL IDS", skills);
+      console.log("SKILLs", skills);
 
       const token = await getIdToken();
       var reqBody = isTypeUser ? JSON.stringify({
@@ -153,15 +174,15 @@ const EditProject = (props: UnregisteredUser | User) => {
         </label>
         <br />
         <label htmlFor="relationship" className="text-black-normal font-bold">
-            Relationship Type
+            Work Style
             <br />
             <Select 
                 id="relationship"
                 defaultValue={proj_relationship_type}
                 {...register("desired_relationship_type", { required: true})}
             >
-              <option value="collaborator">collaborator</option>
-              <option value="sponsor">sponsor</option>
+              <option value="collaborative">collaborative</option>
+              <option value="independent">independent</option>
             </Select>
             {/* <input
                 type="text"
@@ -242,19 +263,22 @@ const EditProject = (props: UnregisteredUser | User) => {
         >
           Required Skills
           <br />
-            <ProjectSkills stateChanger={setSkillIDs} initSkills={skills}/>
+            <ProjectSkills stateChanger={set_skill_ids} initSkills={skills}/>
           <br />
         </label>
-        
+        <FormControl id="users">
         <label
           htmlFor="users"
           className="font-sans text-black-normal font-bold"
         >
-          Users
+          People
           <br />
-            <UserSelect stateChanger={setUserIDs} initUsers={users}/>
+            <UserSelect stateChanger={set_user_ids} initUsers={users}/>
           <br />
         </label>
+        {errors.users && <p>{errors.users.message}</p>}
+        </FormControl>
+        
 
         <Button
             type="submit"

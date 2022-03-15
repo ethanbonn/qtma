@@ -35,14 +35,23 @@ export default function AsyncMulti({stateChanger, initSkills}) {
   // ];
   // var def = initSkills.map((x : Skill) =>  { return  { value: x.name, label: x.name, _id: x._id } })
   // console.log(def);
-  console.log("INIT SKILLS", initSkills);
+
+  console.log("recieved initSkills", initSkills);
   useEffect(() => {
-    if (inputValue){
+    console.log("MAPPING", inputValue);
+    stateChanger(inputValue.map((x) => { return x._id}));
+  }, [inputValue]);
+
+
+  useEffect(() => {
+    if (inputValue && initSkills){
       const temp = initSkills.map((x : Skill) => {return {    
         value: x.name, 
         label: x.name,
         _id: x._id
         }});
+      console.log("INIT SKILLS", initSkills);
+
       console.log(temp);
       setInputValue(temp);
     }
@@ -50,10 +59,7 @@ export default function AsyncMulti({stateChanger, initSkills}) {
   // },[]);
 
 
-  useEffect(() => {
-    console.log("MAPPING", inputValue);
-    stateChanger(inputValue.map((x) => { return x._id}));
-  }, [inputValue]);
+
 
   // change this using mongo to a search
   function filterSkills(inputValue: string, skillOptions: SkillOption[]) {
