@@ -63,11 +63,11 @@ export default function WithSubnavigation() {
         <Flex
           bg={useColorModeValue("green.300", "gray.800")}
           color={useColorModeValue("gray.600", "green.300")}
-          minH={"55px"}
+          minH="55px"
           py={{ base: 2 }}
           px={{ base: 4 }}
           borderColor={useColorModeValue("gray.200", "gray.900")}
-          align={"center"}
+          align="center"
         >
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
             <Link href="/">
@@ -75,15 +75,15 @@ export default function WithSubnavigation() {
                 display={{ base: "flex", md: "flex" }}
                 ml={{ base: 20, md: 20, sm: 0 }}
               >
-                <Image alt="Soar Logo" src="/soarlogo.png"></Image>
+                <Image alt="Soar Logo" src="/soarlogo.png" />
               </Flex>
             </Link>
           </Flex>
 
           <Stack
             flex={{ base: 1, md: 0 }}
-            justify={"flex-end"}
-            direction={"row"}
+            justify="flex-end"
+            direction="row"
             spacing={6}
             mr={{ base: 20, md: 20, sm: 0 }}
           >
@@ -103,7 +103,7 @@ export default function WithSubnavigation() {
               icon={<ChatIcon />}
             />
 
-            <Flex alignItems={"center"}>
+            <Flex alignItems="center">
               <Menu>
                 <MenuButton as={Button} colorScheme="green" minW={0}>
                   Profile
@@ -123,10 +123,10 @@ export default function WithSubnavigation() {
       </Box>
       {/* <Divider color="blue" /> */}
       <Center bg={useColorModeValue("green.300", "gray.700")}>
-        <Container maxW={"5xl"}>
+        <Container maxW="5xl">
           <Stack
             as={Box}
-            textAlign={"center"}
+            textAlign="center"
             spacing={{ base: 8, md: 14 }}
             pt={{ base: 10, md: 10 }}
           >
@@ -140,7 +140,7 @@ export default function WithSubnavigation() {
               Build the dream team to soar your ideas to the moon. 🚀
             </Heading> */}
 
-            <Heading color={"white"} mb="10">
+            <Heading color="white" mb="10">
               {" "}
               Build the dream team to soar your ideas to the moon. 🚀
             </Heading>
@@ -148,89 +148,83 @@ export default function WithSubnavigation() {
 
           <QueryFilter />
 
-          <Container maxW={"7xl"} p="10">
+          <Container maxW="7xl" p="10">
             <SimpleGrid columns={[1, 1, 3]} spacing="40px">
               <Flex
                 flex={1}
-                justify={"center"}
-                align={"center"}
-                position={"relative"}
-                w={"full"}
+                justify="center"
+                align="center"
+                position="relative"
+                w="full"
               >
                 <Box
-                  position={"relative"}
-                  height={"100%"}
-                  width={"100%"}
-                  rounded={"2xl"}
-                  boxShadow={"2xl"}
-                  overflow={"hidden"}
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  rounded="2xl"
+                  boxShadow="2xl"
+                  overflow="hidden"
                 >
                   <Image
-                    alt={"Hero Image"}
-                    fit={"cover"}
-                    align={"center"}
-                    w={"100%"}
-                    h={"100%"}
-                    src={
-                      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
-                    }
+                    alt="Hero Image"
+                    fit="cover"
+                    align="center"
+                    w="100%"
+                    h="100%"
+                    src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
                   />
                 </Box>
               </Flex>
               <Flex
                 flex={1}
-                justify={"center"}
-                align={"center"}
-                position={"relative"}
-                w={"full"}
+                justify="center"
+                align="center"
+                position="relative"
+                w="full"
               >
                 <Box
-                  position={"relative"}
-                  height={"100%"}
-                  width={"100%"}
-                  rounded={"2xl"}
-                  boxShadow={"2xl"}
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  rounded="2xl"
+                  boxShadow="2xl"
                   // width={"full"}
-                  overflow={"hidden"}
+                  overflow="hidden"
                 >
                   <Image
-                    alt={"Hero Image"}
-                    fit={"cover"}
-                    align={"center"}
-                    w={"100%"}
-                    h={"100%"}
-                    src={
-                      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
-                    }
+                    alt="Hero Image"
+                    fit="cover"
+                    align="center"
+                    w="100%"
+                    h="100%"
+                    src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
                   />
                 </Box>
               </Flex>
 
               <Flex
                 flex={1}
-                justify={"center"}
-                align={"center"}
-                position={"relative"}
-                w={"full"}
+                justify="center"
+                align="center"
+                position="relative"
+                w="full"
               >
                 <Box
-                  position={"relative"}
-                  height={"100%"}
-                  width={"100%"}
-                  rounded={"2xl"}
-                  boxShadow={"2xl"}
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  rounded="2xl"
+                  boxShadow="2xl"
                   // width={"full"}
-                  overflow={"hidden"}
+                  overflow="hidden"
                 >
                   <Image
-                    alt={"Hero Image"}
-                    fit={"cover"}
-                    align={"center"}
-                    w={"100%"}
-                    h={"100%"}
-                    src={
-                      "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
-                    }
+                    alt="Hero Image"
+                    fit="cover"
+                    align="center"
+                    w="100%"
+                    h="100%"
+                    src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
                   />
                 </Box>
               </Flex>
@@ -240,10 +234,10 @@ export default function WithSubnavigation() {
       </Center>
 
       <Center mt="15" bg={useColorModeValue("white", "gray.700")}>
-        <Container maxW={"5xl"}>
+        <Container maxW="5xl">
           <Stack
             as={Box}
-            textAlign={"center"}
+            textAlign="center"
             spacing={{ base: 8, md: 14 }}
             pt={{ base: 10, md: 10 }}
           >
@@ -270,9 +264,7 @@ export default function WithSubnavigation() {
             </chakra.h2>
           </VStack>
           <ProfileSearchBar />
-          <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
-  
-          </SimpleGrid>
+          <SimpleGrid alignItems="center" columns={[1, 1, 3]} spacing="40px" />
 
           <Center mt="8px">
             {" "}
@@ -287,8 +279,8 @@ export default function WithSubnavigation() {
             </chakra.h2>
           </VStack>
 
-          <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
-
+          <SimpleGrid alignItems="center" columns={[1, 1, 3]} spacing="40px">
+            yo mama
           </SimpleGrid>
 
           <Center mt="8px" mb="30px">

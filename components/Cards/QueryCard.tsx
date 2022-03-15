@@ -1,9 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import queryDB from "../../functions/server/queryDB";
+import React, { useState, useEffect } from "react";
+
 import { Listbox, Transition } from "@headlessui/react";
-import QueryCardRelationship from "../QueryCardRelationship";
-import QueryCardSelect from "../QueryCardSelect";
 import {
   Box,
   Center,
@@ -19,8 +16,15 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
+import queryDB from "../../functions/server/queryDB";
+import QueryCardRelationship from "../QueryCardRelationship";
+import QueryCardSelect from "../QueryCardSelect";
 
-export default function Card({ stateChanger }) {
+export default function Card({
+  projectStateChanger,
+  profileStateChanger,
+  queryStateChanger,
+}) {
   const [relationship_type, set_relationship_type] = useState("");
   const [skill, set_skill] = useState([]);
   const [search, set_search] = useState("");
@@ -28,6 +32,14 @@ export default function Card({ stateChanger }) {
   const [button_pressed, set_button_press] = useState(0);
 
   useEffect(() => {
+    async function updateHandlers(res) {
+      console.log("yoyo", res[0], typeof res[0]);
+      const projects = res[0];
+      const users = res[1];
+      projectStateChanger(projects);
+      profileStateChanger(users);
+    }
+
     async function handler() {
       console.log("QUERYING", relationship_type);
       console.log(search);
@@ -38,38 +50,36 @@ export default function Card({ stateChanger }) {
         skill.map((x) => x.value)
       )
         .then((response) => response)
-        .then((res) => stateChanger(res));
+        .then((res) => updateHandlers(res));
     }
     handler();
+    queryStateChanger(relationship_type);
   }, [button_pressed]);
 
   useEffect(() => {}, [skill]);
 
   return (
-
     <Center>
       <Box
-        maxW={"650px"}
-        w={"full"}
+        maxW="650px"
+        w="full"
         bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"2xl"}
-        rounded={"lg"}
+        boxShadow="2xl"
+        rounded="lg"
         p={3}
         mb="10"
         // textAlign={"center"}
       >
         {/* <Stack direction={["column", "row"]} spacing="24px">
                 <Box >
-                  
-                </Box>
 
+                </Box>
 
                 <Box >
                                 <Button colorScheme="green">Search</Button>
 
                 </Box>
-               
-               
+
               </Stack> */}
 
         <Grid
@@ -86,26 +96,32 @@ export default function Card({ stateChanger }) {
                   set_relationship_type(event.currentTarget.value)
                 }
               >
-                <option value=""></option>
-                <option value="collaborator">collaborator</option>
-                <option value="sponsor">sponsor</option>
+                <option value="" />
+                <option value="projects">projects</option>
+                <option value="people">people</option>
               </Select>
             </FormControl>
           </GridItem>
           <GridItem colSpan={2}>
             <FormControl>
-              <FormLabel htmlFor="country">Skilled In</FormLabel>
-              <QueryCardSelect stateChanger={set_skill} />
+              <FormLabel htmlFor="country">
+                {relationship_type == "people"
+                  ? "Skilled In"
+                  : "Using These Skills"}
+              </FormLabel>
+              <QueryCardSelect projectStateChanger={set_skill} />
             </FormControl>
           </GridItem>{" "}
           <GridItem colSpan={2}>
             <FormControl>
-              <FormLabel htmlFor="country">To Build</FormLabel>
+              <FormLabel htmlFor="country">
+                {relationship_type == "people" ? "Interested In" : "To Build"}
+              </FormLabel>
               <Input
                 id="country"
                 placeholder="anything you want!"
                 onChange={(event) => set_search(event.currentTarget.value)}
-              ></Input>
+              />
             </FormControl>
           </GridItem>
           <GridItem rowSpan={1} colSpan={1}>

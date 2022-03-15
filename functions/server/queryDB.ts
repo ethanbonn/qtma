@@ -84,8 +84,8 @@ const queryDB = async (
     }
   )
     .then((response) => response.json())
-    .then((projects) => projects.data);
-  console.log(projects);
+    .then((proj) => proj.data);
+  console.log("projects:", projects);
 
   const users = await fetch(
     `${baseUrl}/api/users/search/${profileQueryString}`,
@@ -94,11 +94,13 @@ const queryDB = async (
     }
   )
     .then((response) => response.json())
-    .then((users) => users.data);
+    .then((user) => user.data);
 
   console.log("PROF SS", profileQueryString);
   console.log("RET", users);
-  return projects;
+  console.log("users: ", users);
+  console.log("projs: ", projects);
+  return [projects, users];
 };
 
 export default queryDB;

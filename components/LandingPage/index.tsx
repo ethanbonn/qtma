@@ -1,13 +1,4 @@
-import { useState, useEffect } from "react";
-import PreviewCard from "./PreviewCard";
-// import ProjectCard from "../ChakraComp/ProjectCard";
-// import ProfileCard from "../ChakraComp/ProfileCard";
-// import NavBar from "../NavBar/NavBar";
-// import Footer from "../Footer";
-import Card from "../Cards/QueryCard";
-import queryDB from "../../functions/server/queryDB";
-import ProfileSearchBar from "../ProfileSearchBar"
-
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Flex,
@@ -47,12 +38,21 @@ import {
   MoonIcon,
   SearchIcon,
 } from "@chakra-ui/icons";
-import Footer from "../../components/ChakraComp/Footer";
-import Navbar from "../../components/ChakraComp/Navbar";
-import ProjectCard from "../../components/ChakraComp/ProjectCard";
-import Login from "../../components/ChakraComp/Login";
+import PreviewCard from "./PreviewCard";
+// import ProjectCard from "../ChakraComp/ProjectCard";
+// import ProfileCard from "../ChakraComp/ProfileCard";
+// import NavBar from "../NavBar/NavBar";
+// import Footer from "../Footer";
+import Card from "../Cards/QueryCard";
+import queryDB from "../../functions/server/queryDB";
+import ProfileSearchBar from "../ProfileSearchBar";
 
-import ProfileCard from "../../components/ChakraComp/ProfileCard";
+import Footer from "../ChakraComp/Footer";
+import Navbar from "../ChakraComp/Navbar";
+import ProjectCard from "../ChakraComp/ProjectCard";
+import Login from "../ChakraComp/Login";
+
+import ProfileCard from "../ChakraComp/ProfileCard";
 import { UnregisteredUser } from "../../types";
 import { User } from "../../types/models";
 import QueryCard from "../Cards/QueryCard";
@@ -61,6 +61,10 @@ import getProfiles from "../../functions/server/getProfiles";
 export default function LandingPage(props: UnregisteredUser | User) {
   const [projects, update_projects] = useState([]);
   const [profiles, update_profiles] = useState([]);
+  const [buttonPress, setButtonPress] = useState([]);
+
+  const scrollToProjects = useRef(null);
+  const scrollToPeople = useRef(null);
 
   const { isOpen, onToggle } = useDisclosure();
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -68,12 +72,22 @@ export default function LandingPage(props: UnregisteredUser | User) {
   const SwitchIcon = useColorModeValue(MoonIcon, SunIcon);
 
   useEffect(() => {
+    console.log(buttonPress);
+    if (buttonPress === "projects") {
+      scrollToProjects.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (buttonPress === "people") {
+      scrollToPeople.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [buttonPress]);
+
+  useEffect(() => {
     async function loadProfiles() {
-      var display_profiles = await getProfiles();
+      const display_profiles = await getProfiles();
       update_profiles(display_profiles);
     }
     loadProfiles();
-  // }, [projects]);
+    // }, [projects]);
   }, []);
 
   useEffect(() => {}, [profiles]);
@@ -149,10 +163,10 @@ export default function LandingPage(props: UnregisteredUser | User) {
       </Box>
       {/* <Divider color="blue" /> */}
       <Center bg={useColorModeValue("green.300", "gray.700")}>
-        <Container maxW={"5xl"}>
+        <Container maxW="5xl">
           <Stack
             as={Box}
-            textAlign={"center"}
+            textAlign="center"
             spacing={{ base: 8, md: 14 }}
             pt={{ base: 10, md: 10 }}
           >
@@ -166,97 +180,95 @@ export default function LandingPage(props: UnregisteredUser | User) {
               Build the dream team to soar your ideas to the moon. 🚀
             </Heading> */}
 
-            <Heading color={"white"} mb="10">
+            <Heading color="white" mb="10">
               {" "}
               Build the dream team to soar your ideas to the moon. 🚀
             </Heading>
           </Stack>
 
-          <QueryCard stateChanger={update_projects} />
+          <QueryCard
+            projectStateChanger={update_projects}
+            profileStateChanger={update_profiles}
+            queryStateChanger={setButtonPress}
+          />
 
-          <Container maxW={"7xl"} p="10">
+          <Container maxW="7xl" p="10">
             <SimpleGrid columns={[1, 1, 3]} spacing="40px">
               <Flex
                 flex={1}
-                justify={"center"}
-                align={"center"}
-                position={"relative"}
-                w={"full"}
+                justify="center"
+                align="center"
+                position="relative"
+                w="full"
               >
                 <Box
-                  position={"relative"}
-                  height={"100%"}
-                  width={"100%"}
-                  rounded={"2xl"}
-                  boxShadow={"2xl"}
-                  overflow={"hidden"}
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  rounded="2xl"
+                  boxShadow="2xl"
+                  overflow="hidden"
                 >
                   <Image
-                    alt={"Hero Image"}
-                    fit={"cover"}
-                    align={"center"}
-                    w={"100%"}
-                    h={"100%"}
-                    src={
-                      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    }
+                    alt="Hero Image"
+                    fit="cover"
+                    align="center"
+                    w="100%"
+                    h="100%"
+                    src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
                   />
                 </Box>
               </Flex>
               <Flex
                 flex={1}
-                justify={"center"}
-                align={"center"}
-                position={"relative"}
-                w={"full"}
+                justify="center"
+                align="center"
+                position="relative"
+                w="full"
               >
                 <Box
-                  position={"relative"}
-                  height={"100%"}
-                  width={"100%"}
-                  rounded={"2xl"}
-                  boxShadow={"2xl"}
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  rounded="2xl"
+                  boxShadow="2xl"
                   // width={"full"}
-                  overflow={"hidden"}
+                  overflow="hidden"
                 >
                   <Image
-                    alt={"Hero Image"}
-                    fit={"cover"}
-                    align={"center"}
-                    w={"100%"}
-                    h={"100%"}
-                    src={
-                      "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                    }
+                    alt="Hero Image"
+                    fit="cover"
+                    align="center"
+                    w="100%"
+                    h="100%"
+                    src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
                   />
                 </Box>
               </Flex>
 
               <Flex
                 flex={1}
-                justify={"center"}
-                align={"center"}
-                position={"relative"}
-                w={"full"}
+                justify="center"
+                align="center"
+                position="relative"
+                w="full"
               >
                 <Box
-                  position={"relative"}
-                  height={"100%"}
-                  width={"100%"}
-                  rounded={"2xl"}
-                  boxShadow={"2xl"}
+                  position="relative"
+                  height="100%"
+                  width="100%"
+                  rounded="2xl"
+                  boxShadow="2xl"
                   // width={"full"}
-                  overflow={"hidden"}
+                  overflow="hidden"
                 >
                   <Image
-                    alt={"Hero Image"}
-                    fit={"cover"}
-                    align={"center"}
-                    w={"100%"}
-                    h={"100%"}
-                    src={
-                      "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
-                    }
+                    alt="Hero Image"
+                    fit="cover"
+                    align="center"
+                    w="100%"
+                    h="100%"
+                    src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
                   />
                 </Box>
               </Flex>
@@ -266,10 +278,10 @@ export default function LandingPage(props: UnregisteredUser | User) {
       </Center>
 
       <Center mt="15" bg={useColorModeValue("white", "gray.800")}>
-        <Container maxW={"5xl"}>
+        <Container maxW="5xl">
           <Stack
             as={Box}
-            textAlign={"center"}
+            textAlign="center"
             spacing={{ base: 8, md: 14 }}
             pt={{ base: 10, md: 10 }}
           >
@@ -290,28 +302,31 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </Heading>
           </Stack>
 
-          <VStack alignItems="flex-start" spacing="20px" mt="20">
+          <VStack
+            alignItems="flex-start"
+            spacing="20px"
+            mt="20"
+            ref={scrollToProjects}
+          >
             <chakra.h2 fontSize="2xl" fontWeight="700">
               Featured Projects
             </chakra.h2>
           </VStack>
 
-          <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
+          <SimpleGrid alignItems="center" columns={[1, 1, 3]} spacing="40px">
             {projects.length === 0 ? (
               <>
                 <p>No data</p>
               </>
             ) : (
               <>
-                {projects.map((proj) => {
-                  return (
-                    <ProjectCard
-                      name={proj.name}
-                      skills={proj.skills}
-                      {...proj}
-                    />
-                  );
-                })}
+                {projects.map((proj) => (
+                  <ProjectCard
+                    name={proj.name}
+                    skills={proj.skills}
+                    {...proj}
+                  />
+                ))}
               </>
             )}
           </SimpleGrid>
@@ -323,22 +338,27 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </Button>
           </Center>
 
-          <VStack alignItems="flex-start" spacing="20px" mt="30">
+          <VStack
+            alignItems="flex-start"
+            spacing="20px"
+            mt="30"
+            ref={scrollToPeople}
+          >
             <chakra.h2 mt="30" fontSize="2xl" fontWeight="700">
-              Profiles
+              Featured Profiles
             </chakra.h2>
           </VStack>
 
-          <SimpleGrid alignItems={"center"} columns={[1, 1, 3]} spacing="40px">
+          <SimpleGrid alignItems="center" columns={[1, 1, 3]} spacing="40px">
             {profiles.length === 0 ? (
               <>
                 <p>No data</p>
               </>
             ) : (
               <>
-                {profiles.map((profile) => {
-                  return <ProfileCard {...profile} />;
-                })}
+                {profiles.map((profile) => (
+                  <ProfileCard {...profile} />
+                ))}
               </>
             )}
           </SimpleGrid>
