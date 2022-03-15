@@ -12,6 +12,7 @@ import {
   Text,
   Stack,
   Button,
+  Divider,
   Link,
   Badge,
   useColorModeValue,
@@ -61,6 +62,10 @@ export default function ProfilePageCard(props: userWrapper) {
         <VStack alignItems="flex-start" mt="2">
           <chakra.h2 fontSize="md">{`${userDescription}`}</chakra.h2>
         </VStack>
+        {/* <Divider /> */}
+        <Link   href={`/profile/${user._id}/edit`}>
+          <Button my="2" colorScheme="green">Edit Profile </Button>
+        </Link>
       </Box>
     </>
   );
