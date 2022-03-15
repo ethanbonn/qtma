@@ -313,7 +313,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </chakra.h2>
           </VStack>
 
-          <SimpleGrid alignItems="center" columns={[1, 1, 3]} spacing="40px">
+          <SimpleGrid alignItems="center" columns={[1, 2, 3]} spacing="40px">
             {projects.length === 0 ? (
               <>
                 <p>No data</p>
@@ -349,7 +349,7 @@ export default function LandingPage(props: UnregisteredUser | User) {
             </chakra.h2>
           </VStack>
 
-          <SimpleGrid alignItems="center" columns={[1, 1, 3]} spacing="40px">
+          <SimpleGrid alignItems="center" columns={[1, 2, 3]} spacing="40px">
             {profiles.length === 0 ? (
               <>
                 <p>No data</p>

@@ -54,7 +54,7 @@ export default function SocialProfileSimple(props: User) {
           </chakra.h2>
         </VStack>
         
-        <Stack mb="5" direction={["column", "row"]} spacing="5px">
+        <SimpleGrid columns={[2, 3]} spacing="10px">
           
           {skills.map((x) => {return (
             <Badge
@@ -69,7 +69,7 @@ export default function SocialProfileSimple(props: User) {
             </Badge>
             )}
           )}
-        </Stack>
+        </SimpleGrid>
         {/* </Stack> */}
       </Box>
     </Center>

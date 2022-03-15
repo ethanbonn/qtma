@@ -57,7 +57,7 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
               <Image alt="Soar Logo" src="/soarlogo.png" />
             </Box>
           </Link>
-          <Flex display={{ base: "none", md: "flex" }} ml={5}>
+          {/* <Flex display={{ base: "none", md: "flex" }} ml={5}>
             <Stack
               flex={{ base: 1, md: 0 }}
               justify={"flex-end"}
@@ -66,7 +66,7 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
             >
               <Button colorScheme="green">Explore </Button>
             </Stack>
-          </Flex>
+          </Flex> */}
 
           <Flex alignItems="center">
             <Stack direction="row" spacing={3}>

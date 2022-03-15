@@ -46,34 +46,35 @@ export default function SkillCard(props: userWrapper) {
         borderColor="green.300"
         mt="5"
       >
-    <Stack>
-          {" "}
-          {skills.map(
-            (x) =>
-              (
-                <Button
-                  m="2"
-                  rightIcon={<ArrowForwardIcon />}
-                  colorScheme="green"
-                  variant="outline"
-                >
-                {x.name}
-
-                </Button>
-              )
-          )}
-        </Stack>
-
+        <div className="px-2 pb-2">
+          {skills.map((x) => (
+            <Badge
+              px={2}
+              py={1}
+              bg={useColorModeValue("blue.500", "gray.800")}
+              fontWeight={"400"}
+              color="white"
+              rounded="xl"
+            >
+              {x.name}
+            </Badge>
+          ))}
+        </div>
       </Box>
       <div className="font-sans max-w-auto min-w-auto mx-10 bg-white rounded-xl shadow-lg flex flex-row m-10 border-2 border-green-normal">
         <div className="max-w-xs w-full rounded-xl  overflow-hidden shadow-lg">
           <div className="px-2 pb-2">
             {skills.map((x) => (
-              <span
-                className={`inline-block bg-blue-normal rounded-full px-3 py-1 text-sm font-semibold text-black mx-2 my-2`}
+              <Badge
+                px={2}
+                py={1}
+                bg={useColorModeValue("blue.500", "gray.800")}
+                fontWeight={"400"}
+                color="white"
+                rounded="xl"
               >
                 {x.name}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>
