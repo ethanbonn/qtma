@@ -31,6 +31,8 @@ import { EmailIcon } from "@chakra-ui/icons";
 
 import { Project } from "../../types/models";
 import MailButton from "./Mail";
+import { Helmet } from "react-helmet";
+import { useRef, useEffect, useState } from "react";
 
 // // create a clickable primitive
 // const Clickable = (props) => {
@@ -39,7 +41,10 @@ import MailButton from "./Mail";
 // }
 
 export default function ProjectCard(props: Project) {
-  // const { name, skills, author_timezone, duration, author_name, author_picture, author_title, date_created } = props;
+  const inputRef = useRef(null);
+
+  const [mail, setMail] = useState(false);
+
   const {
     name,
     skills,
@@ -50,6 +55,13 @@ export default function ProjectCard(props: Project) {
     active,
     desired_relationship_type,
   } = props;
+
+  var author_emails = "";
+  for (var i = 0; i < authors.length; i++) {
+    author_emails += authors[i].email + ",";
+  }
+  const author_email_text = author_emails.slice(0, -1);
+
   var current_date = new Date();
   var date_parsed = new Date(JSON.parse('"' + date_created + '"'));
   var diffence_in_days =
@@ -69,11 +81,38 @@ export default function ProjectCard(props: Project) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  useEffect(() => {
+    if (mail) {
+      setMail(false);
+      setTimeout(() => {
+        inputRef.current.click();
+      }, 500);
+    }
+  }, [mail]);
+
   // console.log(Date(date_created).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
   return (
     <Center py={6}>
-      <Flex onClick={onOpen}>
-        <Center py={6}>
+      <Flex>
+        <a
+          ref={inputRef}
+          className="mailtoui"
+          href={
+            "mailto:" +
+            author_email_text +
+            "?subject=Soar%20Project:%20" +
+            name +
+            "&bcc=team@soarup.io&body=Introduce%20yourself!%20"
+          }
+          style={{
+            visibility: "hidden",
+            zIndex: 1,
+            padding: "0px",
+            margin: "0px",
+          }}
+        ></a>
+
+        <Flex onClick={onOpen}>
           <Box
             maxW={"445px"}
             w={"full"}
@@ -88,14 +127,14 @@ export default function ProjectCard(props: Project) {
           >
             <Stack>
               {/* <Text
-              color={"green.500"}
-              textTransform={"uppercase"}
-              fontWeight={800}
-              fontSize={"sm"}
-              letterSpacing={1.1}
-            >
-              Project
-            </Text> */}
+                color={"green.500"}
+                textTransform={"uppercase"}
+                fontWeight={800}
+                fontSize={"sm"}
+                letterSpacing={1.1}
+              >
+                Project
+              </Text> */}
               <Heading
                 color={useColorModeValue("blue.500", "white")}
                 fontSize={"2xl"}
@@ -164,11 +203,11 @@ export default function ProjectCard(props: Project) {
               </Text>
 
               {/* <Text color={"gray.500"}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-              et ea rebum.
-            </Text> */}
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum.
+              </Text> */}
             </Stack>
 
             <VStack alignItems="flex-start" mt="3" mb="2px">
@@ -374,7 +413,7 @@ export default function ProjectCard(props: Project) {
               </ModalContent>
             </Modal>
           </Box>
-        </Center>
+        </Flex>
       </Flex>
     </Center>
   );

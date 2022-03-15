@@ -16,8 +16,16 @@ import {
 import { User } from "../../types/models";
 
 export default function SocialProfileSimple(props: User) {
-
-  const { userName, firstName, lastName, profilePicture, jobTitle, userDescription, date_created, skills} = props;
+  const {
+    userName,
+    firstName,
+    lastName,
+    profilePicture,
+    jobTitle,
+    userDescription,
+    date_created,
+    skills,
+  } = props;
 
   return (
     <Center py={6}>
@@ -30,7 +38,7 @@ export default function SocialProfileSimple(props: User) {
         p={6}
         textAlign={"center"}
         borderWidth="1px"
-        _hover={{bg: "grey.300", boxShadow: "outline"}}
+        _hover={{ bg: "grey.300", boxShadow: "outline" }}
         cursor={"pointer"}
       >
         <Avatar
@@ -53,23 +61,25 @@ export default function SocialProfileSimple(props: User) {
             Skills
           </chakra.h2>
         </VStack>
-        
-        <SimpleGrid columns={[2, 3]} spacing="10px">
-          
-          {skills.map((x) => {return (
-            <Badge
-              px={2}
-              py={1}
-              bg={useColorModeValue("blue.500", "gray.800")}
-              fontWeight={"400"}
-              color="white"
-              rounded="xl"
-            >
-              {x.name}
-            </Badge>
-            )}
-          )}
-        </SimpleGrid>
+
+        <div>
+          {skills.map((x) => {
+            return (
+              <Badge
+                mr="1"
+                my="1"
+                px={2}
+                py={1}
+                bg={useColorModeValue("blue.500", "gray.800")}
+                fontWeight={"400"}
+                color="white"
+                rounded="xl"
+              >
+                {x.name}
+              </Badge>
+            );
+          })}
+        </div>
         {/* </Stack> */}
       </Box>
     </Center>
