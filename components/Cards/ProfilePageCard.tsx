@@ -34,7 +34,7 @@ export default function ProfilePageCard(props: userWrapper) {
         maxW={"320px"}
         w={"full"}
         bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"lg"}
+        boxShadow={"md"}
         rounded={"2xl"}
         p={6}
         textAlign={"center"}
@@ -47,6 +47,8 @@ export default function ProfilePageCard(props: userWrapper) {
           name={firstName + " " + lastName}
           mb={4}
           pos={"relative"}
+          borderWidth="1px"
+          borderColor="green.300"
         />
 
         <Heading fontSize={"2xl"} fontFamily={"body"}>

@@ -52,17 +52,21 @@ export default function Nav(props: UnregisteredUser | User | undefined) {
     <>
       <Box bg={useColorModeValue("green.300", "gray.900")} px={4}>
         <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Link href="/">
-
-          <Box >
-            <Image alt="Soar Logo" src="/soarlogo.png" />
-          </Box>
+          <Link href="/">
+            <Box>
+              <Image alt="Soar Logo" src="/soarlogo.png" />
+            </Box>
           </Link>
-
-          {/* <Flex alignItems="center" mx="1">
-            
-            <Button colorScheme="green">Explore </Button>
-          </Flex> */}
+          <Flex display={{ base: "none", md: "flex" }} ml={5}>
+            <Stack
+              flex={{ base: 1, md: 0 }}
+              justify={"flex-end"}
+              direction={"row"}
+              spacing={6}
+            >
+              <Button colorScheme="green">Explore </Button>
+            </Stack>
+          </Flex>
 
           <Flex alignItems="center">
             <Stack direction="row" spacing={3}>

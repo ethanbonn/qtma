@@ -1,4 +1,21 @@
 import type { User, Link } from "../../types/models";
+import {
+  Heading,
+  Avatar,
+  VStack,
+  chakra,
+  Box,
+  Center,
+  Text,
+  Stack,
+  Button,
+  // Link,
+  Badge,
+  useColorModeValue,
+  SimpleGrid,
+} from "@chakra-ui/react";
+
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 interface userWrapper {
   user: User;
@@ -15,25 +32,52 @@ export default function LinkCard(props: userWrapper) {
 
   return (
     <>
-      <div className="font-sans max-w-auto min-w-auto mx-10 bg-white rounded-xl shadow-lg flex flex-row m-10 border-2 border-green-normal">
-        <div className="max-w-xs w-full rounded-xl  overflow-hidden shadow-lg">
-          <div className="px-2 pb-2">
-            <div className="text-center text-sm font-semibold mt-2">{`Timezone: ${timezone}`}</div>
-            {links.map(
-              (x) =>
-                x.url && (
-                  <span
-                    className={`inline-block bg-${x.colour}-normal rounded-full px-3 py-1 text-sm font-semibold text-black mx-2 my-2`}
-                  >
-                    <a target="_blank" href={`${x.url}`} rel="noreferrer">
-                      {x.site}
-                    </a>
-                  </span>
-                )
-            )}
-          </div>
-        </div>
-      </div>
+      <Box
+        maxW={"320px"}
+        w={"full"}
+        bg={useColorModeValue("white", "gray.900")}
+        boxShadow={"md"}
+        rounded={"2xl"}
+        p={6}
+        textAlign={"center"}
+        borderWidth="1px"
+        borderColor="green.300"
+      >
+        <Text fontWeight="bold" mb="3">
+          TimeZone:{" "}
+          <Badge ml="1" fontSize="0.8em" colorScheme="green">
+            {" "}
+            {timezone}
+          </Badge>
+        </Text>
+
+        <VStack alignItems="flex-start" mt="2">
+          Links
+          {/* <chakra.h2 fontSize="md">{`${}`}</chakra.h2> */}
+        </VStack>
+        <Text fontWeight="500" alignItems="flex-start">
+          External Links
+        </Text>
+
+        <Stack>
+          {" "}
+          {links.map(
+            (x) =>
+              x.url && (
+                <Button
+                  m="2"
+                  rightIcon={<ArrowForwardIcon />}
+                  colorScheme="green"
+                  variant="outline"
+                >
+                  {x.site}
+
+                  <a target="_blank" href={`${x.url}`} rel="noreferrer"></a>
+                </Button>
+              )
+          )}
+        </Stack>
+      </Box>
     </>
   );
 }

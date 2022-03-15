@@ -54,7 +54,7 @@ export default function SocialProfileSimple(props: User) {
           </chakra.h2>
         </VStack>
         
-        <Stack direction={["column", "row"]} spacing="5px">
+        <Stack mb="5" direction={["column", "row"]} spacing="5px">
           
           {skills.map((x) => {return (
             <Badge

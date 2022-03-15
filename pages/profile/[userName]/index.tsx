@@ -87,11 +87,12 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
       {isUserType && userProfile && (
         <div>
           <Navbar {...props} />
-          {/* <Grid
+          <Grid
             h="200px"
             templateRows="repeat(2, 1fr)"
             templateColumns="repeat(5, 1fr)"
             gap={4}
+            p="10"
           >
             <GridItem rowSpan={2} colSpan={1} bg="tomato" />
             <GridItem colSpan={2} bg="papayawhip" />
@@ -99,7 +100,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
             <GridItem colSpan={2} bg="tomato" />
             <GridItem colSpan={2} bg="tomato" />
 
-          </Grid> */}
+          </Grid>
           <Grid
             p="10"
             // h="200px"
@@ -128,12 +129,12 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
           </Grid>
 
           <div className="grid grid-cols-4 auto-cols-min">
-            {/* <div className="col-span-4"></div>
+            <div className="col-span-4"></div>
             <div className="col-span-1">
               <ProfilePageCard user={userProfile} />
               <SkillCard user={userProfile} />
-              <LinkCard user={userProfile} />
-            </div> */}
+            <LinkCard user={userProfile} />
+            </div>
             
             {/* <div className="col-span-3 pt-10 px-20">
               <div className="flex flex-row justify-between">
