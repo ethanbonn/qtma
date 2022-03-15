@@ -47,6 +47,8 @@ export default function AsyncMulti({stateChanger, initSkills}) {
       setInputValue(temp);
     }
   },[initSkills]);
+  // },[]);
+
 
   useEffect(() => {
     console.log("MAPPING", inputValue);

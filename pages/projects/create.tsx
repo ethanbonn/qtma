@@ -54,6 +54,7 @@ const CreateProject = (props: UnregisteredUser | User) => {
         // author_title: props.jobTitle,
         // author_username: props.userName,
         skill_ids: skill,
+        active: true,
         ...data,
         
       }) : JSON.stringify({
@@ -61,6 +62,7 @@ const CreateProject = (props: UnregisteredUser | User) => {
   
         ...data,
         skill_ids: skill,
+        active: true
         // skills: skills
       });
       await fetch(
@@ -106,11 +108,11 @@ const CreateProject = (props: UnregisteredUser | User) => {
         </label>
         <br />
         <label htmlFor="relationship" className="text-black-normal font-bold">
-            Relationship Type
+            Work Style
             <br />
             <Select id="country" {...register("desired_relationship_type", { required: true})}>
-              <option value="collaborator">collaborator</option>
-              <option value="sponsor">sponsor</option>
+              <option value="independent">independent</option>
+              <option value="collaborative">collaborative</option>
             </Select>
             {/* <input
                 type="text"

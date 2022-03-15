@@ -29,7 +29,9 @@ export default function AsyncMulti({stateChanger, initUsers}) {
       console.log(temp);
       setInputValue(temp);
     }
-  },[initUsers]);
+  // },[initUsers]);
+  },[]);
+
 
   useEffect(() => {
     console.log("MAPPING", inputValue);
