@@ -61,7 +61,7 @@ import getProfiles from "../../functions/server/getProfiles";
 export default function LandingPage(props: UnregisteredUser | User) {
   const [projects, update_projects] = useState([]);
   const [profiles, update_profiles] = useState([]);
-  const [buttonPress, setButtonPress] = useState([]);
+  const [buttonPress, setButtonPress] = useState("");
 
   const scrollToProjects = useRef(null);
   const scrollToPeople = useRef(null);
@@ -331,12 +331,12 @@ export default function LandingPage(props: UnregisteredUser | User) {
             )}
           </SimpleGrid>
 
-          <Center mt="8px">
+          {/* <Center mt="8px">
             {" "}
             <Button colorScheme="green" rounded="3xl">
               Explore more projects
             </Button>
-          </Center>
+          </Center> */}
 
           <VStack
             alignItems="flex-start"
@@ -363,12 +363,12 @@ export default function LandingPage(props: UnregisteredUser | User) {
             )}
           </SimpleGrid>
 
-          <Center mt="8px" mb="30px">
+          {/* <Center mt="8px" mb="30px">
             {" "}
             <Button colorScheme="green" rounded="3xl">
               Explore more profiles
             </Button>
-          </Center>
+          </Center> */}
         </Container>
       </Center>
       {/* <Login /> */}

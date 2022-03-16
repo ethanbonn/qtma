@@ -17,6 +17,7 @@ export interface SkillOption {
     readonly isFixed?: boolean;
     readonly isDisabled?: boolean;
     readonly _id: string;
+    readonly disabled?: string;
   }
 
 
@@ -27,12 +28,12 @@ export default function AsyncMulti({stateChanger, initSkills}) {
 
   console.log("INIT SKILLS", initSkills);
   useEffect(() => {
-    if (inputValue.length > 0){
+    if (initSkills.length > 0){
       console.log("INPUT", inputValue);
       const temp = initSkills.map((x : Skill) => {return {    
         value: x.name, 
         label: x.name,
-        _id: x._id
+        _id: x._id,
         }});
       console.log(temp);
       setInputValue(temp);

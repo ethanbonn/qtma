@@ -75,6 +75,7 @@ const EditProject = (props: UnregisteredUser | User) => {
 
     useEffect(() => {
       // register("skill_ids");
+      console.log("Users in effect", users);
       if (users.length < 1) {
         setError("users", {
           types: {

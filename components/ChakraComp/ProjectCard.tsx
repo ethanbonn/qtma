@@ -94,6 +94,11 @@ export default function ProjectCard(props: Project) {
   return (
     <Center py={6}>
       <Flex>
+        <Helmet>
+            
+          <script src="https://cdn.jsdelivr.net/npm/mailtoui@1.0.3/dist/mailtoui-min.js"></script>
+
+        </Helmet>
         <a
           ref={inputRef}
           className="mailtoui"
@@ -104,13 +109,14 @@ export default function ProjectCard(props: Project) {
             name +
             "&bcc=team@soarup.io&body=Introduce%20yourself!%20"
           }
-          style={{
-            visibility: "hidden",
-            zIndex: 1,
-            padding: "0px",
-            margin: "0px",
-          }}
+          // style={{
+          //   visibility: "hidden",
+          //   zIndex: 1,
+          //   padding: "0px",
+          //   margin: "0px",
+          // }}
         ></a>
+        
 
         <Flex onClick={onOpen}>
           <Box
@@ -148,10 +154,12 @@ export default function ProjectCard(props: Project) {
                 <AvatarGroup size="md" max={2}>
                   {authors.map((user) => {
                     return (
+                    <a href={'profile/' + user.userName}>  
                       <Avatar
                         src={user.profilePicture}
                         name={user.firstName + " " + user.lastName}
                       />
+                    </a>
                     );
                   })}
                 </AvatarGroup>
@@ -270,7 +278,7 @@ export default function ProjectCard(props: Project) {
                         spacing={2}
                         align={"center"}
                       >
-                        <AvatarGroup size="md" max={10}>
+                        {/* <AvatarGroup size="md" max={10}>
                           {authors.map((user) => {
                             return (
                               <Avatar
@@ -279,18 +287,43 @@ export default function ProjectCard(props: Project) {
                               />
                             );
                           })}
-                        </AvatarGroup>
+                        </AvatarGroup> */}
 
                         <Stack
-                          direction={"column"}
+                          // direction={"column"}
+                          direction={[ "column", "row"]}
+
                           mt="3px"
-                          spacing={0}
+                          spacing={5}
                           fontSize={"sm"}
                         >
-                          <Text fontWeight={600}>
+                        {authors.map((user) => {
+                            return (
+                            <div>
+                              <Center>
+                                <Avatar
+                                src={user.profilePicture}
+                                name={user.firstName + " " + user.lastName}
+                                />
+                              </Center>
+                              <Center>
+                                <a href={'profile/' + user.userName}>
+                                  <Text fontWeight={600}>
+                                  {user.firstName + " " + user.lastName}
+                                  </Text>
+                                </a>
+                              </Center>
+                              <Center>
+                                <Text color={"gray.500"}>{user.jobTitle}</Text>
+                              </Center>
+                            </div>
+                              
+                            );
+                          })}
+                          {/* <Text fontWeight={600}>
                             {authors[0].firstName + " " + authors[0].lastName}
                           </Text>
-                          <Text color={"gray.500"}>{authors[0].jobTitle}</Text>
+                          <Text color={"gray.500"}>{authors[0].jobTitle}</Text> */}
                         </Stack>
                       </Stack>
                       <Center>
@@ -330,12 +363,12 @@ export default function ProjectCard(props: Project) {
                       </Center>
                     </div>
                   </Center>
-                  <Center>
+                  {/* <Center>
                     {" "}
                     <Button mb="3" colorScheme="green">
                       View Profile
                     </Button>
-                  </Center>
+                  </Center> */}
 
                   <Divider />
 
@@ -392,14 +425,19 @@ export default function ProjectCard(props: Project) {
 
                   <Center m="5">
                     {" "}
-                    <Button colorScheme="blue"> Get Email </Button>
-                    <MailButton
+                    <Button colorScheme="blue" onClick={() => {
+                      setMail(true);
+                      onClose();
+                    }
+                    
+                    }> Message  </Button>
+                    {/* <MailButton
                       mailto={"recepient"}
                       label={"My Label"}
                       closer={onClose}
                     >
                       {" "}
-                    </MailButton>
+                    </MailButton> */}
                   </Center>
                 </ModalBody>
 

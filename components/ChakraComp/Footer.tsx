@@ -36,7 +36,7 @@ export default function Footer() {
           justify={{ base: "center", md: "center" }}
           align={{ base: "center", md: "center" }}
         >
-          <Text>Made with 💚 by Team 4</Text>
+          <Text>Made with 💚 by <a href="https://www.qtma.ca/">QTMA</a></Text>
         </Container>
       </Box>
 
@@ -49,11 +49,11 @@ export default function Footer() {
         align={"center"}
       >
       
-        <Stack direction={"row"} spacing={6}>
+        {/* <Stack direction={"row"} spacing={6}>
           <Link href={"#"}>LinkedIn</Link>
           <Link href={"#"}>Twitter</Link>
           <Link href={"#"}>Instagram</Link>
-        </Stack>
+        </Stack> */}
 
 
         

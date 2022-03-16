@@ -29,13 +29,20 @@ export default async function handler(
 
   // Type guard for the URl query parameters
   type UserQuery = {
-    userDescription: string | null | undefined;
-    search: string | null | undefined;
-    skills: string[] | null | undefined;
+    userDescription?: string | null | undefined;
+    search?: string | null | undefined;
+    skills?: string[] | null | undefined;
   };
 
+  type SearchQ = {
+    should?: [],
+    must ?: [],
+    filter?: [],
+
+  }
+
   let allParams: UserQuery; // : {[key : string] : string[]};
-  const searchObj = {};
+  const searchObj : {[k: string]: any} = {};
   const skillsArr = [];
   let queryString = "";
 

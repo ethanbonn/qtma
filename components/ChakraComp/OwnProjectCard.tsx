@@ -197,7 +197,7 @@ export default function ProjectCard(props: Project) {
               // className="px-4 py-2 text-black bg-gray-light rounded-full shadow-md self-center"
             >
               Edit Project
-              {"  "} <EditIcon />
+              &nbsp; <EditIcon />
             </Button>
           </a>
           {/* <Center>

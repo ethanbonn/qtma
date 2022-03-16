@@ -12,10 +12,12 @@ import getUserData from "../../../functions/server/getUserData";
 import getUserByUsername from "../../../functions/server/getUserByUsername";
 import type { UnregisteredUser } from "../../../types";
 import { handleUserType, isUser } from "../../../functions/typeGuards";
+import OwnProfilePageCard from "../../../components/Cards/OwnProfilePageCard";
 import ProfilePageCard from "../../../components/Cards/ProfilePageCard";
 import SkillCard from "../../../components/Cards/SkillCard";
 import LinkCard from "../../../components/Cards/LinkCard";
-import ProjectCard from "../../../components/ChakraComp/OwnProjectCard";
+import ProjectCard from "../../../components/ChakraComp/ProjectCard";
+import OwnProjectCard from "../../../components/ChakraComp/OwnProjectCard";
 import Navbar from "../../../components/ChakraComp/Navbar";
 import Footer from "../../../components/Footer";
 import getProjectByUID from "../../../functions/server/getProjectByID";
@@ -103,12 +105,16 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
           >
             <GridItem rowSpan={[2,3]} colSpan={1}>
               {" "}
-              <ProfilePageCard user={userProfile} />
+              {isSelf ?  <ProfilePageCard user={userProfile} /> : <OwnProfilePageCard user={userProfile} /> }
               <SkillCard user={userProfile} />
               <LinkCard user={userProfile} />
             </GridItem>
 
-            {userProjects.map((Proj) => {
+            {isSelf ? userProjects.map((Proj) => {
+              console.log("ADDING PROJECT", Proj);
+              return <OwnProjectCard {...Proj} />;
+            }) : 
+            userProjects.map((Proj) => {
               console.log("ADDING PROJECT", Proj);
               return <ProjectCard {...Proj} />;
             })}

@@ -32,6 +32,7 @@ export default function AsyncMulti({stateChanger, initUsers}) {
         firstName: x.firstName,
         lastName: x.lastName,
         profilePicture: x.profilePicture,
+        isDisabled: true,
         }});
       console.log(temp);
       setInputValue(temp);
@@ -117,6 +118,9 @@ export default function AsyncMulti({stateChanger, initUsers}) {
         )}
         defaultOptions
         loadOptions={promiseOptions}
+        isOptionDisabled={(option) => option.isDisabled}
+        isClearable={false}
+
       />
 
     );

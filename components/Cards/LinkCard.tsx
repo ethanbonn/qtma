@@ -64,16 +64,18 @@ export default function LinkCard(props: userWrapper) {
           {links.map(
             (x) =>
               x.url && (
-                <Button
-                  m="2"
-                  rightIcon={<ArrowForwardIcon />}
-                  colorScheme="green"
-                  variant="outline"
-                >
-                  {x.site}
+                <a target="_blank" href={`${x.url}`} rel="noreferrer">
+                  <Button
+                    m="2"
+                    rightIcon={<ArrowForwardIcon />}
+                    colorScheme="green"
+                    variant="outline"
+                  >
+                    {x.site}
 
-                  <a target="_blank" href={`${x.url}`} rel="noreferrer"></a>
-                </Button>
+                    
+                  </Button>
+                </a>
               )
           )}
         </Stack>

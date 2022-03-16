@@ -47,20 +47,23 @@ export default async function handler(
         date_created: current_timestamp.toISOString(),
       });
 
-      const usr : User = {
-        ...req.body,
-        project_ids: [],
-        profilePicture: Location,
-        date_created: current_timestamp.toISOString(),
-      };
+      // const usr : User = {
+      //   ...req.body,
+      //   project_ids: [],
+      //   profilePicture: Location,
+      //   date_created: current_timestamp.toISOString(),
+      // };
 
-      console.log("CREATE OBJ", usr);
-      try{const user: User = await UserModel.create({
+      // console.log("CREATE OBJ", usr);
+      var user : User;
+      try{
+        user = await UserModel.create({
         ...req.body,
         project_ids: [],
         profilePicture: Location,
         date_created: current_timestamp.toISOString(),
-      })} catch (err){
+      })
+      } catch (err){
         console.log(err);
       }
       
