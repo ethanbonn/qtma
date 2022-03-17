@@ -28,7 +28,7 @@ export default function AsyncMulti({stateChanger, initSkills}) {
 
   console.log("INIT SKILLS", initSkills);
   useEffect(() => {
-    if (initSkills.length > 0){
+    if (initSkills && inputValue){
       console.log("INPUT", inputValue);
       const temp = initSkills.map((x : Skill) => {return {    
         value: x.name, 
