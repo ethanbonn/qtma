@@ -58,6 +58,9 @@ import { User } from "../../types/models";
 import QueryCard from "../Cards/QueryCard";
 import getProfiles from "../../functions/server/getProfiles";
 
+
+
+
 export default function LandingPage(props: UnregisteredUser | User) {
   const [projects, update_projects] = useState([]);
   const [profiles, update_profiles] = useState([]);
@@ -90,7 +93,9 @@ export default function LandingPage(props: UnregisteredUser | User) {
     // }, [projects]);
   }, []);
 
-  useEffect(() => {}, [profiles]);
+//   useEffect(() => {
+//     analytics().logEvent("screen_view", {screen_name: "landing"});
+//  })
 
   return (
     <div>

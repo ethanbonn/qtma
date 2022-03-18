@@ -1,3 +1,4 @@
+
 // import { Avatar } from "@chakra-ui/react";
 import profile from "../../pages/profile";
 import type { User } from "../../types/models";
@@ -19,18 +20,21 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
+
 interface userWrapper {
   user: User;
 }
 
 export default function OwnProfilePageCard(props: userWrapper) {
   const { user } = props;
-  const { profilePicture, firstName, lastName, jobTitle, userDescription } =
+
+  const { profilePicture, firstName, lastName, jobTitle, userDescription, email } =
     user;
 
   console.log(profilePicture);
   return (
     <>
+
       <Box
         maxW={"320px"}
         w={"full"}
@@ -63,7 +67,9 @@ export default function OwnProfilePageCard(props: userWrapper) {
           <chakra.h2 fontSize="md">{`${userDescription}`}</chakra.h2>
         </VStack>
         {/* <Divider /> */}
-
+        <Link   href={`/profile/${user._id}/edit`}>
+          <Button my="2" colorScheme="green">Edit Profile </Button>
+        </Link>
       </Box>
     </>
   );

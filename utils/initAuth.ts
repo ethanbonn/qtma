@@ -24,6 +24,10 @@ const initAuth = () => {
       authDomain: "qtma-94a76.firebaseapp.com",
       databaseURL: "https://qtma-94a76-default-rtdb.firebaseio.com",
       projectId: "qtma-94a76",
+      storageBucket: "qtma-94a76.appspot.com",
+      messagingSenderId: "503941208323",
+      appId: "1:503941208323:web:a3cc2e22cadf36e0ec7136",
+      measurementId: "G-PWJZFSZFLF"
     },
     cookies: {
       name: "qtma", // required

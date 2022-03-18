@@ -18,6 +18,8 @@ import {
   useColorModeValue,
   SimpleGrid,
 } from "@chakra-ui/react";
+import {useRef} from "react";
+import {Helmet} from "react-helmet";
 
 interface userWrapper {
   user: User;
@@ -25,12 +27,19 @@ interface userWrapper {
 
 export default function ProfilePageCard(props: userWrapper) {
   const { user } = props;
-  const { profilePicture, firstName, lastName, jobTitle, userDescription } =
+  const { profilePicture, firstName, lastName, jobTitle, userDescription, email } =
     user;
+  const inputRef = useRef(null);
 
   console.log(profilePicture);
   return (
     <>
+      <Helmet>
+        
+        <script src="https://cdn.jsdelivr.net/npm/mailtoui@1.0.3/dist/mailtoui-min.js"></script>
+
+      </Helmet>
+
       <Box
         maxW={"320px"}
         w={"full"}
@@ -63,10 +72,31 @@ export default function ProfilePageCard(props: userWrapper) {
           <chakra.h2 fontSize="md">{`${userDescription}`}</chakra.h2>
         </VStack>
         {/* <Divider /> */}
-        <Link   href={`/profile/${user._id}/edit`}>
-          <Button my="2" colorScheme="green">Edit Profile </Button>
-        </Link>
+        <Button > 
+          <a
+            ref={inputRef}
+            className="mailtoui"
+            href={
+              "mailto:" +
+              email +
+              "?subject=Soar Message" +
+              
+              "&bcc=team@soarup.io&body=Introduce%20yourself!%20"
+            }
+            // style={{
+            //   visibility: "hidden",
+            //   zIndex: 1,
+            //   padding: "0px",
+            //   margin: "0px",
+            // }}
+          >
+            Message 
+          </a>
+        </Button>
+
       </Box>
     </>
   );
 }
+
+

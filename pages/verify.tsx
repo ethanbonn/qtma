@@ -87,7 +87,7 @@ const Verify = (props: UnregisteredUser | User) => {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Welcome to Soar ⭐</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            {verifyMessage}
+            Check Your Email for a verification link
           </Text>
         </Stack>
         {/* <Box

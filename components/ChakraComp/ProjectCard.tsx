@@ -326,7 +326,12 @@ export default function ProjectCard(props: Project) {
                           <Text color={"gray.500"}>{authors[0].jobTitle}</Text> */}
                         </Stack>
                       </Stack>
-                      <Center>
+
+
+                    </div>
+                  </Center>
+                  <Divider />
+                  {/* <Center> */}
                         <div>
                           <Text mt="2px" color={"gray.500"}>
                             <Text mb="2px" color={"gray.500"}>
@@ -360,9 +365,7 @@ export default function ProjectCard(props: Project) {
                             </chakra.span>{" "}
                           </Text>
                         </div>
-                      </Center>
-                    </div>
-                  </Center>
+                      {/* </Center> */}
                   {/* <Center>
                     {" "}
                     <Button mb="3" colorScheme="green">

@@ -38,6 +38,8 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 
+const blank_user : User = {_id: 'none', email: 'loading', userName: 'loading', firstName: 'loading', lastName: 'loading', date_created: new Date(0), timezone: 'EST', project_ids: [], skill_ids: [], skills: [], links: []};
+
 const styles = {
   container: {
     display: "flex",
@@ -52,7 +54,9 @@ const styles = {
 };
 
 export const ViewProfile = (props: UnregisteredUser | User) => {
-  const [userProfile, setUserProfile] = useState(props as User);
+  // const [userProfile, setUserProfile] = useState(props as User);
+  const [userProfile, setUserProfile] = useState(blank_user);
+
 
   const [userProjects, setUserProjects] = useState([]);
   const isUserType = isUser(props);
@@ -105,7 +109,7 @@ export const ViewProfile = (props: UnregisteredUser | User) => {
           >
             <GridItem rowSpan={[2,3]} colSpan={1}>
               {" "}
-              {isSelf ?  <ProfilePageCard user={userProfile} /> : <OwnProfilePageCard user={userProfile} /> }
+              {isSelf ?   <OwnProfilePageCard user={userProfile} /> : <ProfilePageCard user={userProfile} />}
               <SkillCard user={userProfile} />
               <LinkCard user={userProfile} />
             </GridItem>
